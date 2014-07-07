@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="Command" x="24" y="33">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Lang" x="28" y="83">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Player" x="478" y="358">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Card"
+            endpointName="handCards" kind="Simple"/>
+        <Association destinationClassName="Character"
+            endpointName="characters" kind="Simple">
+            <Point x="417" y="299"/>
+            <Point x="355" y="294"/>
+            <Point x="277" y="293"/>
+        </Association>
+    </Class>
+    <Class name="Skill" x="686" y="1133">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="Card"/>
+    </Class>
+    <Class name="Play.DisplayArea.BottomField" x="1059" y="264">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Play.PlayerArea" x="686" y="139">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Player" endpointName="player" kind="Simple"/>
+        <Association destinationClassName="Play.PlayerArea.AttackButton"
+            endpointName="attackButton" kind="Simple"/>
+        <Association
+            destinationClassName="Play.PlayerArea.JobChangeButton"
+            endpointName="jobChangeButton" kind="Simple"/>
+        <Association destinationClassName="Play.PlayerArea.PassButton"
+            endpointName="passButton" kind="Simple"/>
+        <Association destinationClassName="Play.PlayerArea.DrawButton"
+            endpointName="drawButton" kind="Simple"/>
+        <Communication destinationClassName="Play"/>
+        <Communication destinationClassName="Play.DisplayArea.BattleField"/>
+        <Communication destinationClassName="Player"/>
+        <Communication destinationClassName="Character"/>
+        <Communication destinationClassName="Card"/>
+    </Class>
+    <Class name="Item" x="586" y="1137">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="Card"/>
+    </Class>
+    <Class name="Play.PlayerArea.CardButton" x="1002" y="713">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Card" endpointName="card" kind="Simple"/>
+        <Communication destinationClassName="Play.PlayerArea"/>
+        <Communication destinationClassName="Play"/>
+        <Communication destinationClassName="Play.DisplayArea.BattleField"/>
+        <Communication destinationClassName="Player"/>
+        <Communication destinationClassName="Character"/>
+        <Communication destinationClassName="Card"/>
+    </Class>
+    <Class name="Play.PlayerArea.PassButton" x="1000" y="615">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Play.DisplayArea.BattleField.BLabel" x="900" y="218">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Play" x="208" y="30">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Play.PlayerArea"
+            endpointName="player2Area" kind="Simple"/>
+        <Association destinationClassName="Character"
+            endpointName="currentChar" kind="Simple"/>
+        <Association destinationClassName="Character"
+            endpointName="charList" kind="Simple"/>
+        <Association destinationClassName="Player"
+            endpointName="player1" kind="Simple"/>
+        <Association destinationClassName="Player"
+            endpointName="player2" kind="Simple">
+            <Point x="497" y="141"/>
+        </Association>
+        <Association destinationClassName="Play.DisplayArea"
+            endpointName="displayArea" kind="Simple"/>
+        <Association destinationClassName="Play.PlayerArea"
+            endpointName="player1Area" kind="Simple"/>
+        <Communication destinationClassName="Play.PlayerArea"/>
+        <Communication destinationClassName="Play.DisplayArea.BattleField"/>
+        <Communication destinationClassName="Player"/>
+        <Communication destinationClassName="Play.DisplayArea"/>
+        <Communication destinationClassName="Play.PlayerArea.DrawButton"/>
+        <Communication destinationClassName="Card"/>
+        <Communication destinationClassName="Character"/>
+    </Class>
+    <Class name="Equipment" x="466" y="1127">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="Card"/>
+    </Class>
+    <Class name="Play.DisplayArea" x="884" y="69">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Play.DisplayArea.TopField"
+            endpointName="topField" kind="Simple"/>
+        <Association destinationClassName="Play.DisplayArea.BattleField"
+            endpointName="battleField" kind="Simple"/>
+        <Association destinationClassName="Play.DisplayArea.BottomField"
+            endpointName="bottomField" kind="Simple"/>
+        <Communication destinationClassName="Play.DisplayArea.BattleField"/>
+        <Communication destinationClassName="Player"/>
+    </Class>
+    <Class name="Play.PlayerArea.DrawButton" x="999" y="515">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="Play.PlayerArea"/>
+        <Communication destinationClassName="Play"/>
+    </Class>
+    <Class name="Character" x="77" y="317">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Player" endpointName="player" kind="Simple"/>
+        <Association destinationClassName="Equipment"
+            endpointName="equipment" kind="Simple"/>
+        <Communication destinationClassName="Equipment"/>
+        <Communication destinationClassName="Player"/>
+        <Communication destinationClassName="Card"/>
+    </Class>
+    <Class name="Play.DisplayArea.BattleField" x="1031" y="96">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="Play.DisplayArea.BattleField.BLabel"
+            endpointName="player1Chars" kind="Simple"/>
+        <Association
+            destinationClassName="Play.DisplayArea.BattleField.BLabel"
+            endpointName="player2Actions" kind="Simple"/>
+        <Association
+            destinationClassName="Play.DisplayArea.BattleField.BLabel"
+            endpointName="player1Actions" kind="Simple"/>
+        <Association
+            destinationClassName="Play.DisplayArea.BattleField.BLabel"
+            endpointName="player2Chars" kind="Simple"/>
+        <Communication destinationClassName="Player"/>
+    </Class>
+    <Class name="Play.DisplayArea.TopField" x="1088" y="33">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="Play.DisplayArea"/>
+    </Class>
+    <Class name="Play.PlayerArea.AttackButton" x="990" y="359">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Play.PlayerArea.JobChangeButton" x="994" y="432">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="Play.PlayerArea"/>
+        <Communication destinationClassName="Play.DisplayArea.BattleField"/>
+        <Communication destinationClassName="Player"/>
+        <Communication destinationClassName="Character"/>
+    </Class>
+    <Class name="Card" x="567" y="954">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+</ClassDiagram>
