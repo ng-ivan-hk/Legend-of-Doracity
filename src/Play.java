@@ -24,7 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-/**GitHub Started
+/**
+ * GitHub Started (2014/7/7)
  * @author Ivan Ng
  *
  */
