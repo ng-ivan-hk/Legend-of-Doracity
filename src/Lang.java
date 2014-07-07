@@ -1,5 +1,9 @@
 public class Lang {
 
+	/* Application */
+	public final static String legendOfDoracity = "小城聯盟";
+	public final static String frameTitle = legendOfDoracity + " - " + "Legend of Doracity";
+
 	/* Character Names */
 	public final static String[] CharNames = new String[] { "", "烏龍茶", "淋琳", "古怪", "地圖", "鐵皮使",
 			"魚丸串", "白銀劍士", "悠閒的大雄", "奈奈由宇", "燒味", "山大", "彩蝶", "羽須智行", "黑川", "工口勇者謙", "奈特", "雲",
@@ -500,7 +504,7 @@ public class Lang {
 	public final static String skillSelection = "選擇技能";
 	public final static String active = "主動";
 	public final static String passive = "被動";
-	
+
 	/* Char Selection */
 	public final static String charSelection = "選擇角色";
 
@@ -531,8 +535,8 @@ public class Lang {
 	public final static String noMP = "MP不足";
 	public final static String removeEquip = "角色裝備將被移除";
 	public final static String charDefensing = "角色正在防禦中，無法攻擊";
-	
-	/*Game Over Messages*/
+
+	/* Game Over Messages */
 	public final static String gameOver = "遊戲結束";
 	public final static String winner = "勝者";
 	public final static String loser = "敗者";

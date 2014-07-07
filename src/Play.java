@@ -26,8 +26,9 @@ import javax.swing.SwingConstants;
 
 /**
  * GitHub Started (2014/7/7)
+ * 
  * @author Ivan Ng
- *
+ * 
  */
 public class Play extends JFrame {
 
@@ -101,16 +102,16 @@ public class Play extends JFrame {
 					cards.push(new Equipment(i + 1));
 			}
 		}
-//		 for (int i = 0; i < ITEM_MAX.length; i++) {
-//		 for (int j = 0; j < ITEM_MAX[i]; j++) {
-//		 cards.push(new Item(i + 1));
-//		 }
-//		 }
-//		 for (int i = 0; i < SKILL_MAX.length; i++) {
-//		 for (int j = 0; j < SKILL_MAX[i]; j++) {
-//		 cards.push(new Skill(i + 1));
-//		 }
-//		 }
+		// for (int i = 0; i < ITEM_MAX.length; i++) {
+		// for (int j = 0; j < ITEM_MAX[i]; j++) {
+		// cards.push(new Item(i + 1));
+		// }
+		// }
+		// for (int i = 0; i < SKILL_MAX.length; i++) {
+		// for (int j = 0; j < SKILL_MAX[i]; j++) {
+		// cards.push(new Skill(i + 1));
+		// }
+		// }
 		Collections.shuffle(cards);
 
 		// cards.push(new Skill(13));
@@ -124,12 +125,12 @@ public class Play extends JFrame {
 
 		/* Set up GUI */
 
-		try {
+		try { // Set App Icon
 			setIconImage(new ImageIcon(getClass().getResource("/resources/xander.png")).getImage());
 		} catch (NullPointerException e) {
 		}
 
-		setTitle("League of Doracity");
+		setTitle(Lang.frameTitle);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		displayArea = new DisplayArea();
@@ -552,24 +553,25 @@ public class Play extends JFrame {
 						// Add Passive Skills
 						add(new JLabel(Lang.passive));
 
-//						String[][] charSkills = currentChar.getPassiveSkills();
-//						for (int i = 0; i < charSkills.length; i++) {
-//							add(new JLabel(charSkills[i][0]));
-//							add(new JLabel(charSkills[i][1]));
-//						}
-//						// Horizontal line
-//						JSeparator separator = new JSeparator();
-//						Dimension d = separator.getPreferredSize();
-//						d.width = separator.getMaximumSize().width;
-//						separator.setMaximumSize(d);
-//						add(separator);
-//						// Add Active Skills
-//						charSkills = currentChar.getActiveSkills();
-//						add(new JLabel(Lang.active));
-//						for (int i = 0; i < charSkills.length; i++) {
-//							add(new JLabel(charSkills[i][0]));
-//							add(new JLabel(charSkills[i][1]));
-//						}
+						// String[][] charSkills =
+						// currentChar.getPassiveSkills();
+						// for (int i = 0; i < charSkills.length; i++) {
+						// add(new JLabel(charSkills[i][0]));
+						// add(new JLabel(charSkills[i][1]));
+						// }
+						// // Horizontal line
+						// JSeparator separator = new JSeparator();
+						// Dimension d = separator.getPreferredSize();
+						// d.width = separator.getMaximumSize().width;
+						// separator.setMaximumSize(d);
+						// add(separator);
+						// // Add Active Skills
+						// charSkills = currentChar.getActiveSkills();
+						// add(new JLabel(Lang.active));
+						// for (int i = 0; i < charSkills.length; i++) {
+						// add(new JLabel(charSkills[i][0]));
+						// add(new JLabel(charSkills[i][1]));
+						// }
 
 					}
 				}
@@ -1323,8 +1325,6 @@ public class Play extends JFrame {
 
 		}
 	}
-
-	
 
 	private void gameOver(Player winner, Player loser) {
 		JOptionPane.showMessageDialog(this,
