@@ -82,11 +82,11 @@ public class Play extends JFrame {
 
 		/* Create Players */
 		player1 = new Player("Oolong Wong", true);
-		player1.setCharacters(new Character(1, player1), new Character(2, player1), new Character(
-				3, player1), new Character(4, player1), new Character(5, player1));
+		player1.setCharacters(new Tea(player1), new Tea(player1), new Tea(player1),
+				new Tea(player1), new Tea(player1));
 		player2 = new Player("Ivan Ng", false);
-		player2.setCharacters(new Character(6, player2), new Character(7, player2), new Character(
-				8, player2), new Character(9, player2), new Character(30, player2));
+		player2.setCharacters(new Tea(player2), new Tea(player2), new Tea(player2),
+				new Tea(player2), new Tea(player2));
 
 		/* Create Character list */
 		charList = new ArrayList<Character>();
@@ -553,27 +553,46 @@ public class Play extends JFrame {
 						// Add Passive Skills
 						add(new JLabel(Lang.passive));
 
-						// String[][] charSkills =
-						// currentChar.getPassiveSkills();
-						// for (int i = 0; i < charSkills.length; i++) {
-						// add(new JLabel(charSkills[i][0]));
-						// add(new JLabel(charSkills[i][1]));
-						// }
-						// // Horizontal line
-						// JSeparator separator = new JSeparator();
-						// Dimension d = separator.getPreferredSize();
-						// d.width = separator.getMaximumSize().width;
-						// separator.setMaximumSize(d);
-						// add(separator);
-						// // Add Active Skills
-						// charSkills = currentChar.getActiveSkills();
-						// add(new JLabel(Lang.active));
-						// for (int i = 0; i < charSkills.length; i++) {
-						// add(new JLabel(charSkills[i][0]));
-						// add(new JLabel(charSkills[i][1]));
-						// }
+						CharSkill[] charSkills = currentChar.passiveSkills;
+						for (int i = 0; i < charSkills.length; i++) {
+							add(new CharSkillButton(charSkills[i]));
+						}
+						// Horizontal line
+						JSeparator separator = new JSeparator();
+						Dimension d = separator.getPreferredSize();
+						d.width = separator.getMaximumSize().width;
+						separator.setMaximumSize(d);
+						add(separator);
+
+						// Add Active Skills
+						add(new JLabel(Lang.active));
+
+						charSkills = currentChar.activeSkills;
+						for (int i = 0; i < charSkills.length; i++) {
+							add(new CharSkillButton(charSkills[i]));
+						}
 
 					}
+
+					private class CharSkillButton extends JButton implements ActionListener {
+						private CharSkill charSkill = null;
+
+						public CharSkillButton(CharSkill charSkill) {
+							this.charSkill = charSkill;
+							setText(charSkill.getName());
+							setToolTipText(charSkill.getInfo());
+							if (!charSkill.isActive()) {
+								setEnabled(false);
+							}
+							addActionListener(this);
+						}
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+						}
+					}
+
 				}
 			}
 

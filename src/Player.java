@@ -11,7 +11,6 @@ public class Player {
 	private ArrayList<Card> handCards = new ArrayList<Card>();
 
 	public Player(String name, boolean player1) {
-
 		this.name = name;
 		this.player1 = player1;
 	}
