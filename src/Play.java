@@ -589,7 +589,7 @@ public class Play extends JFrame {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							// TODO Auto-generated method stub
+							charSkill.useSkill(currentChar, null); //TODO: testing
 						}
 					}
 
