@@ -63,6 +63,7 @@ public class Play extends JFrame {
 	private ArrayList<Character> charList = null;
 	private Character currentChar = null;
 	private int round = 0;
+	private int currentStatus = 0; // For Battle only
 
 	/* GUI objects */
 	private DisplayArea displayArea = null;
@@ -580,8 +581,14 @@ public class Play extends JFrame {
 						public CharSkillButton(CharSkill charSkill) {
 							this.charSkill = charSkill;
 							setText(charSkill.getName());
-							setToolTipText(charSkill.getInfo());
-							if (!charSkill.isActive()) {
+
+							setToolTipText("<html><font color=blue>"
+									+ (charSkill.getOccasion() != Command.NA ? Lang.occasion[charSkill
+											.getOccasion()] + "<br>"
+											: "") + "</font><font color=black>"
+									+ charSkill.getInfo() + "</font></html>");
+
+							if (!charSkill.isActive() || charSkill.getOccasion() != currentStatus) {
 								setEnabled(false);
 							}
 							addActionListener(this);
@@ -589,7 +596,8 @@ public class Play extends JFrame {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							charSkill.useSkill(currentChar, null); //TODO: testing
+							charSkill.useSkill(currentChar, null); // TODO:testing
+
 						}
 					}
 
@@ -747,6 +755,7 @@ public class Play extends JFrame {
 		while (true) { // Loop until HP <= 0
 
 			/* Start a new round */
+
 			round++;
 			displayArea.setRound(round);
 			System.out.println("========== Round " + round + " ==========");
@@ -898,6 +907,7 @@ public class Play extends JFrame {
 			sortAllChars();
 			System.out.println(">>> Before Battle <<<");
 			displayArea.setStage(Lang.stage_beforeBattle);
+			currentStatus = Command.BEFORE_BATTLE;
 
 			// Skills/Skill Card according to charList
 			for (int i = 0; i < charList.size(); i++) {
@@ -913,14 +923,14 @@ public class Play extends JFrame {
 				PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
 						: player2Area;
 				areaTemp.castSkillButton.setEnabled(true);
-				// TODO: enable skill buttons
 				areaTemp.passButton.setEnabled(true);
+				// TODO: enable skill buttons
 				synchronized (this) {
 					this.wait();
 				}
 				areaTemp.castSkillButton.setEnabled(false);
-				// TODO: enable skill buttons
 				areaTemp.passButton.setEnabled(false);
+				// TODO: disable skill buttons
 
 				// Unhighlight the character
 				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
@@ -932,6 +942,7 @@ public class Play extends JFrame {
 			sortAllChars();
 			System.out.println(">>> During Battle <<<");
 			displayArea.setStage(Lang.stage_duringBattle);
+			currentStatus = Command.DURING_BATTLE;
 
 			// Normal Attack/Skills/Skill Card according to charList
 
@@ -947,12 +958,16 @@ public class Play extends JFrame {
 				PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
 						: player2Area;
 				areaTemp.attackButton.setEnabled(true);
+				areaTemp.castSkillButton.setEnabled(true);
 				areaTemp.passButton.setEnabled(true);
+				// TODO: enable skill buttons
 				synchronized (this) {
 					this.wait();
 				}
 				areaTemp.attackButton.setEnabled(false);
+				areaTemp.castSkillButton.setEnabled(false);
 				areaTemp.passButton.setEnabled(false);
+				// TODO: disable skill buttons
 
 				// Unhighlight the character
 				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
@@ -964,11 +979,34 @@ public class Play extends JFrame {
 			sortAllChars();
 			System.out.println(">>> After Battle <<<");
 			displayArea.setStage(Lang.stage_afterBattle);
+			currentStatus = Command.AFTER_BATTLE;
 
 			// Skills according to charList
-			// for (int i = 0; i < charList.size(); i++) {
-			// System.out.println(charList.get(i));
-			// }
+			for (int i = 0; i < charList.size(); i++) {
+				currentChar = charList.get(i);
+
+				System.out.println(charList.get(i));
+
+				// Highlight the character on the battle field
+				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
+						.getPlayer().indexOfChar(currentChar), true);
+
+				// Handle Buttons
+				PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
+						: player2Area;
+				areaTemp.castSkillButton.setEnabled(true);
+				areaTemp.passButton.setEnabled(true);
+				synchronized (this) {
+					this.wait();
+				}
+				areaTemp.castSkillButton.setEnabled(false);
+				areaTemp.passButton.setEnabled(false);
+
+				// Unhighlight the character
+				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
+						.getPlayer().indexOfChar(currentChar), false);
+
+			}
 
 			// Defense off for all characters
 			for (int i = 0; i < charList.size(); i++) {

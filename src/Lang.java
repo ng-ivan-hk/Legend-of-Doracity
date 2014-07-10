@@ -496,9 +496,7 @@ public class Lang {
 	public final static String passInfo = "結束此階段。";
 
 	/* Skill messages */
-	public final static String beforeBattleOnly = "只限戰鬥前使用";
-	public final static String duringBattleOnly = "只限戰鬥時使用";
-	public final static String afterBattleOnly = "只限戰鬥前後用";
+	public final static String[] occasion = { "", "[戰鬥前]", "[戰鬥時]", "[戰鬥後]" };
 
 	/* Skill Selection */
 	public final static String skillSelection = "選擇技能";

@@ -1,6 +1,6 @@
 public class Skill extends Card {
 
-	private int occasion;
+	private int occasion; // When can this card be used?
 
 	public Skill(int number) {
 		super(Lang.SkillTypes[number], number);
@@ -28,19 +28,8 @@ public class Skill extends Card {
 	}
 
 	public String getInfo() {
-		String message = "";
-		switch (occasion) {
-		case Command.BEFORE_BATTLE:
-			message = Lang.beforeBattleOnly;
-			break;
-		case Command.DURING_BATTLE:
-			message = Lang.duringBattleOnly;
-			break;
-		case Command.AFTER_BATTLE:
-			message = Lang.afterBattleOnly;
-			break;
-		}
-		return "<font color=orange>" + message + "</font><br>" + Lang.SkillInfos[number];
+		return "<font color=orange>" + Lang.occasion[occasion] + "</font><br>"
+				+ Lang.SkillInfos[number];
 
 	}
 
