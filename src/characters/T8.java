@@ -1,23 +1,23 @@
+public class T8 extends Character {
 
-public class Anthony  extends Character{
-
-	public Anthony(Player player) {
-		super(player, 28);
+	public T8(Player player) {
+		super(player, 26);
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	protected void setCharacter() {
 		// TODO Auto-generated method stub
 		if (isFirstJob()) {
 
-			setValues(true, SUPPORT, true, 3, 2, 2, 2, true);
+			setValues(true, SUPPORT, false, 2, 2, 2, 2, true);
 
 			passiveSkills = new CharSkill[1];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
 				public void skillMethod(Character c1, Character c2) {
-					System.out.println("Using Anthony's 1stJob passive skill!");
+					System.out.println("Using T8's 1stJob passive skill!");
 
 				}
 
@@ -28,7 +28,7 @@ public class Anthony  extends Character{
 
 						@Override
 						public void skillMethod(Character c1, Character c2) {
-							System.out.println("Using Anthony's 1stJob active skill!");
+							System.out.println("Using T8's 1stJob active skill!");
 
 						}
 
@@ -36,25 +36,25 @@ public class Anthony  extends Character{
 
 		} else {
 
-			setValues(true, CASTER, false, 3, 2, 3, 4, false);
+			setValues(true, SUPPORT, false, 3, 2, 2, 2, false);
 
 			passiveSkills = new CharSkill[1];
-			passiveSkills[0] = new CharSkill(this, false, 0, Command.BEFORE_BATTLE, new CharSkillMethod() {
+			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
 				public void skillMethod(Character c1, Character c2) {
-					System.out.println("Using Anthony's 2ndJob passive skill!");
+					System.out.println("Using T8's 2ndJob passive skill!");
 
 				}
 
 			});
 			activeSkills = new CharSkill[1];
-			activeSkills[0] = new CharSkill(this, true, 0, Command.DURING_BATTLE,
+			activeSkills[0] = new CharSkill(this, true, 0, Command.BEFORE_BATTLE,
 					new CharSkillMethod() {
 
 						@Override
 						public void skillMethod(Character c1, Character c2) {
-							System.out.println("Using Anthony's 2ndJob active skill!");
+							System.out.println("Using T8's 2ndJob active skill!");
 
 						}
 

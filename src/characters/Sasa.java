@@ -11,7 +11,7 @@ public class Sasa extends Character {
 		// TODO Auto-generated method stub
 		if (isFirstJob()) {
 
-			setValues(true, SUPPORT, true, 3, 2, 2, 2, true);
+			setValues(true, SUPPORT, false, 3, 2, 2, 2, true);
 
 			passiveSkills = new CharSkill[1];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {

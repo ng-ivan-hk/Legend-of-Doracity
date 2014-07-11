@@ -11,7 +11,7 @@ public class SunnyShum extends Character {
 		// TODO Auto-generated method stub
 		if (isFirstJob()) {
 
-			setValues(true, CASTER, true, 2, 2, 4, 3, true);
+			setValues(true, CASTER, false, 2, 2, 4, 3, true);
 
 			passiveSkills = new CharSkill[1];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
