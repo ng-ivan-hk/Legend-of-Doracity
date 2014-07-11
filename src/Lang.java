@@ -1,8 +1,15 @@
-public class Lang {
+﻿public class Lang {
 
 	/* Application */
+	public final static String font = "新細明體";
 	public final static String legendOfDoracity = "小城聯盟";
 	public final static String frameTitle = legendOfDoracity + " - " + "Legend of Doracity";
+	public final static String menu_option = "選項";
+	public final static String menu_help = "幫助";
+	public final static String menu_helpInfo = "這次想大家幫忙測試的包括：<br><br>在戰鬥階段（包括前中後），看看發動技能的視窗有沒有問題<br>還沒寫角色技能所以按鈕按下去應該是沒反應<br>正常來說只有符合發動時機的主動技能的按鈕才可以按（例如現在是戰鬥前，那就只有戰鬥前的技能按鈕才會啟用）<br>滑鼠移到按鈕上會顯示描述和發動時機<br><br>煙霧彈和大部分技能按鈕按下去沒反應是正常，除了大治療術：按下去應該會扣MP回HP，如果不夠MP應該會出現不夠MP的訊息<br><br>還有之前版本的測試內容也可以試試（例如裝備和解除裝備、抽卡、轉職）<br><br>Game Over之後程式沒反應是正常，我遲些會寫Game Over之後的動作的了<br><br>另外暫時只有茶角，要怪就怪射手偷懶還沒開始寫其他角色吧(溜<br><br>感激不盡！";
+	public final static String menu_about = "關於";
+	public final static String menu_aboutInfo = "遊戲設計：烏龍茶<br>程式製作：古怪<br>程式協力：射手小朋友";
+	public final static String menu_exit = "結束";
 
 	/* Character Names */
 	public final static String[] CharNames = new String[] { "", "烏龍茶", "淋琳", "古怪", "地圖", "鐵皮使",
@@ -427,8 +434,7 @@ public class Lang {
 			"所有小城陣營角色物防+1,魔防+1<br><font color=red>只限小城陣營角色</font>",
 			"攻擊+1,速度+1<br>先制: 順位時將在最先行動<br><font color=red>只限劍士和弓手</font>" };
 
-	public final static String[] ItemTypes = new String[] { "", "小型生命水", "中型生命水", "大型生命水", "小型魔法水",
-			"中型魔法水", "大型魔法水", "煙霧彈", "飛刀" };
+	public final static String[] ItemTypes = new String[] { "", "生命水", "魔法水", "煙霧彈" };
 
 	public final static String item = "道具";
 

@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
@@ -18,11 +20,17 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.FontUIResource;
 
 /**
  * GitHub Started (2014/7/7)
@@ -96,14 +104,13 @@ public class Play extends JFrame {
 
 		/* Create card stack and shuffle */
 		cards = new Stack<Card>();
-		// for (int i = 0; i < EQUIPMENT_MAX.length; i++) {
-		// for (int j = 0; j < EQUIPMENT_MAX[i]; j++) {
-		// if (i + 1 == 1 || i + 1 == 2 || i + 1 == 3 || i + 1 == 4 || i + 1 ==
-		// 5
-		// || i + 1 == 14 || i + 1 == 21 || i + 1 == 22) // DEBUG
-		// cards.push(new Equipment(i + 1));
-		// }
-		// }
+		for (int i = 0; i < EQUIPMENT_MAX.length; i++) {
+			for (int j = 0; j < EQUIPMENT_MAX[i]; j++) {
+				if (i + 1 == 1 || i + 1 == 2 || i + 1 == 3 || i + 1 == 4 || i + 1 == 5
+						|| i + 1 == 14 || i + 1 == 21 || i + 1 == 22) // DEBUG
+					cards.push(new Equipment(i + 1));
+			}
+		}
 		for (int i = 0; i < ITEM_MAX.length; i++) {
 			for (int j = 0; j < ITEM_MAX[i]; j++) {
 				cards.push(new Item(i + 1));
@@ -116,16 +123,19 @@ public class Play extends JFrame {
 		}
 		Collections.shuffle(cards);
 
-		// cards.push(new Skill(13));
-		// cards.push(new Item(1));
-		// cards.push(new Item(6));
-		// cards.push(new Item(3));
-		// cards.push(new Item(4));
-		// cards.push(new Item(8));
-
 		System.out.println("===== Ready to play! =====");
 
 		/* Set up GUI */
+
+		// Set Font Size and Type
+		Enumeration<Object> keys = UIManager.getDefaults().keys();
+		while (keys.hasMoreElements()) {
+			Object key = keys.nextElement();
+			Object value = UIManager.get(key);
+			if (value != null && value instanceof FontUIResource) {
+				UIManager.put(key, new FontUIResource(Lang.font, Font.PLAIN, 12));
+			}
+		}
 
 		try { // Set App Icon
 			setIconImage(new ImageIcon(getClass().getResource("/resources/xander.png")).getImage());
@@ -135,13 +145,11 @@ public class Play extends JFrame {
 		setTitle(Lang.frameTitle);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		displayArea = new DisplayArea();
-		player1Area = new PlayerArea(player1);
-		player2Area = new PlayerArea(player2);
+		getContentPane().add(BorderLayout.CENTER, displayArea = new DisplayArea());
+		getContentPane().add(BorderLayout.WEST, player1Area = new PlayerArea(player1));
+		getContentPane().add(BorderLayout.EAST, player2Area = new PlayerArea(player2));
 
-		getContentPane().add(BorderLayout.CENTER, displayArea);
-		getContentPane().add(BorderLayout.WEST, player1Area);
-		getContentPane().add(BorderLayout.EAST, player2Area);
+		setJMenuBar(new MenuBar());
 
 		pack();
 		setMinimumSize(getBounds().getSize());
@@ -150,6 +158,45 @@ public class Play extends JFrame {
 
 		setVisible(true);
 
+	}
+
+	private class MenuBar extends JMenuBar {
+
+		private JMenuItem helpMenuItem = null;
+		private JMenuItem aboutMenuItem = null;
+		private JMenuItem exitMenuItem = null;
+
+		public MenuBar() {
+			JMenu optionMenu = new JMenu(Lang.menu_option);
+			add(optionMenu);
+			// Add Menu Items
+			optionMenu.add(helpMenuItem = new JMenuItem(Lang.menu_help));
+			optionMenu.add(aboutMenuItem = new JMenuItem(Lang.menu_about));
+			optionMenu.add(new JSeparator());
+			optionMenu.add(exitMenuItem = new JMenuItem(Lang.menu_exit));
+			// Add Action Listener for Menu Items
+			helpMenuItem.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JOptionPane.showMessageDialog(Play.this, "<html><font size=4>"
+							+ Lang.menu_helpInfo + "</html>", Lang.menu_help,
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			});
+			aboutMenuItem.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JOptionPane.showMessageDialog(Play.this, "<html>" + Lang.menu_aboutInfo
+							+ "</html>", Lang.menu_about, JOptionPane.INFORMATION_MESSAGE);
+				}
+			});
+			exitMenuItem.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.exit(0);
+				}
+			});
+		}
 	}
 
 	private class DisplayArea extends JPanel {
@@ -168,16 +215,13 @@ public class Play extends JFrame {
 			setLayout(new BorderLayout());
 
 			/* Set Top Field */
-			topField = new TopField();
-			add(topField, BorderLayout.NORTH);
+			add(topField = new TopField(), BorderLayout.NORTH);
 
 			/* Set Battle Field */
-			battleField = new BattleField();
-			add(battleField, BorderLayout.CENTER);
+			add(battleField = new BattleField(), BorderLayout.CENTER);
 
 			/* Set Bottom Field */
-			bottomField = new BottomField();
-			add(bottomField, BorderLayout.SOUTH);
+			add(bottomField = new BottomField(), BorderLayout.SOUTH);
 
 		}
 
@@ -199,15 +243,14 @@ public class Play extends JFrame {
 				setLayout(new GridLayout(0, 2));
 
 				// Add Round Label
-				roundLabel = new JLabel();
+				add(roundLabel = new JLabel());
 				roundLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 				setRound(0);
-				add(roundLabel);
 
 				// Add Stage Label
-				stageLabel = new JLabel(Lang.stage_readyToPlay);
+				add(stageLabel = new JLabel(Lang.stage_readyToPlay));
 				stageLabel.setHorizontalAlignment(SwingConstants.LEFT);
-				add(stageLabel);
+
 			}
 
 		}
@@ -226,10 +269,8 @@ public class Play extends JFrame {
 
 				// Row 0
 				add(new BLabel(Lang.player + ": " + player1.getName()));
-				player1Actions[0] = new BLabel("player1");
-				add(player1Actions[0]);
-				player2Actions[0] = new BLabel("player2");
-				add(player2Actions[0]);
+				add(player1Actions[0] = new BLabel("player1"));
+				add(player2Actions[0] = new BLabel("player2"));
 				add(new BLabel(Lang.player + ": " + player2.getName()));
 
 				// Row 1 - 6
@@ -237,16 +278,13 @@ public class Play extends JFrame {
 				Character[] player2CharTemp = player2.getCharacters();
 				for (int i = 0; i < CHAR_MAX; i++) {
 
-					player1Chars[i] = new CharLabel(player1CharTemp[i]);
+					add(player1Chars[i] = new CharLabel(player1CharTemp[i]));
 					player1Chars[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 					player1Chars[i].setBackground(Color.WHITE);
 					player1Chars[i].setOpaque(true); // paint the background
-					add(player1Chars[i]);
 
-					player1Actions[i] = new BLabel("Player1 " + i);
-					add(player1Actions[i]);
-					player2Actions[i] = new BLabel("Player2 " + i);
-					add(player2Actions[i]);
+					add(player1Actions[i] = new BLabel("Player1 " + i));
+					add(player2Actions[i] = new BLabel("Player2 " + i));
 
 					player2Chars[i] = new CharLabel(player2CharTemp[i]);
 					player2Chars[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -368,10 +406,8 @@ public class Play extends JFrame {
 			add(new JLabel("--- " + player.getName() + " ---"));
 
 			/* Add HP & MP meter */
-			HPmeter = new JLabel();
-			MPmeter = new JLabel();
-			add(HPmeter);
-			add(MPmeter);
+			add(HPmeter = new JLabel());
+			add(MPmeter = new JLabel());
 			// Horizontal line
 			JSeparator separator = new JSeparator();
 			Dimension d = separator.getPreferredSize();
@@ -380,16 +416,11 @@ public class Play extends JFrame {
 			add(separator);
 
 			/* Add General Buttons */
-			attackButton = new AttackButton();
-			add(attackButton);
-			castSkillButton = new CastSkillButton();
-			add(castSkillButton);
-			jobChangeButton = new JobChangeButton();
-			add(jobChangeButton);
-			drawButton = new DrawButton();
-			add(drawButton);
-			passButton = new PassButton();
-			add(passButton);
+			add(attackButton = new AttackButton());
+			add(castSkillButton = new CastSkillButton());
+			add(jobChangeButton = new JobChangeButton());
+			add(drawButton = new DrawButton());
+			add(passButton = new PassButton());
 
 			JSeparator separator1 = new JSeparator(); // Horizontal line;
 			separator1.setMaximumSize(d);
