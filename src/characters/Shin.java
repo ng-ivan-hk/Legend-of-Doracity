@@ -2,7 +2,7 @@
 public class Shin extends Character {
 
 	public Shin(Player player) {
-		super(player, 29);
+		super(player, 25);
 		// TODO Auto-generated constructor stub
 	}
 
