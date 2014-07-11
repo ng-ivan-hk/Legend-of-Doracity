@@ -520,7 +520,7 @@ public class Lang {
 	public final static String stage_useItem = "使用道具";
 	public final static String stage_equipOrJobChange = "裝備、轉職";
 	public final static String stage_beforeBattle = "戰鬥前";
-	public final static String stage_duringBattle = "戰鬥中";
+	public final static String stage_duringBattle = "戰鬥時";
 	public final static String stage_afterBattle = "戰鬥後";
 
 	/* Error Messages */

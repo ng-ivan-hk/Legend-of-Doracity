@@ -28,7 +28,7 @@ public class Skill extends Card {
 	}
 
 	public String getInfo() {
-		return "<font color=orange>" + Lang.occasion[occasion] + "</font><br>"
+		return "<font color=blue>" + Lang.occasion[occasion] + "</font><br>"
 				+ Lang.SkillInfos[number];
 
 	}

@@ -37,9 +37,9 @@ public class Play extends JFrame {
 	public final static int DRAW_CARD_MAX = 3; // draw ? hand cards each turn
 	public final static int[] EQUIPMENT_MAX = new int[] { 3, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1 };
-	public final static int[] ITEM_MAX = new int[] { 10, 5, 2, 10, 5, 2, 5, 5 };
-	public final static int[] SKILL_MAX = new int[] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 5,
-			5, 5, 2, 2, 3, 3 };
+	public final static int[] ITEM_MAX = new int[] { 15, 15, 5 };
+	public final static int[] SKILL_MAX = new int[] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 5,
+			0, 5, 2, 2 };
 	public final static int MAX_HP = 50;
 	public final static int MAX_MP = 30;
 	public final static int INIT_HP = 10;
@@ -63,7 +63,7 @@ public class Play extends JFrame {
 	private ArrayList<Character> charList = null;
 	private Character currentChar = null;
 	private int round = 0;
-	private int currentStatus = 0; // For Battle only
+	private int currentStatus = 0; // For checking occasion in battle
 
 	/* GUI objects */
 	private DisplayArea displayArea = null;
@@ -96,23 +96,24 @@ public class Play extends JFrame {
 
 		/* Create card stack and shuffle */
 		cards = new Stack<Card>();
-		for (int i = 0; i < EQUIPMENT_MAX.length; i++) {
-			for (int j = 0; j < EQUIPMENT_MAX[i]; j++) {
-				if (i + 1 == 1 || i + 1 == 2 || i + 1 == 3 || i + 1 == 4 || i + 1 == 5
-						|| i + 1 == 14 || i + 1 == 21 || i + 1 == 22) // DEBUG
-					cards.push(new Equipment(i + 1));
+		// for (int i = 0; i < EQUIPMENT_MAX.length; i++) {
+		// for (int j = 0; j < EQUIPMENT_MAX[i]; j++) {
+		// if (i + 1 == 1 || i + 1 == 2 || i + 1 == 3 || i + 1 == 4 || i + 1 ==
+		// 5
+		// || i + 1 == 14 || i + 1 == 21 || i + 1 == 22) // DEBUG
+		// cards.push(new Equipment(i + 1));
+		// }
+		// }
+		for (int i = 0; i < ITEM_MAX.length; i++) {
+			for (int j = 0; j < ITEM_MAX[i]; j++) {
+				cards.push(new Item(i + 1));
 			}
 		}
-		// for (int i = 0; i < ITEM_MAX.length; i++) {
-		// for (int j = 0; j < ITEM_MAX[i]; j++) {
-		// cards.push(new Item(i + 1));
-		// }
-		// }
-		// for (int i = 0; i < SKILL_MAX.length; i++) {
-		// for (int j = 0; j < SKILL_MAX[i]; j++) {
-		// cards.push(new Skill(i + 1));
-		// }
-		// }
+		for (int i = 0; i < SKILL_MAX.length; i++) {
+			for (int j = 0; j < SKILL_MAX[i]; j++) {
+				cards.push(new Skill(i + 1));
+			}
+		}
 		Collections.shuffle(cards);
 
 		// cards.push(new Skill(13));
@@ -449,6 +450,32 @@ public class Play extends JFrame {
 				}
 			}
 
+		}
+
+		public void setEnableSkill(boolean b) {
+			Component[] cardButtons = cardArea.getComponents();
+			if (b) { // enable the correct Skill buttons
+				for (int i = 0; i < cardArea.getComponentCount(); i++) {
+
+					// If the button refers to a Skill Card
+					if (cardButtons[i].getBackground() == Color.YELLOW) {
+						CardButton cardButtonTemp = (CardButton) cardButtons[i];
+						Skill cardTemp = (Skill) cardButtonTemp.card;
+
+						// If the occasion of the Skill Card matches
+						if (cardTemp.getOccasion() == currentStatus) {
+							cardButtons[i].setEnabled(true);
+						}
+					}
+				}
+			} else { // disable all Skill buttons
+				for (int i = 0; i < cardArea.getComponentCount(); i++) {
+					if (cardButtons[i].getBackground() == Color.YELLOW) {
+						cardButtons[i].setEnabled(false);
+					}
+				}
+
+			}
 		}
 
 		private class AttackButton extends JButton implements ActionListener {
@@ -924,13 +951,13 @@ public class Play extends JFrame {
 						: player2Area;
 				areaTemp.castSkillButton.setEnabled(true);
 				areaTemp.passButton.setEnabled(true);
-				// TODO: enable skill buttons
+				areaTemp.setEnableSkill(true);
 				synchronized (this) {
 					this.wait();
 				}
 				areaTemp.castSkillButton.setEnabled(false);
 				areaTemp.passButton.setEnabled(false);
-				// TODO: disable skill buttons
+				areaTemp.setEnableSkill(false);
 
 				// Unhighlight the character
 				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
@@ -960,14 +987,14 @@ public class Play extends JFrame {
 				areaTemp.attackButton.setEnabled(true);
 				areaTemp.castSkillButton.setEnabled(true);
 				areaTemp.passButton.setEnabled(true);
-				// TODO: enable skill buttons
+				areaTemp.setEnableSkill(true);
 				synchronized (this) {
 					this.wait();
 				}
 				areaTemp.attackButton.setEnabled(false);
 				areaTemp.castSkillButton.setEnabled(false);
 				areaTemp.passButton.setEnabled(false);
-				// TODO: disable skill buttons
+				areaTemp.setEnableSkill(false);
 
 				// Unhighlight the character
 				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
@@ -1205,33 +1232,14 @@ public class Play extends JFrame {
 			}
 		} else if (card instanceof Item) { // Item Card
 			switch (card.getNumber()) {
-			case 1: // Small HP Potion
-				player.changeHP(2);
-				break;
-			case 2: // Middle HP Potion
+			case 1: // HP Potion
 				player.changeHP(5);
 				break;
-			case 3: // Large HP Potion
-				player.changeHP(10);
-				break;
-			case 4: // Small MP Potion
-				player.changeMP(2);
-				break;
-			case 5: // Middle MP Potion
+			case 2: // MP Potion
 				player.changeMP(5);
 				break;
-			case 6: // Large MP Potion
-				player.changeMP(10);
-				break;
-			case 7: // Smoke Bomb
+			case 3: // Smoke Bomb
 				// TODO: Ignore attack once
-				break;
-			case 8: // Throwing Knife
-				if (player.isPlayer1()) {
-					player2.changeHP(-1);
-				} else {
-					player1.changeHP(-1);
-				}
 				break;
 			}
 
@@ -1259,29 +1267,17 @@ public class Play extends JFrame {
 				break;
 			case 11: // Thunder
 				break;
-			case 12: // Healing: HP+5 MP-3
-				if (player.changeMP(-3) == 0)
-					player.changeHP(5);
-				break;
-			case 13: // Great Healing: HP+10 MP-10
-				if (player.changeMP(-10) == 0)
+			case 13: // Great Healing: HP+10 MP-7
+				if (player.changeMP(-7) == 0)
 					player.changeHP(10);
 				break;
-			case 14: // Wind
-				break;
 			case 15: // Mute
-				break;
-			case 16: // Silence
 				break;
 			case 17: // Jail
 				break;
 			case 18: // Physical field
 				break;
 			case 19: // Mana field
-				break;
-			case 20: // Holy Blessing
-				break;
-			case 21: // Blood Sucking
 				break;
 			}
 		}
