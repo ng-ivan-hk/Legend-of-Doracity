@@ -12,7 +12,7 @@ public class Kuzmon extends Character {
 			setValues(true, CASTER, false, 3, 2, 3, 3, true);
 
 			passiveSkills = new CharSkill[1];
-			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
+			passiveSkills[0] = new CharSkill(this, false, 0, Command.DRAW_CARD, new CharSkillMethod() {
 
 				@Override
 				public void skillMethod(Character c1, Character c2) {
@@ -22,7 +22,7 @@ public class Kuzmon extends Character {
 
 			});
 			activeSkills = new CharSkill[1];
-			activeSkills[0] = new CharSkill(this, true, 0, Command.NA, new CharSkillMethod() {
+			activeSkills[0] = new CharSkill(this, true, 0, Command.DRAW_CARD, new CharSkillMethod() {
 
 				@Override
 				public void skillMethod(Character c1, Character c2) {

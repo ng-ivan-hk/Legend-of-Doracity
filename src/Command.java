@@ -5,6 +5,7 @@ public class Command {
 	public final static int BEFORE_BATTLE = 1;
 	public final static int DURING_BATTLE = 2;
 	public final static int AFTER_BATTLE = 3;
+	public final static int DRAW_CARD = 4;
 
 	// /* Commands */
 	// public final static int CHANGE_HP = 1;
