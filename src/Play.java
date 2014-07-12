@@ -29,7 +29,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
 
 /**
@@ -85,20 +84,7 @@ public class Play extends JFrame {
 
 	/* Methods */
 
-	public Play() {
-
-		/* Create Players */
-		player1 = new Player("Oolong Wong", true);
-		player1.setCharacters(new Tea(player1), new Livia(player1), new Phoebell(player1), new Map(
-				player1), new Iron(player1));
-		player2 = new Player("Ivan Ng", false);
-		player2.setCharacters(new FishBall(player2), new Shirogane(player2), new NonkiNobita(
-				player2), new Nana(player2), new GameNobita(player2));
-
-		/* Create Character list */
-		charList = new ArrayList<Character>();
-		charList.addAll(new ArrayList<Character>(Arrays.asList(player1.getCharacters())));
-		charList.addAll(new ArrayList<Character>(Arrays.asList(player2.getCharacters())));
+	public Play() throws InterruptedException {
 
 		/* Create card stack and shuffle */
 		cards = new Stack<Card>();
@@ -121,11 +107,12 @@ public class Play extends JFrame {
 		}
 		Collections.shuffle(cards);
 
-		System.out.println("===== Ready to play! =====");
+		setGUI();
+	}
 
-		/* Set up GUI */
+	private void setGUI() throws InterruptedException {
 
-		// Set Font Size and Type
+		/* Set Font Size and Type */
 		Enumeration<Object> keys = UIManager.getDefaults().keys();
 		while (keys.hasMoreElements()) {
 			Object key = keys.nextElement();
@@ -135,7 +122,8 @@ public class Play extends JFrame {
 			}
 		}
 
-		try { // Set App Icon
+		/* Set App Icon */
+		try {
 			setIconImage(new ImageIcon(getClass().getResource("/resources/xander.png")).getImage());
 		} catch (NullPointerException e) {
 		}
@@ -143,17 +131,66 @@ public class Play extends JFrame {
 		setTitle(Lang.frameTitle);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+		/* Run Preload GUI */
+		Preload preload = new Preload(this);
+		add(preload);
+		setSize(new Dimension(600, 400));
+		setMinimumSize(getBounds().getSize());
+		setMaximumSize(getBounds().getSize());
+		setVisible(true);
+
+		synchronized (this) {
+			this.wait();
+		}
+
+		/* Run main game GUI */
+		setVisible(false);
+		remove(preload);
+
 		add(BorderLayout.CENTER, displayArea = new DisplayArea());
 		add(BorderLayout.WEST, player1Area = new PlayerArea(player1));
 		add(BorderLayout.EAST, player2Area = new PlayerArea(player2));
-
 		setJMenuBar(new MenuBar());
 
+		revalidate();
 		pack();
 		setMinimumSize(getBounds().getSize());
 		setSize(new Dimension(800, 600));
 		setVisible(true);
+	}
 
+	/**
+	 * Set Player and create character list. It is called by Preload.
+	 * 
+	 * @param p1
+	 *            Player 1's name
+	 * @param p2
+	 *            Player 2's name
+	 * @param p2Chars
+	 *            Player 1's characters in int
+	 * @param p1Chars
+	 *            Player 2's characters in int
+	 */
+	public void setPlayer(String p1, String p2, int[] p1Chars, int[] p2Chars) {
+
+		/* Create Players */
+
+		player1 = new Player(p1, true);
+		player1.setCharacters(p1Chars);
+		// player1.setCharacters(new Tea(player1), new Livia(player1), new
+		// Phoebell(player1), new Map(
+		// player1), new Iron(player1));
+
+		player2 = new Player(p2, false);
+		player2.setCharacters(p2Chars);
+		// player2.setCharacters(new FishBall(player2), new Shirogane(player2),
+		// new NonkiNobita(
+		// player2), new Nana(player2), new GameNobita(player2));
+
+		/* Create Character list */
+		charList = new ArrayList<Character>();
+		charList.addAll(new ArrayList<Character>(Arrays.asList(player1.getCharacters())));
+		charList.addAll(new ArrayList<Character>(Arrays.asList(player2.getCharacters())));
 	}
 
 	/**

@@ -6,7 +6,6 @@ public class Anthony extends Character {
 
 	@Override
 	protected void setCharacter() {
-		// TODO Auto-generated method stub
 		if (isFirstJob()) {
 
 			setValues(true, SUPPORT, true, 3, 2, 2, 2, true);

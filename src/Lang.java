@@ -534,6 +534,10 @@ public class Lang {
 	public final static String stage_afterBattle = "戰鬥後";
 
 	/* Error Messages */
+	public final static String playerNameEmpty = "請填入玩家名稱";
+	public final static String charCountWrong = "請選擇五名角色";
+	public final static String repeatedChar = "雙方角色重複\n雙方均選擇了";
+	
 	public final static String wrongJob = "當前角色的職業無法使用";
 	public final static String notDoracity = "這角色不屬於小城陣營";
 	public final static String notAcademy = "這角色不屬於學園陣營";

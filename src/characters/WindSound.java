@@ -1,6 +1,6 @@
-public class Wind_Sound extends Character {
+public class WindSound extends Character {
 
-	public Wind_Sound(Player player) {
+	public WindSound(Player player) {
 		super(player, 24);
 	}
 

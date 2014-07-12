@@ -1,6 +1,6 @@
-public class Mandy_Lee extends Character {
+public class MandyLee extends Character {
 
-	public Mandy_Lee(Player player) {
+	public MandyLee(Player player) {
 		super(player, 18);
 	}
 

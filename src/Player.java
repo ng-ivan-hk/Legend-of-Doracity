@@ -36,6 +36,108 @@ public class Player {
 		System.out.println();
 	}
 
+	public void setCharacters(int[] chars) {
+		for (int i = 0; i < chars.length; i++) {
+			System.out.println(chars[i]);
+		}
+
+		for (int i = 0; i < Play.CHAR_MAX; i++) {
+			switch (chars[i]) {
+			case 1:
+				characters[i] = new Tea(this);
+				break;
+			case 2:
+				characters[i] = new Livia(this);
+				break;
+			case 3:
+				characters[i] = new Phoebell(this);
+				break;
+			case 4:
+				characters[i] = new Map(this);
+				break;
+			case 5:
+				characters[i] = new Iron(this);
+				break;
+			case 6:
+				characters[i] = new FishBall(this);
+				break;
+			case 7:
+				characters[i] = new Shirogane(this);
+				break;
+			case 8:
+				characters[i] = new NonkiNobita(this);
+				break;
+			case 9:
+				characters[i] = new Nana(this);
+				break;
+			case 10:
+				characters[i] = new GameNobita(this);
+				break;
+			case 11:
+				characters[i] = new Xander(this);
+				break;
+			case 12:
+				characters[i] = new Butterfly(this);
+				break;
+			case 13:
+				characters[i] = new Feather(this);
+				break;
+			case 14:
+				characters[i] = new Kurokawa(this);
+				break;
+			case 15:
+				characters[i] = new Herohim(this);
+				break;
+			case 16:
+				characters[i] = new Knight(this);
+				break;
+			case 17:
+				characters[i] = new Cloud(this);
+				break;
+			case 18:
+				characters[i] = new MandyLee(this);
+				break;
+			case 19:
+				characters[i] = new Kuru(this);
+				break;
+			case 20:
+				characters[i] = new AK(this);
+				break;
+			case 21:
+				characters[i] = new Kuzmon(this);
+				break;
+			case 22:
+				characters[i] = new KaitoDora(this);
+				break;
+			case 23:
+				characters[i] = new LittleCity(this);
+				break;
+			case 24:
+				characters[i] = new WindSound(this);
+				break;
+			case 25:
+				characters[i] = new Shin(this);
+				break;
+			case 26:
+				characters[i] = new Mini(this);
+				break;
+			case 27:
+				characters[i] = new T8(this);
+				break;
+			case 28:
+				characters[i] = new Anthony(this);
+				break;
+			case 29:
+				characters[i] = new Sasa(this);
+				break;
+			case 30:
+				characters[i] = new SunnyShum(this);
+				break;
+
+			}
+		}
+	}
+
 	public String getName() {
 		return name;
 	}
