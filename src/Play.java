@@ -33,7 +33,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
 
 /**
- * This is the GUI for the game.
+ * This is the main GUI for the game.
  * 
  * @author Ivan Ng
  * 
@@ -79,10 +79,8 @@ public class Play extends JFrame {
 	private PlayerArea player2Area = null;
 
 	public static void main(String[] args) throws InterruptedException {
-
 		Play play = new Play();
 		play.start();
-
 	}
 
 	/* Methods */
@@ -91,11 +89,11 @@ public class Play extends JFrame {
 
 		/* Create Players */
 		player1 = new Player("Oolong Wong", true);
-		player1.setCharacters(new T8(player1), new Sasa(player1), new KaitoDora(player1),
-				new Kuzmon(player1), new Anthony(player1));
+		player1.setCharacters(new Tea(player1), new Livia(player1), new Phoebell(player1), new Map(
+				player1), new Iron(player1));
 		player2 = new Player("Ivan Ng", false);
-		player2.setCharacters(new Shin(player2), new SunnyShum(player2), new Mini(player2),
-				new LittleCity(player2), new Wind_Sound(player2));
+		player2.setCharacters(new FishBall(player2), new Shirogane(player2), new NonkiNobita(
+				player2), new Nana(player2), new GameNobita(player2));
 
 		/* Create Character list */
 		charList = new ArrayList<Character>();
@@ -145,17 +143,15 @@ public class Play extends JFrame {
 		setTitle(Lang.frameTitle);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		getContentPane().add(BorderLayout.CENTER, displayArea = new DisplayArea());
-		getContentPane().add(BorderLayout.WEST, player1Area = new PlayerArea(player1));
-		getContentPane().add(BorderLayout.EAST, player2Area = new PlayerArea(player2));
+		add(BorderLayout.CENTER, displayArea = new DisplayArea());
+		add(BorderLayout.WEST, player1Area = new PlayerArea(player1));
+		add(BorderLayout.EAST, player2Area = new PlayerArea(player2));
 
 		setJMenuBar(new MenuBar());
 
 		pack();
 		setMinimumSize(getBounds().getSize());
-
 		setSize(new Dimension(800, 600));
-
 		setVisible(true);
 
 	}
@@ -399,7 +395,8 @@ public class Play extends JFrame {
 							+ "<br>" +
 							// Line 5
 							(character.getEquipment() == null ? "" :
-								Lang.equipment + ": " + character.getEquipmentName())
+							Lang.equipment + ": <font color=blue>" 
+							+ character.getEquipmentName() + "</font>") + "</html>"
 							// @formatter:on
 					);
 

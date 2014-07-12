@@ -10,6 +10,7 @@ public class Lang {
 	public final static String legendOfDoracity = "小城聯盟";
 	public final static String frameTitle = legendOfDoracity + " - " + "Legend of Doracity";
 	public final static String font = "新細明體";
+	public final static String confirm = "決定";
 	public final static String menu_option = "選項";
 	public final static String menu_help = "幫助";
 	public final static String menu_helpInfo = "這次想大家幫忙測試的包括：<br><br>在戰鬥階段（包括前中後），看看發動技能的視窗有沒有問題<br>還沒寫角色技能所以按鈕按下去應該是沒反應<br>正常來說只有符合發動時機的主動技能的按鈕才可以按（例如現在是戰鬥前，那就只有戰鬥前的技能按鈕才會啟用）<br>滑鼠移到按鈕上會顯示描述和發動時機<br><br>煙霧彈和大部分技能按鈕按下去沒反應是正常，除了大治療術：按下去應該會扣MP回HP，如果不夠MP應該會出現不夠MP的訊息<br><br>還有之前版本的測試內容也可以試試（例如裝備和解除裝備、抽卡、轉職）<br><br>Game Over之後程式沒反應是正常，我遲些會寫Game Over之後的動作的了<br><br>另外暫時只有茶角，要怪就怪射手偷懶還沒開始寫其他角色吧(溜<br><br>感激不盡！";

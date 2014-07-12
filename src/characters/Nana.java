@@ -1,32 +1,32 @@
-public class Wind_Sound extends Character {
+public class Nana extends Character {
 
-	public Wind_Sound(Player player) {
-		super(player, 24);
+	public Nana(Player player) {
+		super(player, 9);
 	}
 
 	@Override
 	protected void setCharacter() {
 		if (isFirstJob()) {
 
-			setValues(false, SABER, true, 3, 3, 3, 3, false);
+			setValues(false, CASTER, false, 3, 2, 2, 2, true);
 
 			passiveSkills = new CharSkill[1];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
 				public void skillMethod(Character c1, Character c2) {
-					System.out.println("Using Wind_Sound's 1stJob passive skill!");
+					System.out.println("Using Nana's 1stJob passive skill 1!");
 
 				}
 
 			});
 			activeSkills = new CharSkill[1];
-			activeSkills[0] = new CharSkill(this, true, 0, Command.BEFORE_BATTLE,
+			activeSkills[0] = new CharSkill(this, true, 0, Command.DURING_BATTLE,
 					new CharSkillMethod() {
 
 						@Override
 						public void skillMethod(Character c1, Character c2) {
-							System.out.println("Using Wind_Sound's 1stJob active skill!");
+							System.out.println("Using Nana's 1stJob active skill!");
 
 						}
 
@@ -34,14 +34,14 @@ public class Wind_Sound extends Character {
 
 		} else {
 
-			setValues(true, NA, true, 4, 2, 4, 4, false);
+			setValues(false, SUPPORT, false, 3, 2, 2, 2, false);
 
 			passiveSkills = new CharSkill[1];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
 				public void skillMethod(Character c1, Character c2) {
-					System.out.println("Using Wind_Sound's 2ndJob passive skill!");
+					System.out.println("Using Nana's 2ndJob passive skill!");
 
 				}
 
@@ -52,7 +52,7 @@ public class Wind_Sound extends Character {
 
 						@Override
 						public void skillMethod(Character c1, Character c2) {
-							System.out.println("Using Wind_Sound's 2ndJob active skill!");
+							System.out.println("Using Nana's 2ndJob active skill!");
 
 						}
 
