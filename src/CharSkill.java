@@ -1,3 +1,9 @@
+/**
+ * Represents a character's skill (whether it's active or passive)
+ * 
+ * @author Ivan Ng
+ * 
+ */
 public class CharSkill {
 
 	private Character character;
@@ -30,6 +36,14 @@ public class CharSkill {
 		this.skillMethod = skillMethod;
 	}
 
+	/**
+	 * Call this to use the skill.
+	 * 
+	 * @param c1
+	 *            The Character who uses the skill.
+	 * @param c2
+	 *            The target Character
+	 */
 	public void useSkill(Character c1, Character c2) {
 		skillMethod.skillMethod(c1, c2);
 	}

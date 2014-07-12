@@ -1,3 +1,9 @@
+/**
+ * This represents a Skill Card (NOT CharSkill).
+ * 
+ * @author Ivan Ng
+ * 
+ */
 public class Skill extends Card {
 
 	private int occasion; // When can this card be used?

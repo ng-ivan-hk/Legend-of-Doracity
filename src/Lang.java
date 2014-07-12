@@ -1,4 +1,10 @@
-﻿public class Lang {
+﻿/**
+ * All Chinese characters are stored here.
+ * 
+ * @author Ivan Ng
+ * 
+ */
+public class Lang {
 
 	/* Application */
 	public final static String legendOfDoracity = "小城聯盟";
@@ -454,7 +460,7 @@
 			"自身受普通攻擊時，無效一次<br><font color=red>需要1MP<br>只限弓手</font>",
 			"普通攻擊時無視對方一切提升的物防<br><font color=red>需要1MP<br>只限弓手</font>",
 			"敵方陣營目標受到(自身普攻)的魔法傷害<br><font color=red>需要8MP<br>只限法師</font>",
-			"敵方陣營降底1點魔防<br><font color=red>需要8MPbr>只限法師</font>",
+			"敵方陣營降底1點魔防<br><font color=red>需要8MP<br>只限法師</font>",
 			"每當對敵方陣營造成傷害時，額外造成4點魔法傷害<br><font color=red>需要8MP<br>只限法師</font>",
 			"回復5點HP<br><font color=red>需要3MP<br>只限法師和支援</font>",
 			"回復10點HP<br><font color=red>需要7MP<br>只限支援</font>",

@@ -1,3 +1,9 @@
+/**
+ * This represents a card (including Equipment, Item and Skill).
+ * 
+ * @author Ivan Ng
+ * 
+ */
 abstract public class Card {
 
 	private String name;

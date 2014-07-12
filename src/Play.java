@@ -33,7 +33,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
 
 /**
- * GitHub Started (2014/7/7)
+ * This is the GUI for the game.
  * 
  * @author Ivan Ng
  * 
@@ -160,6 +160,11 @@ public class Play extends JFrame {
 
 	}
 
+	/**
+	 * Menu Bar for JFrame.
+	 * 
+	 * @author Ivan Ng
+	 */
 	private class MenuBar extends JMenuBar {
 
 		private JMenuItem helpMenuItem = null;
@@ -199,6 +204,12 @@ public class Play extends JFrame {
 		}
 	}
 
+	/**
+	 * The Central Area.
+	 * 
+	 * @author Ivan Ng
+	 * 
+	 */
 	private class DisplayArea extends JPanel {
 
 		private TopField topField = null;
@@ -297,6 +308,18 @@ public class Play extends JFrame {
 
 			}
 
+			/**
+			 * Highlight a CharLabel. It is used in Play.start() like this:
+			 * displayArea.battleField.highlightChar(currentChar.getPlayer(),
+			 * currentChar.getPlayer().indexOfChar(currentChar), true)
+			 * 
+			 * @param player
+			 *            Player object
+			 * @param index
+			 *            index in CharLabel
+			 * @param b
+			 *            pass true to highlight, false to unhighlight
+			 */
 			public void highlightChar(Player player, int index, boolean b) {
 				if (player.isPlayer1()) {
 					if (b) {
@@ -354,15 +377,31 @@ public class Play extends JFrame {
 					updateLabel();
 				}
 
+				/**
+				 * Call this function to update the CharLabel whenever some data
+				 * of the character has been changed.
+				 */
 				public void updateLabel() {
-					setText("<html><u>" + character.toString()
-							+ (character.getEquipment() == null ? "" : "+") + "</u><br>"
-							+ character.getJobName() + " (" + Lang.property + ": "
-							+ (character.isPhysical() ? Lang.physical : Lang.mana) + ")<br>"
-							+ Lang.attack + ": " + character.getAttack() + " " + Lang.defP + ": "
+					setText(//@formatter:off
+							// Line 1
+							"<html><u>" + character.getTitle() + " " + character.toString()
+							+ "</u><br>" + 
+							// Line 2
+							character.getJobName() + " (" + Lang.property + ": "
+							+ (character.isPhysical() ? Lang.physical : Lang.mana) + ")<br>" + 
+							// Line 3
+							Lang.attack + ": " + character.getAttack() + " " + Lang.defP + ": "
 							+ character.getDefP() + " " + Lang.defM + ": " + character.getDefM()
-							+ " " + Lang.speed + ": " + character.getSpeed() + "<br> " + Lang.side
-							+ ": " + (character.isDoracity() ? Lang.doracity : Lang.academy));
+							+ " " + Lang.speed + ": " + character.getSpeed() + "<br> " + 
+							// Line 4
+							Lang.side
+							+ ": " + (character.isDoracity() ? Lang.doracity : Lang.academy)
+							+ "<br>" +
+							// Line 5
+							(character.getEquipment() == null ? "" :
+								Lang.equipment + ": " + character.getEquipmentName())
+							// @formatter:on
+					);
 
 					setToolTipText("<html>" + Lang.equipment + ": <font color=blue>"
 							+ character.getEquipmentName() + "</font><br><font color=green>"
@@ -808,6 +847,12 @@ public class Play extends JFrame {
 
 	}
 
+	/**
+	 * Start the game.
+	 * 
+	 * @throws InterruptedException
+	 *             for handling wait() and notify()
+	 */
 	public void start() throws InterruptedException {
 
 		while (true) { // Loop until HP <= 0
@@ -1084,6 +1129,12 @@ public class Play extends JFrame {
 		displayArea.battleField.updateCharOrder();
 	}
 
+	/**
+	 * Draw a card.
+	 * 
+	 * @param player
+	 *            the Player object who draws a card
+	 */
 	public void draw(Player player) {
 
 		// System.out.println("--- Player: " + player.getName()
@@ -1316,9 +1367,10 @@ public class Play extends JFrame {
 		return 0;
 	}
 
+	/**
+	 * Every time you remove an equipment from a character you must call this.
+	 */
 	public void removeEquipmentEffect() { // remove equipment for currentChar
-
-		// TODO: remove equip
 
 		if (currentChar.getEquipment() == null)
 			return;
@@ -1410,12 +1462,21 @@ public class Play extends JFrame {
 		}
 	}
 
+	/**
+	 * Call this function when one player's HP <= 0.
+	 * 
+	 * @param winner
+	 *            Player object which represents the winner.
+	 * @param loser
+	 *            Player object which represents the loser.
+	 */
 	private void gameOver(Player winner, Player loser) {
 		JOptionPane.showMessageDialog(this,
 				Lang.gameOver + "\n\n" + Lang.winner + ": " + winner.getName() + "\n" + Lang.loser
 						+ ": " + loser.getName());
 
-		setEnabled(false);
+		setEnabled(false); // This calls the app to freeze therefore replace it
+							// with something else.
 
 	}
 

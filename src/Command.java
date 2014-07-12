@@ -1,5 +1,11 @@
+/**
+ * Stores some constant value.
+ * 
+ * @author Ivan Ng
+ * 
+ */
 public class Command {
-	
+
 	/* Battle status */
 	public final static int NA = 0;
 	public final static int BEFORE_BATTLE = 1;

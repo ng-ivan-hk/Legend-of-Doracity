@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This represents a Player.
+ * 
+ * @author Ivan Ng
+ * 
+ */
 public class Player {
 
 	private String name; // player's name
@@ -15,8 +21,7 @@ public class Player {
 		this.player1 = player1;
 	}
 
-	public void setCharacters(Character c1, Character c2, Character c3,
-			Character c4, Character c5) {
+	public void setCharacters(Character c1, Character c2, Character c3, Character c4, Character c5) {
 
 		characters[0] = c1;
 		characters[1] = c2;
@@ -25,8 +30,7 @@ public class Player {
 		characters[4] = c5;
 
 		/* List characters */
-		System.out.println("Player " + (player1 ? 1 : 2) + ": " + name
-				+ "'s characters: ");
+		System.out.println("Player " + (player1 ? 1 : 2) + ": " + name + "'s characters: ");
 		for (int i = 0; i < Play.CHAR_MAX; i++)
 			System.out.print(characters[i] + " ");
 		System.out.println();
@@ -76,8 +80,7 @@ public class Player {
 		// Return 0 if success
 		// Return 1 if player HP <= 0 (dead)
 		this.HP += HP;
-		System.out.println("Player: " + name + " " + (HP > 0 ? "+" : "") + HP
-				+ " HP");
+		System.out.println("Player: " + name + " " + (HP > 0 ? "+" : "") + HP + " HP");
 
 		if (this.HP > Play.MAX_HP) {
 			this.HP = Play.MAX_HP;
@@ -102,8 +105,7 @@ public class Player {
 		}
 
 		this.MP += MP;
-		System.out.println("Player: " + name + " " + (MP > 0 ? "+" : "") + MP
-				+ " MP");
+		System.out.println("Player: " + name + " " + (MP > 0 ? "+" : "") + MP + " MP");
 
 		if (this.MP > Play.MAX_MP) {
 			this.MP = Play.MAX_MP;
@@ -144,8 +146,8 @@ public class Player {
 	protected Card getCard(int index) {
 		return handCards.get(index - 1);
 	}
-	
-	protected void sortChars(){
+
+	protected void sortChars() {
 		Arrays.sort(characters, Play.charComparator);
 	}
 

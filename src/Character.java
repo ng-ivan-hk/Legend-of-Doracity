@@ -1,3 +1,9 @@
+/**
+ * This represents a Character. It is the superclass for all characters.
+ * 
+ * @author Ivan Ng
+ * 
+ */
 abstract public class Character {
 
 	/* Static Values for Job */
@@ -261,7 +267,11 @@ abstract public class Character {
 	}
 
 	public String toString() {
-		return Lang.CharNames[number] + " (" + player.getName() + ")";
+		return Lang.CharNames[number];
+	}
+
+	public String getTitle() {
+		return (firstJob ? Lang.CharTitles1 : Lang.CharTitles2)[number];
 	}
 
 	public boolean isMale() {
