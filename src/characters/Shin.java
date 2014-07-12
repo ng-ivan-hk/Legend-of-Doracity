@@ -1,17 +1,14 @@
-
 public class Shin extends Character {
 
 	public Shin(Player player) {
 		super(player, 25);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void setCharacter() {
-		// TODO Auto-generated method stub
 		if (isFirstJob()) {
 
-			setValues(true, ARCHER, true, 3, 3, 3, 3, true);
+			setValues(true, ARCHER, true, 4, 2, 3, 4, true);
 
 			passiveSkills = new CharSkill[1];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
@@ -37,10 +34,10 @@ public class Shin extends Character {
 
 		} else {
 
-			setValues(true, ARCHER, true, 3, 3, 3, 3, false);
+			setValues(true, ARCHER, true, 4, 3, 3, 4, false);
 
 			passiveSkills = new CharSkill[1];
-			passiveSkills[0] = new CharSkill(this, false, 0, Command.BEFORE_BATTLE, new CharSkillMethod() {
+			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
 				public void skillMethod(Character c1, Character c2) {

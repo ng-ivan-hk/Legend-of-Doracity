@@ -1,9 +1,7 @@
-
 public class KaitoDora extends Character {
 
 	public KaitoDora(Player player) {
 		super(player, 22);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -50,16 +48,15 @@ public class KaitoDora extends Character {
 
 			});
 			activeSkills = new CharSkill[1];
-			activeSkills[0] = new CharSkill(this, true, 0, Command.NA,
-					new CharSkillMethod() {
+			activeSkills[0] = new CharSkill(this, true, 0, Command.NA, new CharSkillMethod() {
 
-						@Override
-						public void skillMethod(Character c1, Character c2) {
-							System.out.println("Using KaitoDora's 2ndJob active skill!");
+				@Override
+				public void skillMethod(Character c1, Character c2) {
+					System.out.println("Using KaitoDora's 2ndJob active skill!");
 
-						}
+				}
 
-					});
+			});
 		}
 	}
 

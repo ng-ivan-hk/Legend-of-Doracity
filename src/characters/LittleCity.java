@@ -1,9 +1,7 @@
-
 public class LittleCity extends Character {
 
 	public LittleCity(Player player) {
 		super(player, 23);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -37,7 +35,7 @@ public class LittleCity extends Character {
 
 		} else {
 
-			setValues(true, CASTER, false, 3, 2, 3, 4, false);
+			setValues(true, CASTER, false, 5, 2, 5, 4, false);
 
 			passiveSkills = new CharSkill[1];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
@@ -62,5 +60,4 @@ public class LittleCity extends Character {
 					});
 		}
 	}
-
 }

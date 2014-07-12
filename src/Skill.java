@@ -2,6 +2,10 @@ public class Skill extends Card {
 
 	private int occasion; // When can this card be used?
 
+	/**
+	 * @param number
+	 *            number of the card (See Card())
+	 */
 	public Skill(int number) {
 		super(Lang.SkillTypes[number], number);
 		switch (number) {

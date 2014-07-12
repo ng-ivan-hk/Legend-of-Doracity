@@ -91,11 +91,11 @@ public class Play extends JFrame {
 
 		/* Create Players */
 		player1 = new Player("Oolong Wong", true);
-		player1.setCharacters(new Tea(player1), new Tea(player1), new Tea(player1),
-				new Tea(player1), new Tea(player1));
+		player1.setCharacters(new T8(player1), new Sasa(player1), new KaitoDora(player1),
+				new Kuzmon(player1), new Anthony(player1));
 		player2 = new Player("Ivan Ng", false);
-		player2.setCharacters(new Tea(player2), new Tea(player2), new Tea(player2),
-				new Tea(player2), new Tea(player2));
+		player2.setCharacters(new Shin(player2), new SunnyShum(player2), new Mini(player2),
+				new LittleCity(player2), new Wind_Sound(player2));
 
 		/* Create Character list */
 		charList = new ArrayList<Character>();

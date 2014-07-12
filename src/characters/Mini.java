@@ -1,9 +1,7 @@
-
 public class Mini extends Character {
 
 	public Mini(Player player) {
 		super(player, 26);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -37,10 +35,10 @@ public class Mini extends Character {
 
 		} else {
 
-			setValues(true, CASTER, false, 3, 3, 3, 3,true);
+			setValues(true, CASTER, false, 3, 3, 3, 3, true);
 
 			passiveSkills = new CharSkill[1];
-			passiveSkills[0] = new CharSkill(this, false, 0, Command.BEFORE_BATTLE, new CharSkillMethod() {
+			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
 				public void skillMethod(Character c1, Character c2) {
@@ -50,7 +48,7 @@ public class Mini extends Character {
 
 			});
 			activeSkills = new CharSkill[1];
-			activeSkills[0] = new CharSkill(this, true, 0, Command.DURING_BATTLE,
+			activeSkills[0] = new CharSkill(this, true, 0, Command.BEFORE_BATTLE,
 					new CharSkillMethod() {
 
 						@Override

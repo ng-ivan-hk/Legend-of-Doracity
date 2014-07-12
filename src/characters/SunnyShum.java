@@ -1,14 +1,11 @@
-
 public class SunnyShum extends Character {
 
 	public SunnyShum(Player player) {
 		super(player, 30);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void setCharacter() {
-		// TODO Auto-generated method stub
 		if (isFirstJob()) {
 
 			setValues(true, CASTER, false, 2, 2, 4, 3, true);
@@ -50,7 +47,7 @@ public class SunnyShum extends Character {
 
 			});
 			activeSkills = new CharSkill[1];
-			activeSkills[0] = new CharSkill(this, true, 0, Command.BEFORE_BATTLE,
+			activeSkills[0] = new CharSkill(this, true, 0, Command.DURING_BATTLE,
 					new CharSkillMethod() {
 
 						@Override
