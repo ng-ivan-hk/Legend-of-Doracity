@@ -158,7 +158,7 @@ public class Play extends JFrame {
 		setMinimumSize(getBounds().getSize());
 		setSize(new Dimension(1050, 600));
 		locateCenter();
-		setResizable(true);
+		setResizable(false);
 		setVisible(true);
 	}
 
@@ -681,15 +681,22 @@ public class Play extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				new SkillDialog();
 			}
+			
+			/*@Override
+			public Dimension getPreferredSize() {
+			    return new Dimension(200, 100);
+			}*/
 
 			private class SkillDialog extends JDialog {
 				public SkillDialog() {
 					super(Play.this, true);
 					setLocationRelativeTo(CastSkillButton.this);
 					setTitle(Lang.skillSelection);
-					add(new SkillPanel());
-					pack();
-					setVisible(true);
+					//setSize(420, 240);
+					setResizable(false);
+					add(new SkillPanel());						
+					pack();														
+					setVisible(true);					
 				}
 
 				private class SkillPanel extends JPanel {
