@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -135,8 +136,8 @@ public class Play extends JFrame {
 		Preload preload = new Preload(this);
 		add(preload);
 		setSize(new Dimension(600, 400));
-		setMinimumSize(getBounds().getSize());
-		setMaximumSize(getBounds().getSize());
+		locateCenter();
+		setResizable(false);
 		setVisible(true);
 
 		synchronized (this) {
@@ -155,8 +156,19 @@ public class Play extends JFrame {
 		revalidate();
 		pack();
 		setMinimumSize(getBounds().getSize());
-		setSize(new Dimension(800, 600));
+		setSize(new Dimension(1050, 600));
+		locateCenter();
+		setResizable(true);
 		setVisible(true);
+	}
+
+	/**
+	 * Locate the window at center.
+	 */
+	private void locateCenter() {
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2
+				- this.getSize().height / 2);
 	}
 
 	/**
@@ -257,14 +269,11 @@ public class Play extends JFrame {
 		public DisplayArea() {
 
 			setLayout(new BorderLayout());
-
-			/* Set Top Field */
+			// Set Top Field
 			add(topField = new TopField(), BorderLayout.NORTH);
-
-			/* Set Battle Field */
+			// Set Battle Field
 			add(battleField = new BattleField(), BorderLayout.CENTER);
-
-			/* Set Bottom Field */
+			// Set Bottom Field
 			add(bottomField = new BottomField(), BorderLayout.SOUTH);
 
 		}
@@ -284,7 +293,7 @@ public class Play extends JFrame {
 		private class TopField extends JPanel {
 			public TopField() {
 				setBackground(Color.WHITE);
-				setLayout(new GridLayout(0, 2));
+				setLayout(new GridLayout(0, 3));
 
 				// Add Round Label
 				add(roundLabel = new JLabel());
@@ -294,6 +303,10 @@ public class Play extends JFrame {
 				// Add Stage Label
 				add(stageLabel = new JLabel(Lang.stage_readyToPlay));
 				stageLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+				// Add Cards Left Label
+				add(cardsLeft = new JLabel());
+				cardsLeft.setHorizontalAlignment(SwingConstants.LEFT);
 
 			}
 
@@ -448,8 +461,7 @@ public class Play extends JFrame {
 		private class BottomField extends JPanel {
 			public BottomField() {
 				setBackground(Color.WHITE);
-				cardsLeft = new JLabel();
-				add(cardsLeft);
+				// TODO: put a log here
 			}
 		}
 
@@ -602,6 +614,7 @@ public class Play extends JFrame {
 					setTitle(Lang.charSelection);
 					add(new CharSelectPanel());
 					pack();
+					setResizable(false);
 					setVisible(true);
 				}
 
@@ -885,265 +898,23 @@ public class Play extends JFrame {
 	 * Start the game.
 	 * 
 	 * @throws InterruptedException
-	 *             for handling wait() and notify()
+	 *             for handling wait()
 	 */
 	public void start() throws InterruptedException {
 
 		while (true) { // Loop until HP <= 0
 
-			/* Start a new round */
-
+			// Start a new round
 			round++;
 			displayArea.setRound(round);
 			System.out.println("========== Round " + round + " ==========");
 
-			/* === Draw Cards === */
-
-			displayArea.setStage(Lang.stage_drawCards);
-			System.out.println(">>> Draw Cards <<<");
-
-			if (round == 1) { // give each player 5 cards //TODO debug
-
-				for (int i = 0; i < 5; i++)
-					draw(player1);
-				for (int i = 0; i < 5; i++)
-					draw(player2);
-			} else if (cards.size() >= 8) { // give each player at most 2 cards
-
-				// Player 1
-				player1Area.drawButton.setDrawCard(DRAW_CARD_MAX);
-				player1Area.passButton.setEnabled(true);
-				synchronized (this) {
-					// wait until the draw or pass button is pressed
-					this.wait();
-				}
-				player1Area.drawButton.setEnabled(false);
-				player1Area.passButton.setEnabled(false);
-				// Player 2
-				player2Area.drawButton.setDrawCard(DRAW_CARD_MAX);
-				player2Area.passButton.setEnabled(true);
-				synchronized (this) {
-					this.wait();
-				}
-				player2Area.drawButton.setEnabled(false);
-				player2Area.passButton.setEnabled(false);
-			}
-			player1.listCards();
-			player2.listCards();
-
-			/* === Prepare === */
-			sortAllChars();
-			displayArea.setStage(Lang.stage_prepare + " (" + Lang.stage_autoHealing + ")");
-			System.out.println(">>> Prepare <<<");
-
-			/* Heal HP */
-
-			if (round > 1) { // No healing in round 1
-				player1.changeHP(2);
-				player2.changeHP(2);
-
-			}
-
-			/* Heal MP */
-			// TODO: Handle Shirogane & Anthony's case
-			// Player 1
-			int healMP = 0;
-			Character[] playerCharTemp = player1.getCharacters();
-			for (int i = 0; i < CHAR_MAX; i++) {
-				switch (playerCharTemp[i].getJob()) {
-				case Character.SABER: // And ARCHER
-					healMP++;
-					break;
-				case Character.CASTER:
-					healMP += 2;
-					break;
-				case Character.SUPPORT:
-					healMP += 3;
-					break;
-
-				}
-			}
-			// Player 2
-			player1.changeMP(healMP);
-			healMP = 0;
-			playerCharTemp = player2.getCharacters();
-			for (int i = 0; i < CHAR_MAX; i++) {
-				switch (playerCharTemp[i].getJob()) {
-				case Character.SABER: // or ARCHER
-					healMP++;
-					break;
-				case Character.CASTER:
-					healMP += 2;
-					break;
-				case Character.SUPPORT:
-					healMP += 3;
-					break;
-
-				}
-			}
-			player2.changeMP(healMP);
-
-			player1Area.updateArea();
-			player2Area.updateArea();
-
-			player1.listStatus();
-			player2.listStatus();
-
-			/* Use Item */
-			displayArea.setStage(Lang.stage_prepare + " (" + Lang.stage_useItem + ")");
-			// Player 1
-			player1Area.setEnableItem(true);
-			player1Area.passButton.setEnabled(true);
-			synchronized (this) {
-				this.wait();
-			}
-			player1Area.setEnableItem(false);
-			player1Area.passButton.setEnabled(false);
-			// Player2
-			player2Area.setEnableItem(true);
-			player2Area.passButton.setEnabled(true);
-			synchronized (this) {
-				this.wait();
-			}
-			player2Area.setEnableItem(false);
-			player2Area.passButton.setEnabled(false);
-
-			/* According to char order: equip or/and job change */
-			displayArea.setStage(Lang.stage_prepare + " (" + Lang.stage_equipOrJobChange + ")");
-			for (int i = 0; i < charList.size(); i++) {
-
-				currentChar = charList.get(i);
-
-				System.out.println(currentChar);
-				System.out.println(currentChar.getPlayer().indexOfChar(currentChar));
-
-				// Highlight the character on the battle field
-				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
-						.getPlayer().indexOfChar(currentChar), true);
-
-				// Handle Buttons
-				PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
-						: player2Area;
-				areaTemp.jobChangeButton.setEnabled(true);
-				areaTemp.passButton.setEnabled(true);
-				areaTemp.setEnableEquipment(true);
-				synchronized (this) {
-					this.wait();
-				}
-				areaTemp.jobChangeButton.setEnabled(false);
-				areaTemp.passButton.setEnabled(false);
-				areaTemp.setEnableEquipment(false);
-
-				// Unhighlight the character
-				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
-						.getPlayer().indexOfChar(currentChar), false);
-
-			}
-
-			/* === Before Battle === */
-			sortAllChars();
-			System.out.println(">>> Before Battle <<<");
-			displayArea.setStage(Lang.stage_beforeBattle);
-			currentStatus = Command.BEFORE_BATTLE;
-
-			// Skills/Skill Card according to charList
-			for (int i = 0; i < charList.size(); i++) {
-				currentChar = charList.get(i);
-
-				System.out.println(charList.get(i));
-
-				// Highlight the character on the battle field
-				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
-						.getPlayer().indexOfChar(currentChar), true);
-
-				// Handle Buttons
-				PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
-						: player2Area;
-				areaTemp.castSkillButton.setEnabled(true);
-				areaTemp.passButton.setEnabled(true);
-				areaTemp.setEnableSkill(true);
-				synchronized (this) {
-					this.wait();
-				}
-				areaTemp.castSkillButton.setEnabled(false);
-				areaTemp.passButton.setEnabled(false);
-				areaTemp.setEnableSkill(false);
-
-				// Unhighlight the character
-				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
-						.getPlayer().indexOfChar(currentChar), false);
-
-			}
-
-			/* === During Battle === */
-			sortAllChars();
-			System.out.println(">>> During Battle <<<");
-			displayArea.setStage(Lang.stage_duringBattle);
-			currentStatus = Command.DURING_BATTLE;
-
-			// Normal Attack/Skills/Skill Card according to charList
-
-			for (int i = 0; i < charList.size(); i++) {
-
-				currentChar = charList.get(i);
-
-				// Highlight the character on the battle field
-				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
-						.getPlayer().indexOfChar(currentChar), true);
-
-				// Handle Buttons
-				PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
-						: player2Area;
-				areaTemp.attackButton.setEnabled(true);
-				areaTemp.castSkillButton.setEnabled(true);
-				areaTemp.passButton.setEnabled(true);
-				areaTemp.setEnableSkill(true);
-				synchronized (this) {
-					this.wait();
-				}
-				areaTemp.attackButton.setEnabled(false);
-				areaTemp.castSkillButton.setEnabled(false);
-				areaTemp.passButton.setEnabled(false);
-				areaTemp.setEnableSkill(false);
-
-				// Unhighlight the character
-				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
-						.getPlayer().indexOfChar(currentChar), false);
-
-			}
-
-			/* === After Battle === */
-			sortAllChars();
-			System.out.println(">>> After Battle <<<");
-			displayArea.setStage(Lang.stage_afterBattle);
-			currentStatus = Command.AFTER_BATTLE;
-
-			// Skills according to charList
-			for (int i = 0; i < charList.size(); i++) {
-				currentChar = charList.get(i);
-
-				System.out.println(charList.get(i));
-
-				// Highlight the character on the battle field
-				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
-						.getPlayer().indexOfChar(currentChar), true);
-
-				// Handle Buttons
-				PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
-						: player2Area;
-				areaTemp.castSkillButton.setEnabled(true);
-				areaTemp.passButton.setEnabled(true);
-				synchronized (this) {
-					this.wait();
-				}
-				areaTemp.castSkillButton.setEnabled(false);
-				areaTemp.passButton.setEnabled(false);
-
-				// Unhighlight the character
-				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar
-						.getPlayer().indexOfChar(currentChar), false);
-
-			}
+			// Let's begin!
+			stageDrawCards();
+			stagePrepare();
+			stageBeforeBattle();
+			stageDuringBattle();
+			stageAfterBattle();
 
 			// Defense off for all characters
 			for (int i = 0; i < charList.size(); i++) {
@@ -1153,7 +924,261 @@ public class Play extends JFrame {
 		}
 	}
 
-	public void sortAllChars() {
+	private void stageDrawCards() throws InterruptedException {
+		/* === Draw Cards === */
+
+		displayArea.setStage(Lang.stage_drawCards);
+		System.out.println(">>> Draw Cards <<<");
+
+		if (round == 1) { // give each player 5 cards //TODO debug
+
+			for (int i = 0; i < 5; i++)
+				draw(player1);
+			for (int i = 0; i < 5; i++)
+				draw(player2);
+		} else if (cards.size() >= 8) { // give each player at most 2 cards
+
+			// Player 1
+			player1Area.drawButton.setDrawCard(DRAW_CARD_MAX);
+			player1Area.passButton.setEnabled(true);
+			synchronized (this) {
+				// wait until the draw or pass button is pressed
+				this.wait();
+			}
+			player1Area.drawButton.setEnabled(false);
+			player1Area.passButton.setEnabled(false);
+			// Player 2
+			player2Area.drawButton.setDrawCard(DRAW_CARD_MAX);
+			player2Area.passButton.setEnabled(true);
+			synchronized (this) {
+				this.wait();
+			}
+			player2Area.drawButton.setEnabled(false);
+			player2Area.passButton.setEnabled(false);
+		}
+		player1.listCards();
+		player2.listCards();
+	}
+
+	private void stagePrepare() throws InterruptedException {
+		/* === Prepare === */
+		sortAllChars();
+		displayArea.setStage(Lang.stage_prepare + " (" + Lang.stage_autoHealing + ")");
+		System.out.println(">>> Prepare <<<");
+
+		/* Heal HP */
+
+		if (round > 1) { // No healing in round 1
+			player1.changeHP(2);
+			player2.changeHP(2);
+
+		}
+
+		/* Heal MP */
+		// TODO: Handle Shirogane & Anthony's case
+		// Player 1
+		int healMP = 0;
+		Character[] playerCharTemp = player1.getCharacters();
+		for (int i = 0; i < CHAR_MAX; i++) {
+			switch (playerCharTemp[i].getJob()) {
+			case Character.SABER: // And ARCHER
+				healMP++;
+				break;
+			case Character.CASTER:
+				healMP += 2;
+				break;
+			case Character.SUPPORT:
+				healMP += 3;
+				break;
+
+			}
+		}
+		// Player 2
+		player1.changeMP(healMP);
+		healMP = 0;
+		playerCharTemp = player2.getCharacters();
+		for (int i = 0; i < CHAR_MAX; i++) {
+			switch (playerCharTemp[i].getJob()) {
+			case Character.SABER: // or ARCHER
+				healMP++;
+				break;
+			case Character.CASTER:
+				healMP += 2;
+				break;
+			case Character.SUPPORT:
+				healMP += 3;
+				break;
+
+			}
+		}
+		player2.changeMP(healMP);
+
+		player1Area.updateArea();
+		player2Area.updateArea();
+
+		player1.listStatus();
+		player2.listStatus();
+
+		/* Use Item */
+		displayArea.setStage(Lang.stage_prepare + " (" + Lang.stage_useItem + ")");
+		// Player 1
+		player1Area.setEnableItem(true);
+		player1Area.passButton.setEnabled(true);
+		synchronized (this) {
+			this.wait();
+		}
+		player1Area.setEnableItem(false);
+		player1Area.passButton.setEnabled(false);
+		// Player2
+		player2Area.setEnableItem(true);
+		player2Area.passButton.setEnabled(true);
+		synchronized (this) {
+			this.wait();
+		}
+		player2Area.setEnableItem(false);
+		player2Area.passButton.setEnabled(false);
+
+		/* According to char order: equip or/and job change */
+		displayArea.setStage(Lang.stage_prepare + " (" + Lang.stage_equipOrJobChange + ")");
+		for (int i = 0; i < charList.size(); i++) {
+
+			currentChar = charList.get(i);
+
+			System.out.println(currentChar);
+			System.out.println(currentChar.getPlayer().indexOfChar(currentChar));
+
+			// Highlight the character on the battle field
+			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
+					.indexOfChar(currentChar), true);
+
+			// Handle Buttons
+			PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area : player2Area;
+			areaTemp.jobChangeButton.setEnabled(true);
+			areaTemp.passButton.setEnabled(true);
+			areaTemp.setEnableEquipment(true);
+			synchronized (this) {
+				this.wait();
+			}
+			areaTemp.jobChangeButton.setEnabled(false);
+			areaTemp.passButton.setEnabled(false);
+			areaTemp.setEnableEquipment(false);
+
+			// Unhighlight the character
+			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
+					.indexOfChar(currentChar), false);
+
+		}
+	}
+
+	private void stageBeforeBattle() throws InterruptedException {
+		/* === Before Battle === */
+		sortAllChars();
+		System.out.println(">>> Before Battle <<<");
+		displayArea.setStage(Lang.stage_beforeBattle);
+		currentStatus = Command.BEFORE_BATTLE;
+
+		// Skills/Skill Card according to charList
+		for (int i = 0; i < charList.size(); i++) {
+			currentChar = charList.get(i);
+
+			System.out.println(charList.get(i));
+
+			// Highlight the character on the battle field
+			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
+					.indexOfChar(currentChar), true);
+
+			// Handle Buttons
+			PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area : player2Area;
+			areaTemp.castSkillButton.setEnabled(true);
+			areaTemp.passButton.setEnabled(true);
+			areaTemp.setEnableSkill(true);
+			synchronized (this) {
+				this.wait();
+			}
+			areaTemp.castSkillButton.setEnabled(false);
+			areaTemp.passButton.setEnabled(false);
+			areaTemp.setEnableSkill(false);
+
+			// Unhighlight the character
+			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
+					.indexOfChar(currentChar), false);
+
+		}
+	}
+
+	private void stageDuringBattle() throws InterruptedException {
+		/* === During Battle === */
+		sortAllChars();
+		System.out.println(">>> During Battle <<<");
+		displayArea.setStage(Lang.stage_duringBattle);
+		currentStatus = Command.DURING_BATTLE;
+
+		// Normal Attack/Skills/Skill Card according to charList
+
+		for (int i = 0; i < charList.size(); i++) {
+
+			currentChar = charList.get(i);
+
+			// Highlight the character on the battle field
+			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
+					.indexOfChar(currentChar), true);
+
+			// Handle Buttons
+			PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area : player2Area;
+			areaTemp.attackButton.setEnabled(true);
+			areaTemp.castSkillButton.setEnabled(true);
+			areaTemp.passButton.setEnabled(true);
+			areaTemp.setEnableSkill(true);
+			synchronized (this) {
+				this.wait();
+			}
+			areaTemp.attackButton.setEnabled(false);
+			areaTemp.castSkillButton.setEnabled(false);
+			areaTemp.passButton.setEnabled(false);
+			areaTemp.setEnableSkill(false);
+
+			// Unhighlight the character
+			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
+					.indexOfChar(currentChar), false);
+
+		}
+	}
+
+	private void stageAfterBattle() throws InterruptedException {
+		/* === After Battle === */
+		sortAllChars();
+		System.out.println(">>> After Battle <<<");
+		displayArea.setStage(Lang.stage_afterBattle);
+		currentStatus = Command.AFTER_BATTLE;
+
+		// Skills according to charList
+		for (int i = 0; i < charList.size(); i++) {
+			currentChar = charList.get(i);
+
+			System.out.println(charList.get(i));
+
+			// Highlight the character on the battle field
+			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
+					.indexOfChar(currentChar), true);
+
+			// Handle Buttons
+			PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area : player2Area;
+			areaTemp.castSkillButton.setEnabled(true);
+			areaTemp.passButton.setEnabled(true);
+			synchronized (this) {
+				this.wait();
+			}
+			areaTemp.castSkillButton.setEnabled(false);
+			areaTemp.passButton.setEnabled(false);
+
+			// Unhighlight the character
+			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
+					.indexOfChar(currentChar), false);
+
+		}
+	}
+
+	protected void sortAllChars() {
 		/* Reorder characters according to their speeds */
 		// Reorder the 10-chars list
 		Collections.sort(charList, charComparator);
@@ -1169,7 +1194,7 @@ public class Play extends JFrame {
 	 * @param player
 	 *            the Player object who draws a card
 	 */
-	public void draw(Player player) {
+	protected void draw(Player player) {
 
 		// System.out.println("--- Player: " + player.getName()
 		// + " is drawing a card...");
@@ -1186,7 +1211,7 @@ public class Play extends JFrame {
 		}
 	}
 
-	public int useCard(Player player, Card card) {
+	protected int useCard(Player player, Card card) {
 
 		// Return 0 if success
 		// Return 1 if wrong job
@@ -1404,7 +1429,7 @@ public class Play extends JFrame {
 	/**
 	 * Every time you remove an equipment from a character you must call this.
 	 */
-	public void removeEquipmentEffect() { // remove equipment for currentChar
+	protected void removeEquipmentEffect() { // remove equipment for currentChar
 
 		if (currentChar.getEquipment() == null)
 			return;

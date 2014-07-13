@@ -509,7 +509,7 @@ public class Lang {
 	public final static String[] occasion = { "", "[戰鬥前]", "[戰鬥時]", "[戰鬥後]", "[摸牌階段]" };
 
 	/* Skill Selection */
-	public final static String skillSelection = "選擇技能";
+	public final static String skillSelection = "技能";
 	public final static String active = "主動";
 	public final static String passive = "被動";
 
