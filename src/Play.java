@@ -26,11 +26,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
+import javax.swing.text.DefaultCaret;
 
 /**
  * This is the main GUI for the game.
@@ -64,7 +67,10 @@ public class Play extends JFrame {
 		}
 	};
 
-	/* Variables */
+	/* Static Variables */
+	private static JTextArea LOG_AREA = null;
+
+	/* Non-Static Variables */
 	private Player player1 = null; // Player who attacks first
 	private Player player2 = null; // Player who attacks next
 	private Stack<Card> cards = null; // card stack on the table
@@ -135,6 +141,7 @@ public class Play extends JFrame {
 		/* Run Preload GUI */
 		Preload preload = new Preload(this);
 		add(preload);
+		setJMenuBar(new MenuBar());
 		setSize(new Dimension(600, 400));
 		locateCenter();
 		setResizable(false);
@@ -151,7 +158,6 @@ public class Play extends JFrame {
 		add(BorderLayout.CENTER, displayArea = new DisplayArea());
 		add(BorderLayout.WEST, player1Area = new PlayerArea(player1));
 		add(BorderLayout.EAST, player2Area = new PlayerArea(player2));
-		setJMenuBar(new MenuBar());
 
 		revalidate();
 		pack();
@@ -228,7 +234,7 @@ public class Play extends JFrame {
 			helpMenuItem.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(Play.this, "<html><font size=4>"
+					JOptionPane.showMessageDialog(Play.this, "<html><font size=3>"
 							+ Lang.menu_helpInfo + "</html>", Lang.menu_help,
 							JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -260,11 +266,12 @@ public class Play extends JFrame {
 		private TopField topField = null;
 		private JLabel roundLabel = null;
 		private JLabel stageLabel = null;
+		private JLabel cardsLeft = null;
 
 		protected BattleField battleField = null;
 
 		private BottomField bottomField = null;
-		private JLabel cardsLeft = null;
+		private JTextArea logArea = null;
 
 		public DisplayArea() {
 
@@ -325,10 +332,10 @@ public class Play extends JFrame {
 				setLayout(new GridLayout(6, 4));
 
 				// Row 0
-				add(new BLabel(Lang.player + ": " + player1.getName()));
+				add(new BLabel(Lang.player + ": " + player1));
 				add(player1Actions[0] = new BLabel("player1"));
 				add(player2Actions[0] = new BLabel("player2"));
-				add(new BLabel(Lang.player + ": " + player2.getName()));
+				add(new BLabel(Lang.player + ": " + player2));
 
 				// Row 1 - 6
 				Character[] player1CharTemp = player1.getCharacters();
@@ -459,9 +466,22 @@ public class Play extends JFrame {
 		}
 
 		private class BottomField extends JPanel {
+			private JScrollPane scrollPane = null;
+
 			public BottomField() {
 				setBackground(Color.WHITE);
-				// TODO: put a log here
+				setLayout(new GridLayout(1, 1));
+
+				/* Set Log Area */
+				scrollPane = new JScrollPane(logArea = LOG_AREA = new JTextArea());
+				scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+				scrollPane.setPreferredSize(new Dimension(getWidth(), 100));
+
+				// Update Log Area automatically whenever text is appended
+				DefaultCaret caret = (DefaultCaret) logArea.getCaret();
+				caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
+				add(scrollPane, BorderLayout.CENTER);
 			}
 		}
 
@@ -488,7 +508,7 @@ public class Play extends JFrame {
 			// setAlignmentX(Component.CENTER_ALIGNMENT);
 
 			/* Add Player's name */
-			add(new JLabel("--- " + player.getName() + " ---"));
+			add(new JLabel("--- " + player + " ---"));
 
 			/* Add HP & MP meter */
 			add(HPmeter = new JLabel());
@@ -515,9 +535,9 @@ public class Play extends JFrame {
 			cardArea = new JPanel();
 			cardArea.setLayout(new BoxLayout(cardArea, BoxLayout.PAGE_AXIS));
 			// Create a scroll panel and put the card area into it
-			JScrollPane scrollPanel = new JScrollPane(cardArea);
-			scrollPanel.getVerticalScrollBar().setUnitIncrement(20);
-			add(scrollPanel);
+			JScrollPane scrollPane = new JScrollPane(cardArea);
+			scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+			add(scrollPane);
 
 			updateArea();
 		}
@@ -689,6 +709,7 @@ public class Play extends JFrame {
 					setTitle(Lang.skillSelection);
 					add(new SkillPanel());
 					pack();
+					setResizable(false);
 					setVisible(true);
 				}
 
@@ -907,7 +928,7 @@ public class Play extends JFrame {
 			// Start a new round
 			round++;
 			displayArea.setRound(round);
-			System.out.println("========== Round " + round + " ==========");
+			printlnLog("========== " + Lang.round + round + " ==========");
 
 			// Let's begin!
 			stageDrawCards();
@@ -928,7 +949,7 @@ public class Play extends JFrame {
 		/* === Draw Cards === */
 
 		displayArea.setStage(Lang.stage_drawCards);
-		System.out.println(">>> Draw Cards <<<");
+		printlnLog(">>>" + Lang.stage_drawCards + "<<<");
 
 		if (round == 1) { // give each player 5 cards //TODO debug
 
@@ -964,7 +985,7 @@ public class Play extends JFrame {
 		/* === Prepare === */
 		sortAllChars();
 		displayArea.setStage(Lang.stage_prepare + " (" + Lang.stage_autoHealing + ")");
-		System.out.println(">>> Prepare <<<");
+		printlnLog(">>>" + Lang.stage_prepare + "<<<");
 
 		/* Heal HP */
 
@@ -981,7 +1002,8 @@ public class Play extends JFrame {
 		Character[] playerCharTemp = player1.getCharacters();
 		for (int i = 0; i < CHAR_MAX; i++) {
 			switch (playerCharTemp[i].getJob()) {
-			case Character.SABER: // And ARCHER
+			case Character.SABER:
+			case Character.ARCHER:
 				healMP++;
 				break;
 			case Character.CASTER:
@@ -993,13 +1015,15 @@ public class Play extends JFrame {
 
 			}
 		}
-		// Player 2
+		System.out.println("Final Heal MP" + healMP);
 		player1.changeMP(healMP);
+		// Player 2
 		healMP = 0;
 		playerCharTemp = player2.getCharacters();
 		for (int i = 0; i < CHAR_MAX; i++) {
 			switch (playerCharTemp[i].getJob()) {
-			case Character.SABER: // or ARCHER
+			case Character.SABER:
+			case Character.ARCHER:
 				healMP++;
 				break;
 			case Character.CASTER:
@@ -1043,9 +1067,8 @@ public class Play extends JFrame {
 		for (int i = 0; i < charList.size(); i++) {
 
 			currentChar = charList.get(i);
-
-			System.out.println(currentChar);
-			System.out.println(currentChar.getPlayer().indexOfChar(currentChar));
+			printCurrentChar();
+			// printLog(currentChar.getPlayer().indexOfChar(currentChar));
 
 			// Highlight the character on the battle field
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
@@ -1073,15 +1096,15 @@ public class Play extends JFrame {
 	private void stageBeforeBattle() throws InterruptedException {
 		/* === Before Battle === */
 		sortAllChars();
-		System.out.println(">>> Before Battle <<<");
+		printlnLog(">>>" + Lang.stage_beforeBattle + "<<<");
 		displayArea.setStage(Lang.stage_beforeBattle);
 		currentStatus = Command.BEFORE_BATTLE;
 
 		// Skills/Skill Card according to charList
 		for (int i = 0; i < charList.size(); i++) {
-			currentChar = charList.get(i);
 
-			System.out.println(charList.get(i));
+			currentChar = charList.get(i);
+			printCurrentChar();
 
 			// Highlight the character on the battle field
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
@@ -1109,7 +1132,7 @@ public class Play extends JFrame {
 	private void stageDuringBattle() throws InterruptedException {
 		/* === During Battle === */
 		sortAllChars();
-		System.out.println(">>> During Battle <<<");
+		printlnLog(">>>" + Lang.stage_duringBattle + "<<<");
 		displayArea.setStage(Lang.stage_duringBattle);
 		currentStatus = Command.DURING_BATTLE;
 
@@ -1118,6 +1141,7 @@ public class Play extends JFrame {
 		for (int i = 0; i < charList.size(); i++) {
 
 			currentChar = charList.get(i);
+			printCurrentChar();
 
 			// Highlight the character on the battle field
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
@@ -1147,15 +1171,15 @@ public class Play extends JFrame {
 	private void stageAfterBattle() throws InterruptedException {
 		/* === After Battle === */
 		sortAllChars();
-		System.out.println(">>> After Battle <<<");
+		printlnLog(">>>" + Lang.stage_afterBattle + "<<<");
 		displayArea.setStage(Lang.stage_afterBattle);
 		currentStatus = Command.AFTER_BATTLE;
 
 		// Skills according to charList
 		for (int i = 0; i < charList.size(); i++) {
-			currentChar = charList.get(i);
 
-			System.out.println(charList.get(i));
+			currentChar = charList.get(i);
+			printCurrentChar();
 
 			// Highlight the character on the battle field
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
@@ -1199,7 +1223,7 @@ public class Play extends JFrame {
 		// System.out.println("--- Player: " + player.getName()
 		// + " is drawing a card...");
 		if (cards.empty()) {
-			System.out.println(Lang.noCardsLeft);
+			printlnLog(Lang.noCardsLeft);
 		} else {
 			// Pop the top card from the stack into player's hand
 			Card temp = cards.pop();
@@ -1522,6 +1546,31 @@ public class Play extends JFrame {
 	}
 
 	/**
+	 * Prints a string to the Log Area.
+	 * 
+	 * @param text
+	 */
+	public static void printLog(Object object) {
+		LOG_AREA.append(object.toString());
+	}
+
+	/**
+	 * Prints a string with a line break in prior to the Log Area.
+	 * 
+	 * @param text
+	 */
+	public static void printlnLog(Object object) {
+		printLog("\n" + object);
+	}
+
+	/**
+	 * Prints names of current Character and Player.
+	 */
+	private void printCurrentChar() {
+		printlnLog(currentChar + " (" + currentChar.getPlayer().toString() + ") " + Lang.log_round);
+	}
+
+	/**
 	 * Call this function when one player's HP <= 0.
 	 * 
 	 * @param winner
@@ -1530,12 +1579,14 @@ public class Play extends JFrame {
 	 *            Player object which represents the loser.
 	 */
 	private void gameOver(Player winner, Player loser) {
-		JOptionPane.showMessageDialog(this,
-				Lang.gameOver + "\n\n" + Lang.winner + ": " + winner.getName() + "\n" + Lang.loser
-						+ ": " + loser.getName());
 
-		setEnabled(false); // This calls the app to freeze therefore replace it
-							// with something else.
+		player1Area.updateHPMP();
+		player2Area.updateHPMP();
+
+		JOptionPane.showMessageDialog(this, Lang.gameOver + "\n\n" + Lang.winner + ": " + winner
+				+ "\n" + Lang.loser + ": " + loser);
+
+		System.exit(0); // End the application
 
 	}
 

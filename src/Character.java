@@ -194,22 +194,24 @@ abstract public class Character {
 		// Return 3 if opponent is dead (HP < 0)
 
 		if (target.isDefense()) {
-			System.out.println("Character is defensing!");
 			return 2;
 		}
 
+		// Calculate damage
 		int c2Def = isPhysical() ? target.getDefP() : target.getDefM();
 		int damage = getAttack() - c2Def;
+		
+		Play.printlnLog(this + " " + Lang.attack + " " + target + " --- ");
 
-		String property = isPhysical() ? "Physical" : "Mana";
-		System.out.println(property + " Attack " + getAttack() + " -> " + property + " Defense "
-				+ c2Def);
+		Play.printLog((isPhysical() ? Lang.physical : Lang.mana) + Lang.attack + getAttack()
+				+ " -> " + (isPhysical() ? Lang.defP : Lang.defM) + c2Def + " --- ");
 
 		if (damage < 0) { // Attack failed
+			Play.printLog(Lang.log_attackFailed);
 			target.setDefense(true);
 			return 1;
 		} else { // Attack success
-			System.out.print("Attack succeessfully! ");
+			Play.printLog(Lang.log_attackSuccess);
 			target.setDefense(true);
 		}
 

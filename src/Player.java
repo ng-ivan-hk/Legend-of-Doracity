@@ -37,9 +37,6 @@ public class Player {
 	}
 
 	public void setCharacters(int[] chars) {
-		for (int i = 0; i < chars.length; i++) {
-			System.out.println(chars[i]);
-		}
 
 		for (int i = 0; i < Play.CHAR_MAX; i++) {
 			switch (chars[i]) {
@@ -136,9 +133,10 @@ public class Player {
 
 			}
 		}
+		
 	}
 
-	public String getName() {
+	public String toString() {
 		return name;
 	}
 
@@ -174,7 +172,6 @@ public class Player {
 	public void listStatus() {
 		System.out.println("--- Listing Player: " + name + "'s status...");
 		System.out.println("HP: " + HP + " | MP: " + MP);
-
 	}
 
 	public int changeHP(int HP) {
@@ -182,7 +179,7 @@ public class Player {
 		// Return 0 if success
 		// Return 1 if player HP <= 0 (dead)
 		this.HP += HP;
-		System.out.println("Player: " + name + " " + (HP > 0 ? "+" : "") + HP + " HP");
+		Play.printlnLog(Lang.player + ": " + name + " " + (HP > 0 ? "+" : "-") + HP + " HP");
 
 		if (this.HP > Play.MAX_HP) {
 			this.HP = Play.MAX_HP;
@@ -190,7 +187,7 @@ public class Player {
 
 		if (this.HP <= 0) {
 			this.HP = 0;
-			System.out.println("Player: " + name + " lost!");
+			Play.printlnLog(Lang.player + ": " + name + Lang.log_lost);
 			return 1;
 		}
 
@@ -202,12 +199,11 @@ public class Player {
 		// Return 0 if success
 		// Return 1 if MP is not enough (cannot use skills)
 		if (this.MP + MP < 0) {
-			System.out.println("Player: " + name + " don't have enough MP!");
 			return 1;
 		}
 
 		this.MP += MP;
-		System.out.println("Player: " + name + " " + (MP > 0 ? "+" : "") + MP + " MP");
+		Play.printlnLog(Lang.player + ": " + name + " " + (MP > 0 ? "+" : "-") + MP + " MP");
 
 		if (this.MP > Play.MAX_MP) {
 			this.MP = Play.MAX_MP;
