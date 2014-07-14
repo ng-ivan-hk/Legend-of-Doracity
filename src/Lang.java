@@ -25,6 +25,7 @@ public class Lang {
 	public final static String help_cards = "卡牌種類";
 	public final static String help_QA = "Q & A";
 	public final static String help_appHelp = "程式教學";
+	public final static String help_appFAQ = "常見問題";
 
 	/* Character Names */
 	public final static String[] CharNames = new String[] { "", "烏龍茶", "淋琳", "古怪", "地圖", "鐵皮使",

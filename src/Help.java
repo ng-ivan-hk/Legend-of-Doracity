@@ -8,8 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -87,7 +85,7 @@ public class Help extends JFrame {
 			category = new DefaultMutableTreeNode(Lang.help_appHelp);
 			top.add(category);
 
-			category.add(new DefaultMutableTreeNode(new HelpPage(Lang.help_debug, "debug")));
+			category.add(new DefaultMutableTreeNode(new HelpPage(Lang.help_appFAQ, "appFAQ")));
 		}
 
 	}

@@ -179,7 +179,7 @@ public class Player {
 		// Return 0 if success
 		// Return 1 if player HP <= 0 (dead)
 		this.HP += HP;
-		Play.printlnLog(Lang.player + ": " + name + " " + (HP > 0 ? "+" : "-") + HP + " HP");
+		Play.printlnLog(Lang.player + ": " + name + " " + (HP > 0 ? "+" : "") + HP + " HP");
 
 		if (this.HP > Play.MAX_HP) {
 			this.HP = Play.MAX_HP;
