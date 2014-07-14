@@ -13,10 +13,18 @@ public class Lang {
 	public final static String confirm = "決定";
 	public final static String menu_option = "選項";
 	public final static String menu_help = "幫助";
-	public final static String menu_helpInfo = "這次想大家幫忙測試的包括：<br><br><font color=blue>角色選擇視窗，看看有沒有問題或者建議<br>留意一下視窗標題或者有沒有任何地方出現亂碼</font><br><br>在戰鬥階段（包括前中後），看看發動技能的視窗有沒有問題<br>還沒寫角色技能所以按鈕按下去應該是沒反應<br>正常來說只有符合發動時機的主動技能的按鈕才可以按（例如現在是戰鬥前，那就只有戰鬥前的技能按鈕才會啟用）<br>滑鼠移到按鈕上會顯示描述和發動時機<br><br>煙霧彈和大部分技能按鈕按下去沒反應是正常，除了大治療術：按下去應該會扣MP回HP，如果不夠MP應該會出現不夠MP的訊息<br><br>還有之前版本的測試內容也可以試試（例如裝備和解除裝備、抽卡、轉職）<br><br>Game Over之後程式會沒反應，我遲些會寫Game Over之後的動作的了<br><br>感激不盡！";
 	public final static String menu_about = "關於";
 	public final static String menu_aboutInfo = "遊戲設計：烏龍茶<br>程式製作：古怪<br>程式協力：射手小朋友";
 	public final static String menu_exit = "結束";
+
+	public final static String help_debug = "DEBUG說明";
+	public final static String help_gameRules = "遊戲規則";
+	public final static String help_beforeGame = "遊戲開始前的準備";
+	public final static String help_gameFlow = "遊戲流程";
+	public final static String help_vocab = "遊戲名詞";
+	public final static String help_cards = "卡牌種類";
+	public final static String help_QA = "Q & A";
+	public final static String help_appHelp = "程式教學";
 
 	/* Character Names */
 	public final static String[] CharNames = new String[] { "", "烏龍茶", "淋琳", "古怪", "地圖", "鐵皮使",
@@ -532,7 +540,7 @@ public class Lang {
 	public final static String stage_beforeBattle = "戰鬥前";
 	public final static String stage_duringBattle = "戰鬥時";
 	public final static String stage_afterBattle = "戰鬥後";
-	
+
 	/* Log */
 	public final static String log = "對戰紀錄";
 	public final static String log_gameStart = "遊戲開始";
@@ -542,10 +550,12 @@ public class Lang {
 	public final static String log_lost = "戰敗！";
 
 	/* Error Messages */
+	public final static String error = "錯誤";
+
 	public final static String playerNameEmpty = "請填入玩家名稱";
 	public final static String charCountWrong = "請選擇五名角色";
 	public final static String repeatedChar = "雙方角色重複\n雙方均選擇了";
-	
+
 	public final static String wrongJob = "當前角色的職業無法使用";
 	public final static String notDoracity = "這角色不屬於小城陣營";
 	public final static String notAcademy = "這角色不屬於學園陣營";
@@ -555,6 +565,9 @@ public class Lang {
 	public final static String noMP = "MP不足";
 	public final static String removeEquip = "角色裝備將被移除";
 	public final static String charDefensing = "角色正在防禦中，無法攻擊";
+
+	public final static String badURL = "URL出錯";
+	public final static String fileNotFound = "找不到文件：";
 
 	/* Game Over Messages */
 	public final static String gameOver = "遊戲結束";

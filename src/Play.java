@@ -28,7 +28,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -43,6 +42,7 @@ import javax.swing.text.DefaultCaret;
  * @author Ivan Ng
  * 
  */
+@SuppressWarnings("serial")
 public class Play extends JFrame {
 
 	/* Constant Values */
@@ -133,7 +133,7 @@ public class Play extends JFrame {
 
 		/* Set App Icon */
 		try {
-			setIconImage(new ImageIcon(getClass().getResource("/resources/xander.png")).getImage());
+			setIconImage(new ImageIcon(Play.class.getResource("/resources/xander.png")).getImage());
 		} catch (NullPointerException e) {
 		}
 
@@ -145,7 +145,7 @@ public class Play extends JFrame {
 		add(preload);
 		setJMenuBar(new MenuBar());
 		setSize(new Dimension(600, 400));
-		locateCenter();
+		locateCenter(this);
 		setResizable(false);
 		setVisible(true);
 
@@ -165,18 +165,18 @@ public class Play extends JFrame {
 		pack();
 		setMinimumSize(getBounds().getSize());
 		setSize(new Dimension(1050, 600));
-		locateCenter();
+		locateCenter(this);
 		setResizable(true);
 		setVisible(true);
 	}
 
 	/**
-	 * Locate the window at center.
+	 * Locate the window (JFrame) at center.
 	 */
-	private void locateCenter() {
+	public static void locateCenter(JFrame frame) {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2
-				- this.getSize().height / 2);
+		frame.setLocation(dim.width / 2 - frame.getSize().width / 2,
+				dim.height / 2 - frame.getSize().height / 2);
 	}
 
 	/**
@@ -225,32 +225,35 @@ public class Play extends JFrame {
 		private JMenuItem exitMenuItem = null;
 
 		public MenuBar() {
+
 			JMenu optionMenu = new JMenu(Lang.menu_option);
 			add(optionMenu);
-			// Add Menu Items
+
+			/* Add Menu Items */
 			optionMenu.add(helpMenuItem = new JMenuItem(Lang.menu_help));
 			optionMenu.add(aboutMenuItem = new JMenuItem(Lang.menu_about));
 			optionMenu.add(new JSeparator());
 			optionMenu.add(exitMenuItem = new JMenuItem(Lang.menu_exit));
-			// Add Action Listener for Menu Items
+
+			/* Add Action Listener for Menu Items */
 			helpMenuItem.addActionListener(new ActionListener() {
 				@Override
-				public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(Play.this, "<html><font size=3>"
-							+ Lang.menu_helpInfo + "</html>", Lang.menu_help,
-							JOptionPane.INFORMATION_MESSAGE);
+				public void actionPerformed(ActionEvent evt) {
+					new Help();
 				}
 			});
+
 			aboutMenuItem.addActionListener(new ActionListener() {
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent evt) {
 					JOptionPane.showMessageDialog(Play.this, "<html>" + Lang.menu_aboutInfo
 							+ "</html>", Lang.menu_about, JOptionPane.INFORMATION_MESSAGE);
 				}
 			});
+
 			exitMenuItem.addActionListener(new ActionListener() {
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(ActionEvent evt) {
 					System.exit(0);
 				}
 			});
@@ -630,7 +633,7 @@ public class Play extends JFrame {
 			}
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				new CharSelectDialog();
 			}
 
@@ -642,7 +645,7 @@ public class Play extends JFrame {
 					add(new CharSelectPanel());
 					pack();
 					setResizable(false);
-					
+
 					setVisible(true);
 				}
 
@@ -666,7 +669,7 @@ public class Play extends JFrame {
 						}
 
 						@Override
-						public void actionPerformed(ActionEvent e) {
+						public void actionPerformed(ActionEvent evt) {
 							switch (currentChar.attack(character)) {
 							case 1: // Attack failed
 								JOptionPane.showMessageDialog(this, Lang.attackFailed);
@@ -706,7 +709,7 @@ public class Play extends JFrame {
 			}
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				new SkillDialog();
 			}
 
@@ -768,7 +771,7 @@ public class Play extends JFrame {
 						}
 
 						@Override
-						public void actionPerformed(ActionEvent e) {
+						public void actionPerformed(ActionEvent evt) {
 							charSkill.useSkill(currentChar, null); // TODO:testing
 
 						}
@@ -788,7 +791,7 @@ public class Play extends JFrame {
 			}
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 				if (player.changeMP(-15) == 1) { // MP not enough
 					JOptionPane.showMessageDialog(this, Lang.noMP);
 					return;
