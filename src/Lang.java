@@ -534,6 +534,7 @@ public class Lang {
 	public final static String stage_afterBattle = "戰鬥後";
 	
 	/* Log */
+	public final static String log = "對戰紀錄";
 	public final static String log_gameStart = "遊戲開始";
 	public final static String log_round = "的回合：";
 	public final static String log_attackSuccess = "攻擊成功";

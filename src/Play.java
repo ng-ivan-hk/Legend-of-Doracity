@@ -7,10 +7,12 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Stack;
 
@@ -476,10 +478,15 @@ public class Play extends JFrame {
 				scrollPane = new JScrollPane(logArea = LOG_AREA = new JTextArea());
 				scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 				scrollPane.setPreferredSize(new Dimension(getWidth(), 100));
+				logArea.setEditable(false);
 
 				// Update Log Area automatically whenever text is appended
-				DefaultCaret caret = (DefaultCaret) logArea.getCaret();
-				caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+				((DefaultCaret) logArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
+				// Print current Date to Log Area
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd '('E')' HH:mm:ss");
+				logArea.append(Lang.legendOfDoracity + Lang.log + " " + player1 + " vs " + player2
+						+ " " + formatter.format(new Date()));
 
 				add(scrollPane, BorderLayout.CENTER);
 			}

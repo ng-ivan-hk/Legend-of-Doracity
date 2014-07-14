@@ -203,7 +203,7 @@ public class Player {
 		}
 
 		this.MP += MP;
-		Play.printlnLog(Lang.player + ": " + name + " " + (MP > 0 ? "+" : "-") + MP + " MP");
+		Play.printlnLog(Lang.player + ": " + name + " " + (MP > 0 ? "+" : "") + MP + " MP");
 
 		if (this.MP > Play.MAX_MP) {
 			this.MP = Play.MAX_MP;
