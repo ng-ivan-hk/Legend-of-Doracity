@@ -642,6 +642,7 @@ public class Play extends JFrame {
 					add(new CharSelectPanel());
 					pack();
 					setResizable(false);
+					
 					setVisible(true);
 				}
 
