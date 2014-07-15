@@ -29,6 +29,7 @@ public class Help extends JFrame {
 		add(BorderLayout.CENTER, contentPane = new ContentPane());
 		pack();
 		setMinimumSize(getBounds().getSize());
+		setSize(new Dimension(800,getWidth()));
 		Play.locateCenter(this);
 		setVisible(true);
 	}
@@ -110,7 +111,6 @@ public class Help extends JFrame {
 		}
 
 		public void setContent(String filename) {
-			System.out.println("/resources/help/" + filename + ".html");
 			java.net.URL helpURL = Play.class.getResource("/resources/help/" + filename + ".html");
 			if (helpURL != null) {
 				try {

@@ -164,7 +164,7 @@ public class Play extends JFrame {
 		revalidate();
 		pack();
 		setMinimumSize(getBounds().getSize());
-		setSize(new Dimension(1050, 600));
+		setSize(new Dimension(1050, 650));
 		locateCenter(this);
 		setResizable(true);
 		setVisible(true);
@@ -962,7 +962,7 @@ public class Play extends JFrame {
 		displayArea.setStage(Lang.stage_drawCards);
 		printlnLog(">>>" + Lang.stage_drawCards + "<<<");
 
-		if (round == 1) { // give each player 5 cards //TODO debug
+		if (round == 1) { // give each player 5 cards
 
 			for (int i = 0; i < 5; i++)
 				draw(player1);

@@ -10,12 +10,21 @@ public class Tea extends Character {
 
 			setValues(true, SABER, true, 3, 2, 2, 2, true);
 
-			passiveSkills = new CharSkill[1];
+			passiveSkills = new CharSkill[2];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
 				public void skillMethod(Character c1, Character c2) {
-					System.out.println("Using Tea's 1stJob passive skill!");
+					System.out.println("Using Tea's 1stJob passive skill 1!");
+
+				}
+
+			});
+			passiveSkills[1] = new CharSkill(this, false, 1, Command.NA, new CharSkillMethod() {
+
+				@Override
+				public void skillMethod(Character c1, Character c2) {
+					System.out.println("Using Tea's 1stJob passive skill 2!");
 
 				}
 
