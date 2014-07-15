@@ -659,7 +659,7 @@ public class Play extends JFrame {
 						}
 
 						// For Tea's skill
-						Tea.checkDoMS(currentChar, player.isPlayer1() ? player2 : player1, this);
+						Tea.checkDoM(currentChar, player.isPlayer1() ? player2 : player1, this);
 					}
 
 					public void add(Character character) {

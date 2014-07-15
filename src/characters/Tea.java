@@ -17,15 +17,15 @@ public class Tea extends Character {
 	 * 
 	 * @param myChar
 	 *            Is my Character a girl?
-	 * @param player
-	 *            Does this Player has Tea?
+	 * @param opponent
+	 *            Does the opponent Player has Tea?
 	 * @param panel
 	 *            Pass the panel and let this method do the thing
 	 */
-	public static void checkDoMS(Character myChar, Player player,
+	public static void checkDoM(Character myChar, Player opponent,
 			Play.PlayerArea.AttackButton.CharSelectDialog.CharSelectPanel panel) {
 		// Does the player has Tea?
-		Tea maybeTea = (Tea) player.contains(Tea.class);
+		Tea maybeTea = (Tea) opponent.contains(Tea.class);
 		if (maybeTea == null) { // No Tea!
 			return;
 		} else if (maybeTea.isDoM() && !myChar.isMale()) { // Skill Activated!!!
