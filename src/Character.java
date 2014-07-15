@@ -223,7 +223,7 @@ abstract public class Character {
 		// If Tea's doM is on, damage - 1
 		if (target instanceof Tea) {
 			Tea tea = (Tea) target;
-			if (tea.isDoM()) {
+			if (tea.isDoM() && !isMale()) {
 				damage--;
 				Play.printlnLog(Lang.tea_DoM_lessDamage);
 			}
