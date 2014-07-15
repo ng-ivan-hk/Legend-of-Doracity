@@ -6,13 +6,19 @@
  */
 public class CharSkill {
 
-	private Character character;
+	/* CharSkill */
+	public final static int SELECT_NO_CHAR = 0;
+	public final static int SELECT_ONE_CHAR = 1;
+
+	private Character character; // Which character owns this skill?
 	private boolean active; // if false, passive
 	private int number; // Which skill is this? (refer to Lang)
-	private int occasion; // see class Command
-	private CharSkillMethod skillMethod;
+	private int occasion; // When can be this used? (see class Command)
+	private CharSkillMethod skillMethod; // Stores the method
 
 	/**
+	 * Create a character skill in setCharacter() from Character's subclass.
+	 * 
 	 * @param character
 	 *            Which character does this skill belongs to?
 	 * @param active
@@ -39,24 +45,26 @@ public class CharSkill {
 	/**
 	 * Call this to use the skill.
 	 * 
-	 * @param c1
-	 *            The Character who uses the skill.
-	 * @param c2
-	 *            The target Character
+	 * @param opponent
+	 *            Opponent Player
 	 */
-	public void useSkill(Character c1, Character c2) {
-		skillMethod.skillMethod(c1, c2);
+	public void useSkill(Player opponent) {
+		skillMethod.skillMethod(character, opponent);
 	}
 
 	public boolean isActive() {
 		return active;
 	}
 
+	public Character getCharacter() {
+		return character;
+	}
+
 	public int getOccasion() {
 		return occasion;
 	}
 
-	public String getName() {
+	public String toString() {
 		return (character.isFirstJob() ? Lang.CharSkills1 : Lang.CharSkills2)[character.getNumber()][active ? 1
 				: 0][number][0];
 	}

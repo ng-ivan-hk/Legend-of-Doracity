@@ -14,7 +14,7 @@ public class Livia extends Character {
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
-				public void skillMethod(Character c1, Character c2) {
+				public void skillMethod(Character  currentChar, Player opponent) {
 					System.out.println("Using Livia's 1stJob passive skill!");
 
 				}
@@ -25,7 +25,7 @@ public class Livia extends Character {
 					new CharSkillMethod() {
 
 						@Override
-						public void skillMethod(Character c1, Character c2) {
+						public void skillMethod(Character  currentChar, Player opponent) {
 							System.out.println("Using Livia's 1stJob active skill!");
 
 						}
@@ -40,7 +40,7 @@ public class Livia extends Character {
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
-				public void skillMethod(Character c1, Character c2) {
+				public void skillMethod(Character  currentChar, Player opponent) {
 					System.out.println("Using Livia's 2ndJob passive skill!");
 
 				}
@@ -51,7 +51,7 @@ public class Livia extends Character {
 					new CharSkillMethod() {
 
 						@Override
-						public void skillMethod(Character c1, Character c2) {
+						public void skillMethod(Character  currentChar, Player opponent) {
 							System.out.println("Using Livia's 2ndJob active skill!");
 
 						}

@@ -624,7 +624,7 @@ public class Play extends JFrame {
 			}
 		}
 
-		private class AttackButton extends JButton implements ActionListener {
+		public class AttackButton extends JButton implements ActionListener {
 			public AttackButton() {
 				setText(Lang.normalAttack);
 				setToolTipText(Lang.normalAttackInfo);
@@ -637,7 +637,7 @@ public class Play extends JFrame {
 				new CharSelectDialog();
 			}
 
-			private class CharSelectDialog extends JDialog {
+			public class CharSelectDialog extends JDialog {
 				public CharSelectDialog() {
 					super(Play.this, true);
 					setLocationRelativeTo(AttackButton.this);
@@ -649,17 +649,24 @@ public class Play extends JFrame {
 					setVisible(true);
 				}
 
-				private class CharSelectPanel extends JPanel {
+				public class CharSelectPanel extends JPanel {
 					public CharSelectPanel() {
 						setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 						Character[] charTemp = player.isPlayer1() ? player2.getCharacters()
 								: player1.getCharacters();
 						for (int i = 0; i < CHAR_MAX; i++) {
-							add(new CharButton(charTemp[i]));
+							add(charTemp[i]);
 						}
+
+						// For Tea's skill
+						Tea.checkDoMS(currentChar, player.isPlayer1() ? player2 : player1, this);
 					}
 
-					private class CharButton extends JButton implements ActionListener {
+					public void add(Character character) {
+						add(new CharButton(character));
+					}
+
+					public class CharButton extends JButton implements ActionListener {
 						private Character character = null;
 
 						public CharButton(Character character) {
@@ -756,7 +763,7 @@ public class Play extends JFrame {
 
 						public CharSkillButton(CharSkill charSkill) {
 							this.charSkill = charSkill;
-							setText(charSkill.getName());
+							setText(charSkill.toString());
 
 							setToolTipText("<html><font color=blue>"
 									+ (charSkill.getOccasion() != Command.NA ? Lang.occasion[charSkill
@@ -772,7 +779,24 @@ public class Play extends JFrame {
 
 						@Override
 						public void actionPerformed(ActionEvent evt) {
-							charSkill.useSkill(currentChar, null); // TODO:testing
+							Play.printlnLog(currentChar + Lang.log_castSkill + charSkill + " ("
+									+ Lang.log_skillEffect + charSkill.getInfo() + ")");
+
+							// Really use skill!
+							charSkill.useSkill(currentChar.getPlayer().isPlayer1() ? player2
+									: player1);
+
+							// Update Area
+							player1Area.updateHPMP();
+							player2Area.updateHPMP();
+							displayArea.battleField.updateAllLabels();
+
+							// Pass
+							SkillDialog.this.dispose();
+							CastSkillButton.this.setEnabled(false);
+							synchronized (Play.this) {
+								Play.this.notify();
+							}
 
 						}
 					}
@@ -948,9 +972,12 @@ public class Play extends JFrame {
 			stageDuringBattle();
 			stageAfterBattle();
 
-			// Defense off for all characters
+			// Call characters to disable something (e.g. skills)
 			for (int i = 0; i < charList.size(); i++) {
-				charList.get(i).setDefense(false);
+				Character temp = charList.get(i);
+				temp.roundEnd();
+				// Defense off for all characters
+				temp.setDefense(false);
 			}
 
 		}

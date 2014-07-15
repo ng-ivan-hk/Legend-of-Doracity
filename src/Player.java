@@ -133,7 +133,7 @@ public class Player {
 
 			}
 		}
-		
+
 	}
 
 	public String toString() {
@@ -179,7 +179,7 @@ public class Player {
 		// Return 0 if success
 		// Return 1 if player HP <= 0 (dead)
 		this.HP += HP;
-		Play.printlnLog(Lang.player + ": " + name + " " + (HP > 0 ? "+" : "") + HP + " HP");
+		Play.printlnLog(Lang.player + ": " + name + " " + (HP >= 0 ? "+" : "") + HP + " HP");
 
 		if (this.HP > Play.MAX_HP) {
 			this.HP = Play.MAX_HP;
@@ -203,7 +203,7 @@ public class Player {
 		}
 
 		this.MP += MP;
-		Play.printlnLog(Lang.player + ": " + name + " " + (MP > 0 ? "+" : "") + MP + " MP");
+		Play.printlnLog(Lang.player + ": " + name + " " + (MP >= 0 ? "+" : "") + MP + " MP");
 
 		if (this.MP > Play.MAX_MP) {
 			this.MP = Play.MAX_MP;
@@ -222,6 +222,22 @@ public class Player {
 
 	protected Character[] getCharacters() {
 		return characters;
+	}
+
+	/**
+	 * Check if this Player contains a specific Character.
+	 * 
+	 * @param charClass
+	 *            Character.class
+	 * @return that specific Character object; null if not found
+	 */
+	protected Character contains(Class<?> charClass) {
+		for (int i = 0; i < Play.CHAR_MAX; i++) {
+			if (charClass.isInstance(characters[i])) {
+				return characters[i];
+			}
+		}
+		return null;
 	}
 
 	protected int indexOfChar(Character target) {

@@ -548,7 +548,14 @@ public class Lang {
 	public final static String log_round = "的回合：";
 	public final static String log_attackSuccess = "攻擊成功";
 	public final static String log_attackFailed = "攻擊失敗";
+	public final static String log_castSkill = "發動了技能：";
+	public final static String log_skillEffect = "技能效果：";
 	public final static String log_lost = "戰敗！";
+
+	// Skill messages
+	public final static String tea_DoM = "烏龍茶的抖M技能正在發動：";
+	public final static String tea_DoM_attackTeaOnly = tea_DoM + "女性只能攻擊茶";
+	public final static String tea_DoM_lessDamage = tea_DoM + "所受傷害-1";
 
 	/* Error Messages */
 	public final static String error = "錯誤";

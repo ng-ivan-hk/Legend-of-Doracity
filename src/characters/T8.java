@@ -15,7 +15,7 @@ public class T8 extends Character {
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
-				public void skillMethod(Character c1, Character c2) {
+				public void skillMethod(Character  currentChar, Player opponent) {
 					System.out.println("Using T8's 1stJob passive skill!");
 
 				}
@@ -26,7 +26,7 @@ public class T8 extends Character {
 					new CharSkillMethod() {
 
 						@Override
-						public void skillMethod(Character c1, Character c2) {
+						public void skillMethod(Character  currentChar, Player opponent) {
 							System.out.println("Using T8's 1stJob active skill!");
 
 						}
@@ -42,7 +42,7 @@ public class T8 extends Character {
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
-				public void skillMethod(Character c1, Character c2) {
+				public void skillMethod(Character  currentChar, Player opponent) {
 					System.out.println("Using T8's 2ndJob passive skill 1!");
 
 				}
@@ -51,7 +51,7 @@ public class T8 extends Character {
 			passiveSkills[1] = new CharSkill(this, false, 1, Command.NA, new CharSkillMethod() {
 
 				@Override
-				public void skillMethod(Character c1, Character c2) {
+				public void skillMethod(Character  currentChar, Player opponent) {
 					System.out.println("Using T8's 2ndJob passive skill 2!");
 
 				}
@@ -63,7 +63,7 @@ public class T8 extends Character {
 					new CharSkillMethod() {
 
 						@Override
-						public void skillMethod(Character c1, Character c2) {
+						public void skillMethod(Character  currentChar, Player opponent) {
 							System.out.println("Using T8's 2ndJob active skill 1!");
 
 						}
@@ -73,7 +73,7 @@ public class T8 extends Character {
 					new CharSkillMethod() {
 
 						@Override
-						public void skillMethod(Character c1, Character c2) {
+						public void skillMethod(Character  currentChar, Player opponent) {
 							System.out.println("Using T8's 2ndJob active skill 2!");
 
 						}
@@ -83,7 +83,7 @@ public class T8 extends Character {
 					new CharSkillMethod() {
 
 						@Override
-						public void skillMethod(Character c1, Character c2) {
+						public void skillMethod(Character  currentChar, Player opponent) {
 							System.out.println("Using T8's 2ndJob active skill 3!");
 
 						}

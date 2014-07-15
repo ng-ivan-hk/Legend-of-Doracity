@@ -13,17 +13,24 @@ abstract public class Character {
 	public final static int SUPPORT = 3;
 	public final static int NA = 4;
 
-	/* Character properties */
+	/* Character's initial properties */
+	// Modify only when create character or job change
 	private Player player; // Player object (who owns the character?)
 	private int number; // number of the character
 	private boolean male; // if false, female
 	private int job; // from 0 to 3 (see static field "jobs")
 	private boolean physical; // if false, mana
-	private int attack;
-	private int defP; // physical defense
-	private int defM; // magical defense
-	private int speed; // AT (who moves first)
+	private int attack_init;
+	private int defP_init; // physical defense
+	private int defM_init; // magical defense
+	private int speed_init; // AT (who moves first)
 	private boolean doracity; // if false, academy
+
+	/* Character's current properties */
+	private int attack;
+	private int defP;
+	private int defM;
+	private int speed;
 
 	protected CharSkill[] passiveSkills = null;
 	protected CharSkill[] activeSkills = null;
@@ -31,7 +38,7 @@ abstract public class Character {
 	/* Character variables */
 	private boolean firstJob = true; // if false, second job
 	private Equipment equipment = null;
-	private boolean defense = false; // character will defense if attacked
+	protected boolean defense = false; // character will defense if attacked
 
 	/**
 	 * @param player
@@ -50,9 +57,21 @@ abstract public class Character {
 		setCharacter();
 	}
 
+	/**
+	 * Set character properties and skills when it is created or job change.
+	 */
 	abstract protected void setCharacter();
 
 	/**
+	 * Override this if the character needs to do something when a round ends.
+	 * No need to include defense off.
+	 */
+	public void roundEnd() {
+	}
+
+	/**
+	 * Call this in setCharacter() to set character's properties.
+	 * 
 	 * @param male
 	 *            male->true, female->false
 	 * @param job
@@ -75,10 +94,10 @@ abstract public class Character {
 		this.male = male;
 		this.job = job;
 		this.physical = physical;
-		this.attack = attack;
-		this.defP = defP;
-		this.defM = defM;
-		this.speed = speed;
+		this.attack = this.attack_init = attack;
+		this.defP = this.defP_init = defP;
+		this.defM = this.defM_init = defM;
+		this.speed = this.speed_init = speed;
 		this.doracity = doracity;
 	}
 
@@ -197,10 +216,20 @@ abstract public class Character {
 			return 2;
 		}
 
-		// Calculate damage
+		/* Calculate damage */
 		int c2Def = isPhysical() ? target.getDefP() : target.getDefM();
 		int damage = getAttack() - c2Def;
-		
+
+		// If Tea's doM is on, damage - 1
+		if (target instanceof Tea) {
+			Tea tea = (Tea) target;
+			if (tea.isDoM()) {
+				damage--;
+				Play.printlnLog(Lang.tea_DoM_lessDamage);
+			}
+		}
+
+		/* Print log and set defense */
 		Play.printlnLog(this + " " + Lang.attack + " " + target + " --- ");
 
 		Play.printLog((isPhysical() ? Lang.physical : Lang.mana) + Lang.attack + getAttack()
@@ -215,6 +244,7 @@ abstract public class Character {
 			target.setDefense(true);
 		}
 
+		/* Really attack */
 		if (target.getPlayer().changeHP(-damage) == 1) // Opponent dead
 			return 3;
 
