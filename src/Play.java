@@ -2,11 +2,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +34,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.DefaultCaret;
@@ -75,6 +78,7 @@ public class Play extends JFrame {
 	/* Non-Static Variables */
 	private Player player1 = null; // Player who attacks first
 	private Player player2 = null; // Player who attacks next
+	private Player[] players = null;
 	private Stack<Card> cards = null; // card stack on the table
 	private ArrayList<Character> charList = null;
 	private Character currentChar = null;
@@ -85,10 +89,13 @@ public class Play extends JFrame {
 	private DisplayArea displayArea = null;
 	private PlayerArea player1Area = null;
 	private PlayerArea player2Area = null;
+	PlayerArea[] playerAreas = null; // refers to the 2 player areas
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
+
 		Play play = new Play();
 		play.start();
+
 	}
 
 	/* Methods */
@@ -117,6 +124,7 @@ public class Play extends JFrame {
 		Collections.shuffle(cards);
 
 		setGUI();
+
 	}
 
 	private void setGUI() throws InterruptedException {
@@ -161,6 +169,11 @@ public class Play extends JFrame {
 		add(BorderLayout.WEST, player1Area = new PlayerArea(player1));
 		add(BorderLayout.EAST, player2Area = new PlayerArea(player2));
 
+		// If we want to do same thing for both area we can use playerAreas
+		playerAreas = new PlayerArea[2];
+		playerAreas[0] = player1Area;
+		playerAreas[1] = player2Area;
+
 		revalidate();
 		pack();
 		setMinimumSize(getBounds().getSize());
@@ -168,6 +181,7 @@ public class Play extends JFrame {
 		locateCenter(this);
 		setResizable(true);
 		setVisible(true);
+
 	}
 
 	/**
@@ -207,10 +221,15 @@ public class Play extends JFrame {
 		// new NonkiNobita(
 		// player2), new Nana(player2), new GameNobita(player2));
 
+		players = new Player[2];
+		players[0] = player1;
+		players[1] = player2;
+
 		/* Create Character list */
 		charList = new ArrayList<Character>();
 		charList.addAll(new ArrayList<Character>(Arrays.asList(player1.getCharacters())));
 		charList.addAll(new ArrayList<Character>(Arrays.asList(player2.getCharacters())));
+
 	}
 
 	/**
@@ -966,11 +985,15 @@ public class Play extends JFrame {
 			printlnLog("========== " + Lang.round + round + " ==========");
 
 			// Let's begin!
-			stageDrawCards();
-			stagePrepare();
-			stageBeforeBattle();
-			stageDuringBattle();
-			stageAfterBattle();
+			try {
+				stageDrawCards();
+				stagePrepare();
+				stageBeforeBattle();
+				stageDuringBattle();
+				stageAfterBattle();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
 
 			// Call characters to disable something (e.g. skills)
 			for (int i = 0; i < charList.size(); i++) {
@@ -983,7 +1006,7 @@ public class Play extends JFrame {
 		}
 	}
 
-	private void stageDrawCards() throws InterruptedException {
+	private void stageDrawCards() throws InterruptedException, InvocationTargetException {
 		/* === Draw Cards === */
 
 		displayArea.setStage(Lang.stage_drawCards);
@@ -991,36 +1014,45 @@ public class Play extends JFrame {
 
 		if (round == 1) { // give each player 5 cards
 
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 5; i++) {
 				draw(player1);
-			for (int i = 0; i < 5; i++)
 				draw(player2);
-		} else if (cards.size() >= 8) { // give each player at most 2 cards
+			}
 
-			// Player 1
-			player1Area.drawButton.setDrawCard(DRAW_CARD_MAX);
-			player1Area.passButton.setEnabled(true);
-			synchronized (this) {
-				// wait until the draw or pass button is pressed
-				this.wait();
+		} else if (cards.size() >= 8) { // give each player at most 3 cards
+
+			for (int p = 0; p < playerAreas.length; p++) {
+				final PlayerArea playerAreaTemp = playerAreas[p];
+
+				SwingUtilities.invokeAndWait(new Runnable() {
+					@Override
+					public void run() {
+						playerAreaTemp.drawButton.setDrawCard(DRAW_CARD_MAX);
+						playerAreaTemp.passButton.setEnabled(true);
+					}
+				});
+
+				synchronized (this) {
+					this.wait(); // wait until a button is pressed
+				}
+
+				SwingUtilities.invokeAndWait(new Runnable() {
+					@Override
+					public void run() {
+						playerAreaTemp.drawButton.setEnabled(false);
+						playerAreaTemp.passButton.setEnabled(false);
+					}
+				});
+
 			}
-			player1Area.drawButton.setEnabled(false);
-			player1Area.passButton.setEnabled(false);
-			// Player 2
-			player2Area.drawButton.setDrawCard(DRAW_CARD_MAX);
-			player2Area.passButton.setEnabled(true);
-			synchronized (this) {
-				this.wait();
-			}
-			player2Area.drawButton.setEnabled(false);
-			player2Area.passButton.setEnabled(false);
+
 		}
 		player1.listCards();
 		player2.listCards();
 	}
 
-	private void stagePrepare() throws InterruptedException {
-		/* === Prepare === */
+	private void stagePrepare() throws InterruptedException, InvocationTargetException {
+
 		sortAllChars();
 		displayArea.setStage(Lang.stage_prepare + " (" + Lang.stage_autoHealing + ")");
 		printlnLog(">>>" + Lang.stage_prepare + "<<<");
@@ -1035,70 +1067,56 @@ public class Play extends JFrame {
 
 		/* Heal MP */
 		// TODO: Handle Shirogane & Anthony's case
-		// Player 1
-		int healMP = 0;
-		Character[] playerCharTemp = player1.getCharacters();
-		for (int i = 0; i < CHAR_MAX; i++) {
-			switch (playerCharTemp[i].getJob()) {
-			case Character.SABER:
-			case Character.ARCHER:
-				healMP++;
-				break;
-			case Character.CASTER:
-				healMP += 2;
-				break;
-			case Character.SUPPORT:
-				healMP += 3;
-				break;
+		for (int p = 0; p < players.length; p++) {
+			int healMP = 0;
+			Character[] playerCharTemp = players[p].getCharacters();
+			for (int i = 0; i < CHAR_MAX; i++) {
+				switch (playerCharTemp[i].getJob()) {
+				case Character.SABER:
+				case Character.ARCHER:
+					healMP++;
+					break;
+				case Character.CASTER:
+					healMP += 2;
+					break;
+				case Character.SUPPORT:
+					healMP += 3;
+					break;
 
+				}
 			}
+			players[p].changeMP(healMP);
+			playerAreas[p].updateArea();
 		}
-		System.out.println("Final Heal MP" + healMP);
-		player1.changeMP(healMP);
-		// Player 2
-		healMP = 0;
-		playerCharTemp = player2.getCharacters();
-		for (int i = 0; i < CHAR_MAX; i++) {
-			switch (playerCharTemp[i].getJob()) {
-			case Character.SABER:
-			case Character.ARCHER:
-				healMP++;
-				break;
-			case Character.CASTER:
-				healMP += 2;
-				break;
-			case Character.SUPPORT:
-				healMP += 3;
-				break;
-
-			}
-		}
-		player2.changeMP(healMP);
-
-		player1Area.updateArea();
-		player2Area.updateArea();
 
 		player1.listStatus();
 		player2.listStatus();
 
 		/* Use Item */
 		displayArea.setStage(Lang.stage_prepare + " (" + Lang.stage_useItem + ")");
-		// Player 1
-		player1Area.setEnableItem(true);
-		player1Area.passButton.setEnabled(true);
-		synchronized (this) {
-			this.wait();
+		for (int p = 0; p < playerAreas.length; p++) {
+			final PlayerArea playerAreaTemp = playerAreas[p];
+
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					playerAreaTemp.setEnableItem(true);
+					playerAreaTemp.passButton.setEnabled(true);
+				}
+			});
+
+			synchronized (this) {
+				this.wait();
+			}
+
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					playerAreaTemp.setEnableItem(false);
+					playerAreaTemp.passButton.setEnabled(false);
+				}
+			});
 		}
-		player1Area.setEnableItem(false);
-		player1Area.passButton.setEnabled(false);
-		// Player2
-		player2Area.setEnableItem(true);
-		player2Area.passButton.setEnabled(true);
-		synchronized (this) {
-			this.wait();
-		}
-		player2Area.setEnableItem(false);
-		player2Area.passButton.setEnabled(false);
 
 		/* According to char order: equip or/and job change */
 		displayArea.setStage(Lang.stage_prepare + " (" + Lang.stage_equipOrJobChange + ")");
@@ -1113,16 +1131,30 @@ public class Play extends JFrame {
 					.indexOfChar(currentChar), true);
 
 			// Handle Buttons
-			PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area : player2Area;
-			areaTemp.jobChangeButton.setEnabled(true);
-			areaTemp.passButton.setEnabled(true);
-			areaTemp.setEnableEquipment(true);
+			final PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
+					: player2Area;
+
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					areaTemp.jobChangeButton.setEnabled(true);
+					areaTemp.passButton.setEnabled(true);
+					areaTemp.setEnableEquipment(true);
+				}
+			});
+
 			synchronized (this) {
 				this.wait();
 			}
-			areaTemp.jobChangeButton.setEnabled(false);
-			areaTemp.passButton.setEnabled(false);
-			areaTemp.setEnableEquipment(false);
+
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					areaTemp.jobChangeButton.setEnabled(false);
+					areaTemp.passButton.setEnabled(false);
+					areaTemp.setEnableEquipment(false);
+				}
+			});
 
 			// Unhighlight the character
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
@@ -1131,8 +1163,8 @@ public class Play extends JFrame {
 		}
 	}
 
-	private void stageBeforeBattle() throws InterruptedException {
-		/* === Before Battle === */
+	private void stageBeforeBattle() throws InterruptedException, InvocationTargetException {
+
 		sortAllChars();
 		printlnLog(">>>" + Lang.stage_beforeBattle + "<<<");
 		displayArea.setStage(Lang.stage_beforeBattle);
@@ -1149,16 +1181,29 @@ public class Play extends JFrame {
 					.indexOfChar(currentChar), true);
 
 			// Handle Buttons
-			PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area : player2Area;
-			areaTemp.castSkillButton.setEnabled(true);
-			areaTemp.passButton.setEnabled(true);
-			areaTemp.setEnableSkill(true);
+			final PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
+					: player2Area;
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					areaTemp.castSkillButton.setEnabled(true);
+					areaTemp.passButton.setEnabled(true);
+					areaTemp.setEnableSkill(true);
+				}
+			});
+
 			synchronized (this) {
 				this.wait();
 			}
-			areaTemp.castSkillButton.setEnabled(false);
-			areaTemp.passButton.setEnabled(false);
-			areaTemp.setEnableSkill(false);
+
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					areaTemp.castSkillButton.setEnabled(false);
+					areaTemp.passButton.setEnabled(false);
+					areaTemp.setEnableSkill(false);
+				}
+			});
 
 			// Unhighlight the character
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
@@ -1167,15 +1212,14 @@ public class Play extends JFrame {
 		}
 	}
 
-	private void stageDuringBattle() throws InterruptedException {
-		/* === During Battle === */
+	private void stageDuringBattle() throws InterruptedException, InvocationTargetException {
+
 		sortAllChars();
 		printlnLog(">>>" + Lang.stage_duringBattle + "<<<");
 		displayArea.setStage(Lang.stage_duringBattle);
 		currentStatus = Command.DURING_BATTLE;
 
 		// Normal Attack/Skills/Skill Card according to charList
-
 		for (int i = 0; i < charList.size(); i++) {
 
 			currentChar = charList.get(i);
@@ -1186,18 +1230,30 @@ public class Play extends JFrame {
 					.indexOfChar(currentChar), true);
 
 			// Handle Buttons
-			PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area : player2Area;
-			areaTemp.attackButton.setEnabled(true);
-			areaTemp.castSkillButton.setEnabled(true);
-			areaTemp.passButton.setEnabled(true);
-			areaTemp.setEnableSkill(true);
+			final PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
+					: player2Area;
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					areaTemp.attackButton.setEnabled(true);
+					areaTemp.castSkillButton.setEnabled(true);
+					areaTemp.passButton.setEnabled(true);
+					areaTemp.setEnableSkill(true);
+				}
+			});
+
 			synchronized (this) {
 				this.wait();
 			}
-			areaTemp.attackButton.setEnabled(false);
-			areaTemp.castSkillButton.setEnabled(false);
-			areaTemp.passButton.setEnabled(false);
-			areaTemp.setEnableSkill(false);
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					areaTemp.attackButton.setEnabled(false);
+					areaTemp.castSkillButton.setEnabled(false);
+					areaTemp.passButton.setEnabled(false);
+					areaTemp.setEnableSkill(false);
+				}
+			});
 
 			// Unhighlight the character
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
@@ -1206,8 +1262,7 @@ public class Play extends JFrame {
 		}
 	}
 
-	private void stageAfterBattle() throws InterruptedException {
-		/* === After Battle === */
+	private void stageAfterBattle() throws InterruptedException, InvocationTargetException {
 		sortAllChars();
 		printlnLog(">>>" + Lang.stage_afterBattle + "<<<");
 		displayArea.setStage(Lang.stage_afterBattle);
@@ -1224,14 +1279,26 @@ public class Play extends JFrame {
 					.indexOfChar(currentChar), true);
 
 			// Handle Buttons
-			PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area : player2Area;
-			areaTemp.castSkillButton.setEnabled(true);
-			areaTemp.passButton.setEnabled(true);
+			final PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
+					: player2Area;
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					areaTemp.castSkillButton.setEnabled(true);
+					areaTemp.passButton.setEnabled(true);
+				}
+			});
+
 			synchronized (this) {
 				this.wait();
 			}
-			areaTemp.castSkillButton.setEnabled(false);
-			areaTemp.passButton.setEnabled(false);
+			SwingUtilities.invokeAndWait(new Runnable() {
+				@Override
+				public void run() {
+					areaTemp.castSkillButton.setEnabled(false);
+					areaTemp.passButton.setEnabled(false);
+				}
+			});
 
 			// Unhighlight the character
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
