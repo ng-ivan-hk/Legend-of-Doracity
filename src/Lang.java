@@ -552,10 +552,15 @@ public class Lang {
 	public final static String log_skillEffect = "技能效果：";
 	public final static String log_lost = "戰敗！";
 
-	// Skill messages
+	/* Log: Skill messages */
+	//1. Tea
 	public final static String tea_DoM = "烏龍茶的抖M技能正在發動：";
 	public final static String tea_DoM_attackTeaOnly = tea_DoM + "女性只能攻擊茶";
-	public final static String tea_DoM_lessDamage = tea_DoM + "所受傷害-1";
+	public final static String tea_DoM_lessDamage = tea_DoM + "傷害-1";
+	//4. Map
+	public final static String map_assassin = "地圖的刺殺技能正在發動：";
+	public final static String map_assassin_moreDamage = map_assassin + "傷害+1";
+	public final static String map_choose = "地圖選擇了：";
 
 	/* Error Messages */
 	public final static String error = "錯誤";

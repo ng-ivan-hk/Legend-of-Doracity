@@ -1,3 +1,11 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+
 /**
  * Represents a character's skill (whether it's active or passive)
  * 
@@ -5,6 +13,98 @@
  * 
  */
 public class CharSkill {
+
+	/* CharSelectPanel for CharSkill */
+	@SuppressWarnings("serial")
+	public static class CharSelectDialog extends JDialog {
+		private Character currentChar = null;
+		private Player opponent = null; // be null if list my character's only
+		private TargetMethod method = null;
+
+		/**
+		 * Select a character from the opponent player.
+		 * 
+		 * @param currentChar
+		 * @param opponent
+		 * @param method
+		 */
+		public CharSelectDialog(Character currentChar, Player opponent, TargetMethod method) {
+			super((java.awt.Frame)null, true);
+			Play.locateCenter(this);
+			this.currentChar = currentChar;
+			this.opponent = opponent;
+			this.method = method;
+
+			setTitle(Lang.charSelection);
+			add(new CharSelectPanel(true));
+			pack();
+			setResizable(false);
+			setVisible(true);
+		}
+
+		/**
+		 * Select a character from myself.
+		 * 
+		 * @param currentChar
+		 * @param method
+		 */
+		public CharSelectDialog(Character currentChar, TargetMethod method) {
+			this.currentChar = currentChar;
+			this.method = method;
+
+			setTitle(Lang.charSelection);
+			add(new CharSelectPanel(false));
+			pack();
+			setResizable(false);
+			setVisible(true);
+		}
+
+		public class CharSelectPanel extends SuperCharSelectPanel {
+			/**
+			 * @param listOpponent
+			 *            Pass true if list opponent's characters, false if list
+			 *            my characters
+			 */
+			public CharSelectPanel(boolean listOpponent) {
+				setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+				if (listOpponent) {
+					Character[] charTemp = opponent.getCharacters();
+					for (int i = 0; i < Play.CHAR_MAX; i++) {
+						add(charTemp[i]);
+					}
+					// For Tea's skill
+					Tea.checkDoM(currentChar, opponent, this);
+				} else { // List my character
+					Character[] charTemp = currentChar.getPlayer().getCharacters();
+					for (int i = 0; i < Play.CHAR_MAX; i++) {
+						add(charTemp[i]);
+					}
+				}
+			}
+
+			public void add(Character character) {
+				add(new CharButton(character));
+			}
+
+			public class CharButton extends JButton implements ActionListener {
+				private Character character = null;
+
+				public CharButton(Character character) {
+					this.character = character;
+					setText(character.toString());
+					addActionListener(this);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent evt) {
+					CharSelectDialog.this.dispose();
+					method.targetMethod(currentChar, character);
+				}
+			}
+		}
+
+	}
 
 	/* CharSkill */
 	public final static int SELECT_NO_CHAR = 0;
@@ -15,6 +115,7 @@ public class CharSkill {
 	private int number; // Which skill is this? (refer to Lang)
 	private int occasion; // When can be this used? (see class Command)
 	private CharSkillMethod skillMethod; // Stores the method
+	private int requiredMP; // How many MP is required for this skill?
 
 	/**
 	 * Create a character skill in setCharacter() from Character's subclass.
@@ -32,14 +133,17 @@ public class CharSkill {
 	 *            AFTER_BATTLE
 	 * @param skillMethod
 	 *            Pass the function that really does the skill
+	 * @param requiredMP
+	 *            How many MP is required for this skill?
 	 */
 	public CharSkill(Character character, boolean active, int number, int occasion,
-			CharSkillMethod skillMethod) {
+			CharSkillMethod skillMethod, int requiredMP) {
 		this.character = character;
 		this.active = active;
 		this.number = number;
 		this.occasion = occasion;
 		this.skillMethod = skillMethod;
+		this.requiredMP = requiredMP;
 	}
 
 	/**
@@ -62,6 +166,10 @@ public class CharSkill {
 
 	public int getOccasion() {
 		return occasion;
+	}
+
+	public int getRequiredMP() {
+		return requiredMP;
 	}
 
 	public String toString() {

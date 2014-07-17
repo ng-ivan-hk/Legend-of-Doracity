@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
@@ -17,6 +18,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Stack;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -90,6 +92,9 @@ public class Play extends JFrame {
 	private PlayerArea player1Area = null;
 	private PlayerArea player2Area = null;
 	PlayerArea[] playerAreas = null; // refers to the 2 player areas
+
+	/* for threads */
+	public static CountDownLatch latch = null;
 
 	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
 
@@ -187,7 +192,7 @@ public class Play extends JFrame {
 	/**
 	 * Locate the window (JFrame) at center.
 	 */
-	public static void locateCenter(JFrame frame) {
+	public static void locateCenter(Window frame) {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dim.width / 2 - frame.getSize().width / 2,
 				dim.height / 2 - frame.getSize().height / 2);
@@ -668,13 +673,13 @@ public class Play extends JFrame {
 					setVisible(true);
 				}
 
-				public class CharSelectPanel extends JPanel {
+				public class CharSelectPanel extends SuperCharSelectPanel {
 					public CharSelectPanel() {
 						setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 						Character[] charTemp = player.isPlayer1() ? player2.getCharacters()
 								: player1.getCharacters();
 						for (int i = 0; i < CHAR_MAX; i++) {
-							add(charTemp[i]);
+							add(new CharButton(charTemp[i]));
 						}
 
 						// For Tea's skill
@@ -798,10 +803,17 @@ public class Play extends JFrame {
 
 						@Override
 						public void actionPerformed(ActionEvent evt) {
+							// Check MP enough?
+							if (charSkill.getCharacter().getPlayer()
+									.changeMP(-charSkill.getRequiredMP()) == 1) {
+								JOptionPane.showMessageDialog(this, Lang.noMP);
+								return;
+							}
+
 							Play.printlnLog(currentChar + Lang.log_castSkill + charSkill + " ("
 									+ Lang.log_skillEffect + charSkill.getInfo() + ")");
 
-							// Really use skill!
+							/* Really use skill! */
 							charSkill.useSkill(currentChar.getPlayer().isPlayer1() ? player2
 									: player1);
 
@@ -995,12 +1007,10 @@ public class Play extends JFrame {
 				e.printStackTrace();
 			}
 
-			// Call characters to disable something (e.g. skills)
+			// Call characters to disable something (e.g. defense, skills)
 			for (int i = 0; i < charList.size(); i++) {
 				Character temp = charList.get(i);
 				temp.roundEnd();
-				// Defense off for all characters
-				temp.setDefense(false);
 			}
 
 		}

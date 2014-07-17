@@ -39,6 +39,7 @@ abstract public class Character {
 	private boolean firstJob = true; // if false, second job
 	private Equipment equipment = null;
 	protected boolean defense = false; // character will defense if attacked
+	protected boolean assassin = false; // Map's Active Skill
 
 	/**
 	 * @param player
@@ -63,10 +64,21 @@ abstract public class Character {
 	abstract protected void setCharacter();
 
 	/**
-	 * Override this if the character needs to do something when a round ends.
-	 * No need to include defense off.
+	 * Do something when a round ends.
 	 */
-	public void roundEnd() {
+	final public void roundEnd() {
+		// Defense off
+		defense = false;
+		// Map's Assassin off
+		assassin = false;
+		roundEndExtra();
+	}
+
+	/**
+	 * Override this if the character needs to do something else other than
+	 * roundEnd() when a round ends.
+	 */
+	public void roundEndExtra() {
 	}
 
 	/**
@@ -204,6 +216,14 @@ abstract public class Character {
 	public boolean isDefense() {
 		return defense;
 	}
+	
+	public void setAssassin(boolean b){
+		assassin = b;
+	}
+
+	public boolean isAssassin() {
+		return assassin;
+	}
 
 	public int attack(Character target) { // Normal Attack (c1->c2)
 
@@ -227,6 +247,12 @@ abstract public class Character {
 				damage--;
 				Play.printlnLog(Lang.tea_DoM_lessDamage);
 			}
+		}
+
+		// If marked by Map's assassin, damage + 1
+		if (target.isAssassin()) {
+			damage++;
+			Play.printlnLog(Lang.map_assassin_moreDamage);
 		}
 
 		/* Print log and set defense */

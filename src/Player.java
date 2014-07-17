@@ -174,10 +174,14 @@ public class Player {
 		System.out.println("HP: " + HP + " | MP: " + MP);
 	}
 
+	/**
+	 * @param HP
+	 *            How much HP is changed? (e.g. pass 2 if +2HP, pass -1 if -1P)
+	 * @return 0 if success<br>
+	 *         1 if player HP <= 0
+	 */
 	public int changeHP(int HP) {
 
-		// Return 0 if success
-		// Return 1 if player HP <= 0 (dead)
 		this.HP += HP;
 		Play.printlnLog(Lang.player + ": " + name + " " + (HP >= 0 ? "+" : "") + HP + " HP");
 
@@ -194,10 +198,14 @@ public class Player {
 		return 0;
 	}
 
+	/**
+	 * @param MP
+	 *            How much MP is changed? (e.g. pass 2 if +2MP, pass -1 if -1MP)
+	 * @return 0 if success<br>
+	 *         1 if MP is not enough
+	 */
 	public int changeMP(int MP) {
 
-		// Return 0 if success
-		// Return 1 if MP is not enough (cannot use skills)
 		if (this.MP + MP < 0) {
 			return 1;
 		}

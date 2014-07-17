@@ -23,7 +23,7 @@ public class Tea extends Character {
 	 *            Pass the panel and let this method do the thing
 	 */
 	public static void checkDoM(Character myChar, Player opponent,
-			Play.PlayerArea.AttackButton.CharSelectDialog.CharSelectPanel panel) {
+			SuperCharSelectPanel panel) {
 		// Does the player has Tea?
 		Tea maybeTea = (Tea) opponent.contains(Tea.class);
 		if (maybeTea == null) { // No Tea!
@@ -37,7 +37,7 @@ public class Tea extends Character {
 	}
 
 	@Override
-	public void roundEnd() {
+	public void roundEndExtra() {
 		doM = false;
 	}
 
@@ -68,7 +68,7 @@ public class Tea extends Character {
 
 				}
 
-			});
+			}, 0);
 			passiveSkills[1] = new CharSkill(this, false, 1, Command.NA, new CharSkillMethod() {
 
 				@Override
@@ -77,7 +77,7 @@ public class Tea extends Character {
 
 				}
 
-			});
+			}, 0);
 			activeSkills = new CharSkill[1];
 			activeSkills[0] = new CharSkill(this, true, 0, Command.BEFORE_BATTLE,
 					new CharSkillMethod() {
@@ -88,7 +88,7 @@ public class Tea extends Character {
 							doM = true;
 						}
 
-					});
+					}, 3);
 
 		} else {
 
@@ -103,7 +103,7 @@ public class Tea extends Character {
 
 				}
 
-			});
+			}, 0);
 			activeSkills = new CharSkill[1];
 			activeSkills[0] = new CharSkill(this, true, 0, Command.BEFORE_BATTLE,
 					new CharSkillMethod() {
@@ -114,7 +114,7 @@ public class Tea extends Character {
 
 						}
 
-					});
+					}, 7);
 		}
 	}
 
