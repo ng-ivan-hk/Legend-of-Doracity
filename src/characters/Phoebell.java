@@ -1,4 +1,61 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
+
 public class Phoebell extends Character {
+
+	@Override
+	public void jobChangeExtra() {
+		if (getPlayer().contains(Livia.class) != null) {
+			if (isFirstJob()) {
+				Play.printlnLog(Lang.phoebell_together);
+				setAttack(getAttack() + 1);
+			}
+		}
+	}
+
+	/**
+	 * Check if the Character is Phoebell and add an option for Physical Attack
+	 * or Mana Attack.
+	 * 
+	 * @param myChar
+	 *            Is my Character Phoebell?
+	 * @param panel
+	 *            Pass the panel and let this method do the thing
+	 */
+	public static void checkPhoebell(final Character myChar, SuperCharSelectPanel panel) {
+		if (myChar instanceof Phoebell) {
+			ActionListener l = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent evt) {
+					if (evt.getActionCommand() == "Physical") {
+						myChar.setPhysical(true);
+					} else {
+						myChar.setPhysical(false);
+					}
+				}
+			};
+			// Create Radio Buttons
+			JRadioButton physicalButton = new JRadioButton(Lang.physical);
+			physicalButton.setActionCommand("Physical");
+			physicalButton.addActionListener(l);
+			physicalButton.setSelected(true);
+			JRadioButton manaButton = new JRadioButton(Lang.mana);
+			manaButton.setActionCommand("Mana");
+			manaButton.addActionListener(l);
+			// Group the Buttons
+			ButtonGroup group = new ButtonGroup();
+			group.add(physicalButton);
+			group.add(manaButton);
+			// Add to panel
+			panel.add(physicalButton);
+			panel.add(manaButton);
+		}
+	}
+
+	/* === Above are Phoebell's unique fields and methods === */
 
 	public Phoebell(Player player) {
 		super(player, 3);
@@ -15,8 +72,7 @@ public class Phoebell extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using Phoebell's 1stJob passive skill 1!");
-
+					// COMPLETED
 				}
 
 			}, 0);
@@ -24,7 +80,7 @@ public class Phoebell extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using Phoebell's 1stJob passive skill 2!");
+					// COMPLETED
 
 				}
 
@@ -50,7 +106,7 @@ public class Phoebell extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using Phoebell's 2ndJob passive skill!");
+					// COMPLETED
 
 				}
 

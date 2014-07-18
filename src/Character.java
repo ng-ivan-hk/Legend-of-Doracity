@@ -19,10 +19,10 @@ abstract public class Character {
 	private int number; // number of the character
 	private boolean male; // if false, female
 	private int job; // from 0 to 3 (see static field "jobs")
-	private boolean physical; // if false, mana
+	private boolean physical; // if false, mana (Phoebell can modify this)
 	private int attack_init;
 	private int defP_init; // physical defense
-	private int defM_init; // magical defense
+	private int defM_init; // mana defense
 	private int speed_init; // AT (who moves first)
 	private boolean doracity; // if false, academy
 
@@ -103,13 +103,13 @@ abstract public class Character {
 	 * @param job
 	 *            SABER, ARCHER, CASTER, SUPPORT, NA
 	 * @param physical
-	 *            Physical->true, Magical->false
+	 *            Physical->true, Mana->false
 	 * @param attack
 	 *            Attack
 	 * @param defP
 	 *            Physical Defense
 	 * @param defM
-	 *            Magical Defense
+	 *            Mana Defense
 	 * @param speed
 	 *            Speed
 	 * @param doracity
@@ -153,6 +153,16 @@ abstract public class Character {
 
 	public String getJobName() {
 		return Lang.JobNames[job];
+	}
+
+	/**
+	 * Used by Phoebell only.
+	 * 
+	 * @param b
+	 */
+	public void setPhysical(boolean b) {
+		if (this instanceof Phoebell)
+			physical = b;
 	}
 
 	public boolean isPhysical() {
@@ -264,28 +274,39 @@ abstract public class Character {
 				Play.printlnLog(Lang.tea_DoM_lessDamage);
 			}
 		}
-		// If marked by Map's assassin, damage + 1
-		if (target.isAssassin()) {
-			damage++;
-			Play.printlnLog(Lang.map_assassin_moreDamage);
-		}
 
 		/* Print log and set defense */
 		Play.printlnLog(this + " " + Lang.attack + " " + target + " --- ");
 
 		Play.printLog((isPhysical() ? Lang.physical : Lang.mana) + Lang.attack + getAttack()
 				+ " -> " + (isPhysical() ? Lang.defP : Lang.defM) + c2Def + " --- ");
+		target.setDefense(true);
 
 		if (damage < 0) { // Attack failed
 			Play.printLog(Lang.log_attackFailed);
-			target.setDefense(true);
+			// Check for Tea's MSoul
+			if (target instanceof Tea) {
+				Tea tea = (Tea) target;
+				if (tea.isFirstJob() && !isMale()) {
+					tea.getPlayer().changeHP(1);
+					Play.printlnLog(Lang.tea_MSoul);
+				}
+			}
 			return 1;
-		} else { // Attack success
+		} else {
 			Play.printLog(Lang.log_attackSuccess);
-			target.setDefense(true);
+			if (damage == 0) { // Attack success but no damage
+
+			} else { // Attack success with damage!
+				// If marked by Map's assassin, damage + 1
+				if (target.isAssassin()) {
+					damage++;
+					Play.printlnLog(Lang.map_assassin_moreDamage);
+				}
+			}
 		}
 
-		/* Really attack */
+		/* True Damage */
 		if (target.getPlayer().changeHP(-damage) == 1) // Opponent dead
 			return 3;
 
@@ -296,6 +317,10 @@ abstract public class Character {
 				tea.getPlayer().changeHP(1);
 				Play.printlnLog(Lang.tea_MSoul);
 			}
+		}
+		// Set Phoebell's property back to physical
+		if (this instanceof Phoebell){
+			setPhysical(true);
 		}
 
 		return 0;

@@ -685,8 +685,10 @@ public class Play extends JFrame {
 							add(new CharButton(charTemp[i]));
 						}
 
-						// For Tea's skill
+						// For Tea's active skill
 						Tea.checkDoM(currentChar, player.isPlayer1() ? player2 : player1, this);
+						// For Phoebell's passive skill
+						Phoebell.checkPhoebell(currentChar, this);
 					}
 
 					public void add(Character character) {
@@ -704,6 +706,7 @@ public class Play extends JFrame {
 
 						@Override
 						public void actionPerformed(ActionEvent evt) {
+
 							switch (currentChar.attack(character)) {
 							case 1: // Attack failed
 								JOptionPane.showMessageDialog(this, Lang.attackFailed);
@@ -857,7 +860,7 @@ public class Play extends JFrame {
 				}
 				// Print Log
 				Play.printlnLog(currentChar + " " + Lang.log_jobChange
-						+ (currentChar.isFirstJob() ? Lang.log_job1 : Lang.log_job2));
+						+ (currentChar.isFirstJob() ? Lang.log_job2 : Lang.log_job1));
 				// Remove Equipment effect
 				removeEquipmentEffect();
 				// Really Job Change
@@ -1114,7 +1117,14 @@ public class Play extends JFrame {
 					break;
 
 				}
+				// Check if there is a job2-Phoebell with Livia
+				if (playerCharTemp[i] instanceof Phoebell && !playerCharTemp[i].isFirstJob()
+						&& playerCharTemp[i].getPlayer().contains(Livia.class) != null) {
+					Play.printlnLog(Lang.phoebell_together_job2);
+					healMP++;
+				}
 			}
+
 			players[p].changeMP(healMP);
 			playerAreas[p].updateArea();
 		}

@@ -568,6 +568,9 @@ public class Lang {
 	public final static String livia_together = "古怪在場，淋琳的相伴技能發動：";
 	public final static String livia_together_job1 = livia_together + "物防+1 魔防+1";
 	public final static String livia_together_job2 = livia_together + "額外回復1HP";
+	// 3. Phoebell
+	public final static String phoebell_together = "淋琳在場，古怪的相伴技能發動：";
+	public final static String phoebell_together_job2 = "古怪的相伴技能發動：MP回復+1";
 	// 4. Map
 	public final static String map_assassin = "地圖的刺殺技能正在發動：";
 	public final static String map_assassin_moreDamage = map_assassin + "傷害+1";
