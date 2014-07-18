@@ -9,7 +9,10 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +23,7 @@ import java.util.Enumeration;
 import java.util.Stack;
 import java.util.concurrent.CountDownLatch;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -486,9 +490,17 @@ public class Play extends JFrame {
 							// @formatter:on
 					);
 
+					URL imageURL = Play.class.getResource("/resources/CharPics/mC"
+							+ String.format("%03d", character.getNumber()) + "-"
+							+ (character.isFirstJob() ? "1" : "2") + ".png");
+					if (imageURL == null) {
+						imageURL = Play.class.getResource("/resources/CharPics/null.png");
+					}
+
 					setToolTipText("<html>" + Lang.equipment + ": <font color=blue>"
 							+ character.getEquipmentName() + "</font><br><font color=green>"
-							+ character.getEquipmentInfo() + "</font></html>");
+							+ character.getEquipmentInfo() + "</font>"
+							+ "<br><img height=316 width=220 src=" + imageURL + ">" + "</html>");
 				}
 			}
 
