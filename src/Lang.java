@@ -522,8 +522,9 @@ public class Lang {
 	public final static String active = "主動";
 	public final static String passive = "被動";
 
-	/* Char Selection */
+	/* Selection Dialogs */
 	public final static String charSelection = "選擇角色";
+	public final static String cardSelection = "選擇祭品";
 
 	/* Status */
 	public final static String player = "玩家";
@@ -553,11 +554,15 @@ public class Lang {
 	public final static String log_lost = "戰敗！";
 
 	/* Log: Skill messages */
-	//1. Tea
+	// 1. Tea
 	public final static String tea_DoM = "烏龍茶的抖M技能正在發動：";
 	public final static String tea_DoM_attackTeaOnly = tea_DoM + "女性只能攻擊茶";
 	public final static String tea_DoM_lessDamage = tea_DoM + "傷害-1";
-	//4. Map
+	// 2. Livia
+	public final static String livia_together = "古怪在場，淋琳的相伴技能發動：";
+	public final static String livia_together_job1 = livia_together + "物防+1 魔防+1";
+	public final static String livia_together_job2 = livia_together + "額外回復1HP";
+	// 4. Map
 	public final static String map_assassin = "地圖的刺殺技能正在發動：";
 	public final static String map_assassin_moreDamage = map_assassin + "傷害+1";
 	public final static String map_choose = "地圖選擇了：";

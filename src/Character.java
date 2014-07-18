@@ -53,15 +53,29 @@ abstract public class Character {
 		setCharacter();
 	}
 
-	public void jobChange() {
+	final public void jobChange() {
 		firstJob = !firstJob;
 		setCharacter();
+		jobChangeExtra();
+	}
+
+	/**
+	 * Override this if the character needs to do something else other than
+	 * jobChange() during jog change.
+	 */
+	public void jobChangeExtra() {
 	}
 
 	/**
 	 * Set character properties and skills when it is created or job change.
 	 */
 	abstract protected void setCharacter();
+
+	/**
+	 * Override this if the character needs to do something when a game starts.
+	 */
+	public void gameStart() {
+	}
 
 	/**
 	 * Do something when a round ends.
@@ -216,8 +230,8 @@ abstract public class Character {
 	public boolean isDefense() {
 		return defense;
 	}
-	
-	public void setAssassin(boolean b){
+
+	public void setAssassin(boolean b) {
 		assassin = b;
 	}
 
@@ -225,7 +239,7 @@ abstract public class Character {
 		return assassin;
 	}
 
-	public int attack(Character target) { // Normal Attack (c1->c2)
+	final public int attack(Character target) { // Normal Attack (c1->c2)
 
 		// Return 0 if success
 		// Return 1 if failed
@@ -248,7 +262,6 @@ abstract public class Character {
 				Play.printlnLog(Lang.tea_DoM_lessDamage);
 			}
 		}
-
 		// If marked by Map's assassin, damage + 1
 		if (target.isAssassin()) {
 			damage++;
@@ -276,13 +289,4 @@ abstract public class Character {
 
 		return 0;
 	}
-
-	// public String[][] getPassiveSkills() {
-	// return (firstJob ? Lang.CharSkills1 : Lang.CharSkills2)[number][0];
-	// }
-	//
-	// public String[][] getActiveSkills() {
-	// return (firstJob ? Lang.CharSkills1 : Lang.CharSkills2)[number][1];
-	// }
-
 }

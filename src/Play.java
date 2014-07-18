@@ -576,6 +576,9 @@ public class Play extends JFrame {
 			updateArea();
 		}
 
+		/**
+		 * Updates HP, MP meter and Card Area.
+		 */
 		public void updateArea() {
 
 			cardArea.removeAll();
@@ -818,6 +821,7 @@ public class Play extends JFrame {
 									: player1);
 
 							// Update Area
+							updateArea(); // TODO:???
 							player1Area.updateHPMP();
 							player2Area.updateHPMP();
 							displayArea.battleField.updateAllLabels();
@@ -989,6 +993,12 @@ public class Play extends JFrame {
 	 */
 	public void start() throws InterruptedException {
 
+		// Call characters to do something when game start
+		for (int i = 0; i < charList.size(); i++) {
+			Character temp = charList.get(i);
+			temp.gameStart();
+		}
+
 		while (true) { // Loop until HP <= 0
 
 			// Start a new round
@@ -1012,6 +1022,10 @@ public class Play extends JFrame {
 				Character temp = charList.get(i);
 				temp.roundEnd();
 			}
+			// Update GUI
+			player1Area.updateArea();
+			player2Area.updateArea();
+			displayArea.battleField.updateAllLabels();
 
 		}
 	}

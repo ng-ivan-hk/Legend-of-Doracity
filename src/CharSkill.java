@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -29,8 +30,7 @@ public class CharSkill {
 		 * @param method
 		 */
 		public CharSelectDialog(Character currentChar, Player opponent, TargetMethod method) {
-			super((java.awt.Frame)null, true);
-			Play.locateCenter(this);
+			super((java.awt.Frame) null, true);
 			this.currentChar = currentChar;
 			this.opponent = opponent;
 			this.method = method;
@@ -38,6 +38,7 @@ public class CharSkill {
 			setTitle(Lang.charSelection);
 			add(new CharSelectPanel(true));
 			pack();
+			Play.locateCenter(this);
 			setResizable(false);
 			setVisible(true);
 		}
@@ -100,6 +101,57 @@ public class CharSkill {
 				public void actionPerformed(ActionEvent evt) {
 					CharSelectDialog.this.dispose();
 					method.targetMethod(currentChar, character);
+				}
+			}
+		}
+
+	}
+
+	/* CardSelectDialog for CharSkill */
+	@SuppressWarnings("serial")
+	public static class CardSelectDialog extends JDialog {
+		private Player player = null;
+		private TargetMethod method = null;
+
+		public CardSelectDialog(Player player, TargetMethod method) {
+			super((java.awt.Frame) null, true);
+			this.player = player;
+			this.method = method;
+
+			setTitle(Lang.cardSelection);
+			add(new CardSelectPanel()); // TODO: JScrollPane?
+			pack();
+			Play.locateCenter(this);
+			setResizable(false);
+			setVisible(true);
+		}
+
+		public class CardSelectPanel extends JPanel {
+
+			public CardSelectPanel() {
+				setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+				ArrayList<Card> cards = player.getHandCards();
+
+				for (int i = cards.size() - 1; i >= 0; i--) {
+					add(new CardButton(cards.get(i)));
+				}
+			}
+
+			public class CardButton extends JButton implements ActionListener {
+				private Card card = null;
+
+				public CardButton(Card card) {
+					this.card = card;
+					setText(card.toString());
+					addActionListener(this);
+				}
+
+				@Override
+				public void actionPerformed(ActionEvent evt) {
+					CardSelectDialog.this.dispose();
+					player.removeCard(card);
+					method.targetMethod(null, null);
 				}
 			}
 		}
