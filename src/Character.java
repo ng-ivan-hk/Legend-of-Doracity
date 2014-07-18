@@ -266,15 +266,6 @@ abstract public class Character {
 		int c2Def = isPhysical() ? target.getDefP() : target.getDefM();
 		int damage = getAttack() - c2Def;
 
-		// If Tea's doM is on, damage - 1
-		if (target instanceof Tea) {
-			Tea tea = (Tea) target;
-			if (tea.isDoM() && !isMale()) {
-				damage--;
-				Play.printlnLog(Lang.tea_DoM_lessDamage);
-			}
-		}
-
 		/* Print log and set defense */
 		Play.printlnLog(this + " " + Lang.attack + " " + target + " --- ");
 
@@ -289,12 +280,27 @@ abstract public class Character {
 			if (damage == 0) { // Attack success but no damage
 
 			} else { // Attack success with damage!
+
+				// If Tea's doM is on, damage - 1
+				if (target instanceof Tea) {
+					Tea tea = (Tea) target;
+					if (tea.isDoM() && !isMale()) {
+						damage--;
+						Play.printlnLog(Lang.tea_DoM_lessDamage);
+					}
+				}
+
 				// If marked by Map's assassin, damage + 1
 				if (target.isAssassin()) {
 					damage++;
 					Play.printlnLog(Lang.map_assassin_moreDamage);
 				}
+
+				/* True Damage */
+				if (target.getPlayer().changeHP(-damage) == 1) // Opponent dead?
+					return 3;
 			}
+
 		}
 
 		/* === Commond Route for 3 cases === */
@@ -303,8 +309,8 @@ abstract public class Character {
 		if (target instanceof Tea) {
 			Tea tea = (Tea) target;
 			if (tea.isFirstJob() && !isMale()) {
-				tea.getPlayer().changeHP(1);
 				Play.printlnLog(Lang.tea_MSoul);
+				tea.getPlayer().changeHP(1);
 			}
 		}
 		// Set Phoebell's property back to physical
@@ -316,11 +322,6 @@ abstract public class Character {
 
 		if (damage < 0) { // Attack failed
 			return 1;
-		} else { // Attack success
-			
-			/* True Damage */
-			if (target.getPlayer().changeHP(-damage) == 1) // Opponent dead?
-				return 3;
 		}
 
 		return 0;
