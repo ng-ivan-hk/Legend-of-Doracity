@@ -308,7 +308,7 @@ abstract public class Character {
 			}
 		}
 		// Set Phoebell's property back to physical
-		if (this instanceof Phoebell) {
+		if (this instanceof Phoebell && isFirstJob()) {
 			setPhysical(true);
 		}
 
