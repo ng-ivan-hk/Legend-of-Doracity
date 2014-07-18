@@ -284,15 +284,6 @@ abstract public class Character {
 
 		if (damage < 0) { // Attack failed
 			Play.printLog(Lang.log_attackFailed);
-			// Check for Tea's MSoul
-			if (target instanceof Tea) {
-				Tea tea = (Tea) target;
-				if (tea.isFirstJob() && !isMale()) {
-					tea.getPlayer().changeHP(1);
-					Play.printlnLog(Lang.tea_MSoul);
-				}
-			}
-			return 1;
 		} else {
 			Play.printLog(Lang.log_attackSuccess);
 			if (damage == 0) { // Attack success but no damage
@@ -306,9 +297,7 @@ abstract public class Character {
 			}
 		}
 
-		/* True Damage */
-		if (target.getPlayer().changeHP(-damage) == 1) // Opponent dead
-			return 3;
+		/* === Commond Route for 3 cases === */
 
 		// Check for Tea's MSoul
 		if (target instanceof Tea) {
@@ -319,8 +308,19 @@ abstract public class Character {
 			}
 		}
 		// Set Phoebell's property back to physical
-		if (this instanceof Phoebell){
+		if (this instanceof Phoebell) {
 			setPhysical(true);
+		}
+
+		/* === Commond Route END === */
+
+		if (damage < 0) { // Attack failed
+			return 1;
+		} else { // Attack success
+			
+			/* True Damage */
+			if (target.getPlayer().changeHP(-damage) == 1) // Opponent dead?
+				return 3;
 		}
 
 		return 0;
