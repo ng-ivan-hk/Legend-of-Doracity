@@ -26,7 +26,7 @@ public class Phoebell extends Character {
 	 *            Pass the panel and let this method do the thing
 	 */
 	public static void checkPhoebell(final Character myChar, SuperCharSelectPanel panel) {
-		if (myChar instanceof Phoebell) {
+		if (myChar instanceof Phoebell && myChar.isFirstJob()) {
 			ActionListener l = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent evt) {
