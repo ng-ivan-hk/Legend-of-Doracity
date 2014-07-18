@@ -8,7 +8,7 @@ public class Feather extends Character {
 	protected void setCharacter() {
 		if (isFirstJob()) {
 
-			setValues(true, CASTER, false, 3, 2, 2, 2, true);
+			setValues(false, CASTER, false, 3, 2, 2, 2, true);
 
 			passiveSkills = new CharSkill[1];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {

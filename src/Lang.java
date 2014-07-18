@@ -552,12 +552,18 @@ public class Lang {
 	public final static String log_castSkill = "發動了技能：";
 	public final static String log_skillEffect = "技能效果：";
 	public final static String log_lost = "戰敗！";
+	public final static String log_jobChange = "轉成";
+	public final static String log_job1 = "一職";
+	public final static String log_job2 = "二職";
 
 	/* Log: Skill messages */
 	// 1. Tea
+	public final static String tea_gentleman = "場上有女性角色，烏龍茶的紳士技能發動：";
+	public final static String tea_MSoul = "烏龍茶的M魂技能發動：受到女性角色攻擊時，回復1HP";
 	public final static String tea_DoM = "烏龍茶的抖M技能正在發動：";
 	public final static String tea_DoM_attackTeaOnly = tea_DoM + "女性只能攻擊茶";
 	public final static String tea_DoM_lessDamage = tea_DoM + "傷害-1";
+	public final static String tea_ero = "烏龍茶的工口技能發動：場上的女性角色數量是";
 	// 2. Livia
 	public final static String livia_together = "古怪在場，淋琳的相伴技能發動：";
 	public final static String livia_together_job1 = livia_together + "物防+1 魔防+1";

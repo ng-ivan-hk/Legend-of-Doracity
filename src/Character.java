@@ -36,7 +36,7 @@ abstract public class Character {
 	protected CharSkill[] activeSkills = null;
 
 	/* Character variables */
-	private boolean firstJob = true; // if false, second job
+	private boolean firstJob = false; // if false, second job
 	private Equipment equipment = null;
 	protected boolean defense = false; // character will defense if attacked
 	protected boolean assassin = false; // Map's Active Skill
@@ -160,6 +160,8 @@ abstract public class Character {
 	}
 
 	public void setAttack(int attack) {
+		int diff = attack - this.attack;
+		Play.printlnLog(this + " " + Lang.attack + (diff >= 0 ? "+" : "") + diff);
 		this.attack = attack;
 	}
 
@@ -286,6 +288,15 @@ abstract public class Character {
 		/* Really attack */
 		if (target.getPlayer().changeHP(-damage) == 1) // Opponent dead
 			return 3;
+
+		// Check for Tea's MSoul
+		if (target instanceof Tea) {
+			Tea tea = (Tea) target;
+			if (tea.isFirstJob() && !isMale()) {
+				tea.getPlayer().changeHP(1);
+				Play.printlnLog(Lang.tea_MSoul);
+			}
+		}
 
 		return 0;
 	}

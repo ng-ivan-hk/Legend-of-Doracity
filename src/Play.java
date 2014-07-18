@@ -82,7 +82,7 @@ public class Play extends JFrame {
 	private Player player2 = null; // Player who attacks next
 	private Player[] players = null;
 	private Stack<Card> cards = null; // card stack on the table
-	private ArrayList<Character> charList = null;
+	protected static ArrayList<Character> charList = null;
 	private Character currentChar = null;
 	private int round = 0;
 	private int currentStatus = 0; // For checking occasion in battle
@@ -855,6 +855,9 @@ public class Play extends JFrame {
 					JOptionPane.showMessageDialog(this, Lang.noMP);
 					return;
 				}
+				// Print Log
+				Play.printlnLog(currentChar + " " + Lang.log_jobChange
+						+ (currentChar.isFirstJob() ? Lang.log_job1 : Lang.log_job2));
 				// Remove Equipment effect
 				removeEquipmentEffect();
 				// Really Job Change
@@ -996,7 +999,10 @@ public class Play extends JFrame {
 		// Call characters to do something when game start
 		for (int i = 0; i < charList.size(); i++) {
 			Character temp = charList.get(i);
+			// First Game Start, then Job Change! Because some jobChangeExtra()
+			// depends on gameStart()
 			temp.gameStart();
+			temp.jobChange();
 		}
 
 		while (true) { // Loop until HP <= 0

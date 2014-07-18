@@ -1,15 +1,34 @@
+import java.util.ArrayList;
+
 import javax.swing.JLabel;
 
 public class Tea extends Character {
 
 	/**
 	 * for Job 1 Active Skill Do-M<br>
-	 * if true, opponent's girl characters can attack him only
+	 * If true, opponent's girl characters can attack him only.
 	 */
 	private boolean doM = false;
 
 	public boolean isDoM() {
 		return doM;
+	}
+
+	/**
+	 * for Job 2 Active Skill Loli Soul
+	 */
+	private boolean loliSoul = false;
+	private int noOfGirls = 0;
+
+	@Override
+	public void gameStart() {
+		// Find out how many girls are there in total
+		final ArrayList<Character> charList = Play.charList;
+		for (int i = 0; i < charList.size(); i++) {
+			if (!charList.get(i).isMale()) {
+				noOfGirls++;
+			}
+		}
 	}
 
 	/**
@@ -22,8 +41,7 @@ public class Tea extends Character {
 	 * @param panel
 	 *            Pass the panel and let this method do the thing
 	 */
-	public static void checkDoM(Character myChar, Player opponent,
-			SuperCharSelectPanel panel) {
+	public static void checkDoM(Character myChar, Player opponent, SuperCharSelectPanel panel) {
 		// Does the player has Tea?
 		Tea maybeTea = (Tea) opponent.contains(Tea.class);
 		if (maybeTea == null) { // No Tea!
@@ -37,8 +55,27 @@ public class Tea extends Character {
 	}
 
 	@Override
+	public void jobChangeExtra() {
+		if (isFirstJob()) { // Gentleman: Any female character?
+			System.out.println(noOfGirls);
+			if (noOfGirls > 0) {
+				Play.printlnLog(Lang.tea_gentleman);
+				setAttack(getAttack() + 2);
+			}
+		} else { // Ero
+			Play.printlnLog(Lang.tea_ero + noOfGirls);
+			setAttack(getAttack() + noOfGirls);
+		}
+	}
+
+	@Override
 	public void roundEndExtra() {
-		doM = false;
+		if (isFirstJob()) {
+			doM = false;
+		} else if (loliSoul) {
+			loliSoul = false;
+			setAttack(getAttack() - noOfGirls);
+		}
 	}
 
 	@Override
@@ -64,8 +101,7 @@ public class Tea extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using Tea's 1stJob passive skill 1!");
-
+					// COMPLETED
 				}
 
 			}, 0);
@@ -73,8 +109,7 @@ public class Tea extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using Tea's 1stJob passive skill 2!");
-
+					// COMPLETED
 				}
 
 			}, 0);
@@ -99,8 +134,7 @@ public class Tea extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using Tea's 2ndJob passive skill!");
-
+					// COMPLETED
 				}
 
 			}, 0);
@@ -111,7 +145,8 @@ public class Tea extends Character {
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
 							System.out.println("Using Tea's 2ndJob active skill!");
-
+							loliSoul = true;
+							setAttack(getAttack() + noOfGirls);
 						}
 
 					}, 7);

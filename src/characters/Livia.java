@@ -4,15 +4,6 @@ public class Livia extends Character {
 	private int recoverHP = 2;
 
 	@Override
-	public void gameStart() {
-		if (getPlayer().contains(Phoebell.class) != null) {
-			Play.printlnLog(Lang.livia_together_job1);
-			setDefP(getDefP() + 1);
-			setDefM(getDefM() + 1);
-		}
-	}
-
-	@Override
 	public void jobChangeExtra() {
 		if (getPlayer().contains(Phoebell.class) != null) {
 			if (isFirstJob()) {
