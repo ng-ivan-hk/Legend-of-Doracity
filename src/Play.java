@@ -12,6 +12,8 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.QuadCurve2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.File;
@@ -44,6 +46,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import javax.swing.JToolTip;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -103,6 +106,11 @@ public class Play extends JFrame {
 	private PlayerArea player1Area = null;
 	private PlayerArea player2Area = null;
 	PlayerArea[] playerAreas = null; // refers to the 2 player areas
+	// Constant objects
+	private final static Color doracityColor = new Color(9, 101, 188);
+	private final static Color academyColor = new Color(230, 73, 0);
+	private final static Color doracityColorLight = new Color(220, 242, 255);
+	private final static Color academyColorLight = new Color(255, 231, 210);
 
 	/* for threads */
 	public static CountDownLatch latch = null;
@@ -196,7 +204,7 @@ public class Play extends JFrame {
 		revalidate();
 		pack();
 		setMinimumSize(getBounds().getSize());
-		setSize(new Dimension(1100, 650));
+		setSize(new Dimension(1100, 680));
 		locateCenter(this);
 		setResizable(true);
 		setVisible(true);
@@ -427,18 +435,21 @@ public class Play extends JFrame {
 			 *            pass true to highlight, false to unhighlight
 			 */
 			public void highlightChar(Player player, int index, boolean b) {
+
+				int borderWidth = 2;
+
 				if (player.isPlayer1()) {
 					if (b) {
-						player1Chars[index].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4,
-								Color.CYAN));
+						player1Chars[index].setBorder(BorderFactory.createMatteBorder(borderWidth,
+								borderWidth, borderWidth, borderWidth, Color.CYAN));
 					} else {
 						player1Chars[index].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 								Color.BLACK));
 					}
 				} else {
 					if (b) {
-						player2Chars[index].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4,
-								Color.CYAN));
+						player2Chars[index].setBorder(BorderFactory.createMatteBorder(borderWidth,
+								borderWidth, borderWidth, borderWidth, Color.CYAN));
 					} else {
 						player2Chars[index].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 								Color.BLACK));
@@ -496,37 +507,86 @@ public class Play extends JFrame {
 				 */
 				public void updateLabel() {
 
-					setText(//@formatter:off
+					setText(// @formatter:off
 							// Line 1
 							"<html><u>" + character.getTitle() + " " + character.toString()
 							+ "</u><br>" + 
 							// Line 2
-							character.getJobName() + " (" + Lang.property + ": "
+							character.getJobName() + " ("
 							+ (character.isPhysical() ? Lang.physical : Lang.mana) + ")<br>" + 
 							// Line 3
-							Lang.attack + ": " + character.getAttack() + " " + Lang.defP + ": "
-							+ character.getDefP() + " " + Lang.defM + ": " + character.getDefM()
-							+ " " + Lang.speed + ": " + character.getSpeed() + "<br> " + 
+							"AT " + character.getAttack() + " " + "PD "
+							+ character.getDefP() + " " + "PM " + character.getDefM()
+							+ " " + "SP " + character.getSpeed() + "<br>" + 
+							
 							// Line 4
-							Lang.side
-							+ ": " + (character.isDoracity() ? Lang.doracity : Lang.academy)
-							+ "<br>" +
-							// Line 5
 							(character.getEquipment() == null ? "" :
 							Lang.equipment + ": <font color=blue>" 
 							+ character.getEquipmentName() + "</font>") + "</html>"
 							// @formatter:on
 					);
 
-					setToolTipText("<html>" + Lang.equipment + ": <font color=blue>"
+					// For displaying all skill infos of the Character
+					String skillInfo = "";
+					skillInfo += (Lang.passive + Lang.skill + "<br>");
+					CharSkill[] charSkills = character.passiveSkills;
+					for (int i = 0; i < charSkills.length; i++) {
+						skillInfo += (charSkills[i] + ": " + charSkills[i].getInfo() + "<br>");
+					}
+					skillInfo += ("<br>" + Lang.active + Lang.skill + "<br>");
+					charSkills = character.activeSkills;
+					for (int i = 0; i < charSkills.length; i++) {
+						skillInfo += (charSkills[i] + ": " + charSkills[i].getInfo() + "<br>");
+					}
+
+					setToolTipText(//@formatter:off
+							"<html><table border=0><tr><td>" + 
+							
+							/* === Left-Hand-Side BEGIN === */
+							"<img height=316 width=220 src=" + getCharImageURL() + ">"
+							
+							/* === Left-Hand-Side END === */
+							+ "</td><td>" +
+							
+							/* === Right-Hand-Side BEGIN === */
+							character.getTitle() + " " + character.toString() + "<hr><br>" +
+							
+							Lang.equipment + ": <font color=blue>"
 							+ character.getEquipmentName() + "</font><br><font color=green>"
-							+ character.getEquipmentInfo() + "</font>"
-							+ "<br><img height=316 width=220 src=" + getCharImageURL() + ">"
-							+ "</html>");
+							+ character.getEquipmentInfo() + "</font><br><br>" +
+							
+							Lang.job + ": " + character.getJobName() + "<br>" + Lang.property + ": "
+							+ (character.isPhysical() ? Lang.physical : Lang.mana) + "<br><br>" + 
+							
+							Lang.attack + ": " + character.getAttack() + "<br>" + Lang.defP + ": "
+							+ character.getDefP() + "<br>" + Lang.defM + ": " + character.getDefM()
+							+ "<br>" + Lang.speed + ": " + character.getSpeed() + "<br><br>" + 
+							
+							Lang.side
+							+ ": " + (character.isDoracity() ? Lang.doracity : Lang.academy)
+							+ "<br><br>" +
+							skillInfo +
+							
+							/* === Right-Hand-Side END === */
+							"</td></tr></table></html>"
+							//@formatter:on
+					);
 
 					setCharImage();
 
 					repaint();
+
+				}
+
+				@Override
+				public JToolTip createToolTip() {
+					JToolTip toolTip = super.createToolTip();
+					Color color = character.isDoracity() ? doracityColor : academyColor;
+					Color bg = character.isDoracity() ? doracityColorLight : academyColorLight;
+					toolTip.setBackground(bg);
+					toolTip.setForeground(color);
+					toolTip.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, color));
+					return toolTip;
 
 				}
 
@@ -540,7 +600,7 @@ public class Play extends JFrame {
 					// Crop Image
 					charImage = src.getSubimage(130, 185, 300, 100);
 					// Set Filter
-					RescaleOp rescaleOp = new RescaleOp(0.3f, 180, null);
+					RescaleOp rescaleOp = new RescaleOp(0.3f, 182, null);
 					rescaleOp.filter(charImage, charImage);
 				}
 
@@ -567,7 +627,16 @@ public class Play extends JFrame {
 
 				@Override
 				public void paintComponent(Graphics g) {
+
+					// Draw Char Image
 					g.drawImage(charImage, 0, 0, null);
+
+					// Draw a line representing doracity or academy
+					int lineHeight = 5;
+					Color lineColor = character.isDoracity() ? doracityColor : academyColor;
+					g.setColor(lineColor);
+					g.fillRect(0, getHeight() - lineHeight, getWidth(), lineHeight);
+
 					super.paintComponent(g);
 				}
 			}
