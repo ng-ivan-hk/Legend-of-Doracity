@@ -200,7 +200,6 @@ public class Play extends JFrame {
 		locateCenter(this);
 		setResizable(true);
 		setVisible(true);
-
 	}
 
 	/**
@@ -473,6 +472,7 @@ public class Play extends JFrame {
 				}
 
 				public BLabel() {
+					setHorizontalAlignment(SwingConstants.CENTER);
 				}
 			}
 
@@ -531,16 +531,17 @@ public class Play extends JFrame {
 				}
 
 				private void setCharImage() {
-					/* Set up char image */
 					BufferedImage src = null;
 					try {
 						src = ImageIO.read(getCharImageURL());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					RescaleOp rescaleOp = new RescaleOp(0.3f, 180, null);
-					rescaleOp.filter(src, src);
+					// Crop Image
 					charImage = src.getSubimage(130, 185, 300, 100);
+					// Set Filter
+					RescaleOp rescaleOp = new RescaleOp(0.3f, 180, null);
+					rescaleOp.filter(charImage, charImage);
 				}
 
 				/**
@@ -568,7 +569,6 @@ public class Play extends JFrame {
 				public void paintComponent(Graphics g) {
 					g.drawImage(charImage, 0, 0, null);
 					super.paintComponent(g);
-
 				}
 			}
 
