@@ -4,13 +4,18 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -41,6 +46,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.DefaultCaret;
@@ -154,6 +161,9 @@ public class Play extends JFrame {
 		} catch (NullPointerException e) {
 		}
 
+		/* Set Tool Tip */
+		ToolTipManager.sharedInstance().setInitialDelay(0);
+
 		setTitle(Lang.frameTitle);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -186,11 +196,26 @@ public class Play extends JFrame {
 		revalidate();
 		pack();
 		setMinimumSize(getBounds().getSize());
-		setSize(new Dimension(1050, 650));
+		setSize(new Dimension(1100, 650));
 		locateCenter(this);
 		setResizable(true);
 		setVisible(true);
 
+	}
+
+	/**
+	 * Override getToolTipLocation() of a Component and return this function.
+	 * This can make the ToolTip follows the mouse cursor.
+	 * 
+	 * @param e
+	 *            MouseEvent
+	 * @return Point
+	 */
+	private Point moveWithCursor(MouseEvent e) {
+		Point p = e.getPoint();
+		p.x += 15;
+		p.y += 15;
+		return p;
 	}
 
 	/**
@@ -377,17 +402,13 @@ public class Play extends JFrame {
 
 					add(player1Chars[i] = new CharLabel(player1CharTemp[i]));
 					player1Chars[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-					player1Chars[i].setBackground(Color.WHITE);
-					player1Chars[i].setOpaque(true); // paint the background
 
 					add(player1Actions[i] = new BLabel("Player1 " + i));
 					add(player2Actions[i] = new BLabel("Player2 " + i));
 
-					player2Chars[i] = new CharLabel(player2CharTemp[i]);
+					add(player2Chars[i] = new CharLabel(player2CharTemp[i]));
 					player2Chars[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-					player2Chars[i].setBackground(Color.WHITE);
-					player2Chars[i].setOpaque(true); // paint the background
-					add(player2Chars[i]);
+
 				}
 
 				updateAllLabels();
@@ -409,15 +430,19 @@ public class Play extends JFrame {
 			public void highlightChar(Player player, int index, boolean b) {
 				if (player.isPlayer1()) {
 					if (b) {
-						player1Chars[index].setBackground(Color.CYAN);
+						player1Chars[index].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4,
+								Color.CYAN));
 					} else {
-						player1Chars[index].setBackground(Color.WHITE);
+						player1Chars[index].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+								Color.BLACK));
 					}
 				} else {
 					if (b) {
-						player2Chars[index].setBackground(Color.CYAN);
+						player2Chars[index].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4,
+								Color.CYAN));
 					} else {
-						player2Chars[index].setBackground(Color.WHITE);
+						player2Chars[index].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+								Color.BLACK));
 					}
 				}
 			}
@@ -427,8 +452,6 @@ public class Play extends JFrame {
 				for (int i = 0; i < CHAR_MAX; i++) {
 					player1Chars[i].updateLabel();
 					player2Chars[i].updateLabel();
-					// player2Chars[i].setToolTipText("<html><img src=" +
-					// getClass().getResource("test.png") + "></html>");
 				}
 			}
 
@@ -448,14 +471,18 @@ public class Play extends JFrame {
 					super(text);
 					setHorizontalAlignment(SwingConstants.CENTER);
 				}
+
+				public BLabel() {
+				}
 			}
 
 			private class CharLabel extends BLabel {
 				private Character character = null;
+				private BufferedImage charImage = null;
 
 				public CharLabel(Character character) {
-					super("");
 					this.character = character;
+					setOpaque(false);
 				}
 
 				public void changeChar(Character character) {
@@ -468,6 +495,7 @@ public class Play extends JFrame {
 				 * of the character has been changed.
 				 */
 				public void updateLabel() {
+
 					setText(//@formatter:off
 							// Line 1
 							"<html><u>" + character.getTitle() + " " + character.toString()
@@ -490,17 +518,57 @@ public class Play extends JFrame {
 							// @formatter:on
 					);
 
+					setToolTipText("<html>" + Lang.equipment + ": <font color=blue>"
+							+ character.getEquipmentName() + "</font><br><font color=green>"
+							+ character.getEquipmentInfo() + "</font>"
+							+ "<br><img height=316 width=220 src=" + getCharImageURL() + ">"
+							+ "</html>");
+
+					setCharImage();
+
+					repaint();
+
+				}
+
+				private void setCharImage() {
+					/* Set up char image */
+					BufferedImage src = null;
+					try {
+						src = ImageIO.read(getCharImageURL());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					RescaleOp rescaleOp = new RescaleOp(0.3f, 180, null);
+					rescaleOp.filter(src, src);
+					charImage = src.getSubimage(130, 185, 300, 100);
+				}
+
+				/**
+				 * Checks which Character does this CharLabel represents and
+				 * returns the respective URL.
+				 * 
+				 * @return URL object which represents the Character image.
+				 */
+				private URL getCharImageURL() {
 					URL imageURL = Play.class.getResource("/resources/CharPics/mC"
 							+ String.format("%03d", character.getNumber()) + "-"
 							+ (character.isFirstJob() ? "1" : "2") + ".png");
 					if (imageURL == null) {
 						imageURL = Play.class.getResource("/resources/CharPics/null.png");
 					}
+					return imageURL;
+				}
 
-					setToolTipText("<html>" + Lang.equipment + ": <font color=blue>"
-							+ character.getEquipmentName() + "</font><br><font color=green>"
-							+ character.getEquipmentInfo() + "</font>"
-							+ "<br><img height=316 width=220 src=" + imageURL + ">" + "</html>");
+				@Override
+				public Point getToolTipLocation(MouseEvent e) {
+					return moveWithCursor(e);
+				}
+
+				@Override
+				public void paintComponent(Graphics g) {
+					g.drawImage(charImage, 0, 0, null);
+					super.paintComponent(g);
+
 				}
 			}
 
@@ -836,7 +904,7 @@ public class Play extends JFrame {
 									: player1);
 
 							// Update Area
-							updateArea(); // TODO:???
+							updateArea();
 							player1Area.updateHPMP();
 							player2Area.updateHPMP();
 							displayArea.battleField.updateAllLabels();
@@ -974,6 +1042,11 @@ public class Play extends JFrame {
 				this.setToolTipText("<html>" + card.getInfo() + "</html>");
 
 				addActionListener(this);
+			}
+
+			@Override
+			public Point getToolTipLocation(MouseEvent e) {
+				return moveWithCursor(e);
 			}
 
 			@Override
