@@ -25,6 +25,7 @@ public class Lang {
 	public final static String help_cards = "卡牌種類";
 	public final static String help_QA = "Q & A";
 	public final static String help_appHelp = "程式教學";
+	public final static String help_icons = "圖案說明";
 	public final static String help_appFAQ = "常見問題";
 
 	/* Character Names */

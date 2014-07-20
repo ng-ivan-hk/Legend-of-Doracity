@@ -474,17 +474,22 @@ public class Play extends JFrame {
 				public BLabel(String text) {
 					super(text);
 					setHorizontalAlignment(SwingConstants.CENTER);
+					setVerticalAlignment(SwingConstants.BOTTOM);
 				}
 
 				public BLabel() {
 					setHorizontalAlignment(SwingConstants.CENTER);
+					setVerticalAlignment(SwingConstants.BOTTOM);
 				}
 			}
 
 			private class CharLabel extends BLabel {
 				private Character character = null;
+				// To be drawn in paintComponent()
 				private BufferedImage charImage = null;
 				private Image jobIcon = null;
+				private Image propertyIcon = null;
+				private String charTitle = null;
 				private String charName = null;
 				private String charValues = null;
 
@@ -525,7 +530,8 @@ public class Play extends JFrame {
 				public void updateLabel() {
 
 					// For paintComponent()
-					charName = character.getTitle() + " " + character.toString();
+					charTitle = character.getTitle();
+					charName = character.toString();
 
 					charValues = "SP " + character.getSpeed() + "\nPM " + character.getDefM()
 							+ "\nPD " + character.getDefP() + "\nAT " + character.getAttack();
@@ -533,10 +539,6 @@ public class Play extends JFrame {
 					setText(// @formatter:off
 							// Line 1
 							"<html>" + 
-							// Line 2
-							"("
-							+ (character.isPhysical() ? Lang.physical : Lang.mana) + ")<br>" + 
-							
 							// Line 3
 							(character.getEquipment() == null ? "" :
 							Lang.equipment + ": <font color=blue>" 
@@ -567,7 +569,8 @@ public class Play extends JFrame {
 							+ "</td><td>" +
 							
 							/* === Right-Hand-Side BEGIN === */
-							character.getTitle() + " " + character.toString() + "<hr><br>" +
+							"<font size=5><b>" + character.getTitle() + " " + character.toString()
+							+ "</b><br><br></font>" +
 							
 							Lang.equipment + ": <font color=blue>"
 							+ character.getEquipmentName() + "</font><br><font color=green>"
@@ -592,6 +595,7 @@ public class Play extends JFrame {
 
 					setCharImage();
 					setJobIcon();
+					setPropertyIcon();
 
 					repaint();
 
@@ -617,7 +621,7 @@ public class Play extends JFrame {
 						e.printStackTrace();
 					}
 					// Crop Image
-					charImage = src.getSubimage(130, 185, 300, 100);
+					charImage = src.getSubimage(120, 185, 300, 100);
 					// Set Filter
 					RescaleOp rescaleOp = new RescaleOp(0.3f, 182, null);
 					rescaleOp.filter(charImage, charImage);
@@ -632,6 +636,17 @@ public class Play extends JFrame {
 					}
 					// Resize Image smoothly
 					jobIcon = src.getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING);
+				}
+
+				private void setPropertyIcon() {
+					BufferedImage src = null;
+					try {
+						src = ImageIO.read(getPropertyIconURL());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					// Resize Image smoothly
+					propertyIcon = src.getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING);
 				}
 
 				/**
@@ -651,13 +666,26 @@ public class Play extends JFrame {
 				}
 
 				/**
-				 * Checks Character's job and returns the respective URL
+				 * Checks Character's job and returns the respective URL.
 				 * 
 				 * @return URL object which represents the Character's job icon.
 				 */
 				private URL getJobIconURL() {
 					URL iconURL = Play.class.getResource("/resources/icons/job"
 							+ character.getJob() + ".png");
+					return iconURL;
+				}
+
+				/**
+				 * Checks Character's property (physical/mana) and returns the
+				 * respective URL.
+				 * 
+				 * @return URL object which represents the Character's property.
+				 */
+				private URL getPropertyIconURL() {
+					String property = character.isPhysical() ? "physical" : "mana";
+					URL iconURL = Play.class.getResource("/resources/icons/property-" + property
+							+ ".png");
 					return iconURL;
 				}
 
@@ -669,25 +697,35 @@ public class Play extends JFrame {
 				@Override
 				public void paintComponent(Graphics g) {// TODO::PaintComponent
 
-					// Draw Char Image
+					// Horizontal space between image and edge
+					int imageX = 2;
+					int imageY = 2;
+					// Horizontal space between text and edge
+					int valuesX = 5;
+					int valuesY = 5;
+
+					// Draw Char Image at back
 					g.drawImage(charImage, 0, 0, null);
+
+					// Draw Job Icon at bottom
+					int iconSize = 25;
+					g.drawImage(jobIcon, imageX, getHeight() - iconSize - imageY, iconSize,
+							iconSize, null);
+
+					// Draw Property Icon above Job Icon
+					g.drawImage(propertyIcon, imageX, getHeight() - iconSize * 2 - imageY,
+							iconSize, iconSize, null);
 
 					// Set Color representing doracity or academy
 					Color lineColor = character.isDoracity() ? doracityColor : academyColor;
 					g.setColor(lineColor);
 
-					/* Let's write something! */
-					int valuesX = 5; // Horizontal space between text and edge
-					int valuesY = 5; // Vertical space between text and edge
-
-					// Write Character's name at bottom
+					// Write Character's title and name at top
+					g.setFont(new Font(Lang.font, Font.PLAIN, 12));
+					g.drawString(charTitle, valuesX, valuesY * 3);
+					int titleWidth = g.getFontMetrics().stringWidth(charTitle);
 					g.setFont(new Font(Lang.font, Font.PLAIN, 15));
-					g.drawString(charName, valuesX, valuesY * 3);
-
-					// Draw Job Icon
-					int iconSize = 25;
-					g.drawImage(jobIcon, valuesX, getHeight() - iconSize - valuesY, iconSize,
-							iconSize, null);
+					g.drawString(charName, valuesX + titleWidth + 2, valuesY * 3);
 
 					// Write Character's values at right
 					valuesY += getHeight();
