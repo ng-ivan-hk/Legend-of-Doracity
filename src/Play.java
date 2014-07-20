@@ -469,6 +469,18 @@ public class Play extends JFrame {
 					player2Chars[i].changeChar(player2CharTemp[i]);
 				}
 			}
+			
+			public void updateCharImages() {
+				for (int i = 0; i < CHAR_MAX; i++) {
+					player1Chars[i].setCharImage();
+					player1Chars[i].setJobIcon();
+					player1Chars[i].setPropertyIcon();
+					player2Chars[i].setCharImage();
+					player2Chars[i].setJobIcon();
+					player2Chars[i].setPropertyIcon();
+				}
+				
+			}
 
 			private class BLabel extends JLabel {
 				public BLabel(String text) {
@@ -495,12 +507,18 @@ public class Play extends JFrame {
 
 				public CharLabel(Character character) {
 					this.character = character;
+					setCharImage();
+					setJobIcon();
+					setPropertyIcon();
 					setOpaque(false);
 				}
 
 				public void changeChar(Character character) {
 					this.character = character;
 					updateLabel();
+					setCharImage();
+					setJobIcon();
+					setPropertyIcon();
 					highLightLabel(false);
 				}
 
@@ -593,10 +611,6 @@ public class Play extends JFrame {
 							//@formatter:on
 					);
 
-					setCharImage();
-					setJobIcon();
-					setPropertyIcon();
-
 					repaint();
 
 				}
@@ -613,7 +627,11 @@ public class Play extends JFrame {
 
 				}
 
-				private void setCharImage() {
+				/**
+				 * Set Character's image. Only call this in job change (or game
+				 * start).
+				 */
+				public void setCharImage() {
 					BufferedImage src = null;
 					try {
 						src = ImageIO.read(getCharImageURL());
@@ -627,7 +645,11 @@ public class Play extends JFrame {
 					rescaleOp.filter(charImage, charImage);
 				}
 
-				private void setJobIcon() {
+				/**
+				 * Set Character's Job Icon. Only call this in job change (or
+				 * game start).
+				 */
+				public void setJobIcon() {
 					BufferedImage src = null;
 					try {
 						src = ImageIO.read(getJobIconURL());
@@ -638,7 +660,11 @@ public class Play extends JFrame {
 					jobIcon = src.getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING);
 				}
 
-				private void setPropertyIcon() {
+				/**
+				 * Set Character's Property(Physical/Mana) Icon. Only call this
+				 * in job change (or game start).
+				 */
+				public void setPropertyIcon() {
 					BufferedImage src = null;
 					try {
 						src = ImageIO.read(getPropertyIconURL());
@@ -1137,6 +1163,7 @@ public class Play extends JFrame {
 				player1Area.updateHPMP();
 				player2Area.updateHPMP();
 				displayArea.battleField.updateAllLabels();
+				displayArea.battleField.updateCharImages();
 				setEnabled(false);
 
 			}
