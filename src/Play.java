@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
@@ -107,8 +108,9 @@ public class Play extends JFrame {
 	private PlayerArea player2Area = null;
 	PlayerArea[] playerAreas = null; // refers to the 2 player areas
 	// Constant objects
-	private final static Color doracityColor = new Color(9, 101, 188);
-	private final static Color academyColor = new Color(230, 73, 0);
+	private final static int alpha = 200; // 0~255, 255 = no transparent
+	private final static Color doracityColor = new Color(6, 77, 144);
+	private final static Color academyColor = new Color(186, 53, 0);
 	private final static Color doracityColorLight = new Color(220, 242, 255);
 	private final static Color academyColorLight = new Color(255, 231, 210);
 
@@ -408,13 +410,11 @@ public class Play extends JFrame {
 				for (int i = 0; i < CHAR_MAX; i++) {
 
 					add(player1Chars[i] = new CharLabel(player1CharTemp[i]));
-					player1Chars[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 					add(player1Actions[i] = new BLabel("Player1 " + i));
 					add(player2Actions[i] = new BLabel("Player2 " + i));
 
 					add(player2Chars[i] = new CharLabel(player2CharTemp[i]));
-					player2Chars[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 				}
 
@@ -436,23 +436,17 @@ public class Play extends JFrame {
 			 */
 			public void highlightChar(Player player, int index, boolean b) {
 
-				int borderWidth = 2;
-
 				if (player.isPlayer1()) {
 					if (b) {
-						player1Chars[index].setBorder(BorderFactory.createMatteBorder(borderWidth,
-								borderWidth, borderWidth, borderWidth, Color.CYAN));
+						player1Chars[index].highLightLabel(true);
 					} else {
-						player1Chars[index].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-								Color.BLACK));
+						player1Chars[index].highLightLabel(false);
 					}
 				} else {
 					if (b) {
-						player2Chars[index].setBorder(BorderFactory.createMatteBorder(borderWidth,
-								borderWidth, borderWidth, borderWidth, Color.CYAN));
+						player2Chars[index].highLightLabel(true);
 					} else {
-						player2Chars[index].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-								Color.BLACK));
+						player2Chars[index].highLightLabel(false);
 					}
 				}
 			}
@@ -490,6 +484,9 @@ public class Play extends JFrame {
 			private class CharLabel extends BLabel {
 				private Character character = null;
 				private BufferedImage charImage = null;
+				private Image jobIcon = null;
+				private String charName = null;
+				private String charValues = null;
 
 				public CharLabel(Character character) {
 					this.character = character;
@@ -499,6 +496,26 @@ public class Play extends JFrame {
 				public void changeChar(Character character) {
 					this.character = character;
 					updateLabel();
+					highLightLabel(false);
+				}
+
+				/**
+				 * Called by highLightChar().
+				 * 
+				 * @param b
+				 */
+				public void highLightLabel(boolean b) {
+
+					int borderWidth = b ? 3 : 2;
+					if (b) {
+						setBorder(BorderFactory.createMatteBorder(borderWidth, borderWidth,
+								borderWidth, borderWidth, Color.CYAN));
+					} else {
+						setBorder(BorderFactory.createMatteBorder(borderWidth, borderWidth,
+								borderWidth, borderWidth, character.isDoracity() ? doracityColor
+										: academyColor));
+					}
+
 				}
 
 				/**
@@ -507,19 +524,20 @@ public class Play extends JFrame {
 				 */
 				public void updateLabel() {
 
+					// For paintComponent()
+					charName = character.getTitle() + " " + character.toString();
+
+					charValues = "SP " + character.getSpeed() + "\nPM " + character.getDefM()
+							+ "\nPD " + character.getDefP() + "\nAT " + character.getAttack();
+
 					setText(// @formatter:off
 							// Line 1
-							"<html><u>" + character.getTitle() + " " + character.toString()
-							+ "</u><br>" + 
+							"<html>" + 
 							// Line 2
-							character.getJobName() + " ("
+							"("
 							+ (character.isPhysical() ? Lang.physical : Lang.mana) + ")<br>" + 
-							// Line 3
-							"AT " + character.getAttack() + " " + "PD "
-							+ character.getDefP() + " " + "PM " + character.getDefM()
-							+ " " + "SP " + character.getSpeed() + "<br>" + 
 							
-							// Line 4
+							// Line 3
 							(character.getEquipment() == null ? "" :
 							Lang.equipment + ": <font color=blue>" 
 							+ character.getEquipmentName() + "</font>") + "</html>"
@@ -573,6 +591,7 @@ public class Play extends JFrame {
 					);
 
 					setCharImage();
+					setJobIcon();
 
 					repaint();
 
@@ -604,6 +623,17 @@ public class Play extends JFrame {
 					rescaleOp.filter(charImage, charImage);
 				}
 
+				private void setJobIcon() {
+					BufferedImage src = null;
+					try {
+						src = ImageIO.read(getJobIconURL());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					// Resize Image smoothly
+					jobIcon = src.getScaledInstance(25, 25, Image.SCALE_AREA_AVERAGING);
+				}
+
 				/**
 				 * Checks which Character does this CharLabel represents and
 				 * returns the respective URL.
@@ -620,22 +650,54 @@ public class Play extends JFrame {
 					return imageURL;
 				}
 
+				/**
+				 * Checks Character's job and returns the respective URL
+				 * 
+				 * @return URL object which represents the Character's job icon.
+				 */
+				private URL getJobIconURL() {
+					URL iconURL = Play.class.getResource("/resources/icons/job"
+							+ character.getJob() + ".png");
+					return iconURL;
+				}
+
 				@Override
 				public Point getToolTipLocation(MouseEvent e) {
 					return moveWithCursor(e);
 				}
 
 				@Override
-				public void paintComponent(Graphics g) {
+				public void paintComponent(Graphics g) {// TODO::PaintComponent
 
 					// Draw Char Image
 					g.drawImage(charImage, 0, 0, null);
 
-					// Draw a line representing doracity or academy
-					int lineHeight = 5;
+					// Set Color representing doracity or academy
 					Color lineColor = character.isDoracity() ? doracityColor : academyColor;
 					g.setColor(lineColor);
-					g.fillRect(0, getHeight() - lineHeight, getWidth(), lineHeight);
+
+					/* Let's write something! */
+					int valuesX = 5; // Horizontal space between text and edge
+					int valuesY = 5; // Vertical space between text and edge
+
+					// Write Character's name at bottom
+					g.setFont(new Font(Lang.font, Font.PLAIN, 15));
+					g.drawString(charName, valuesX, valuesY * 3);
+
+					// Draw Job Icon
+					int iconSize = 25;
+					g.drawImage(jobIcon, valuesX, getHeight() - iconSize - valuesY, iconSize,
+							iconSize, null);
+
+					// Write Character's values at right
+					valuesY += getHeight();
+					g.setFont(new Font("Arial", Font.PLAIN, 12));
+					for (String line : charValues.split("\n")) { // bottom-to-top
+						int lineWidth = g.getFontMetrics().stringWidth(line); // right-align
+						g.drawString(line, getWidth() - lineWidth - valuesX, valuesY -= g
+								.getFontMetrics().getHeight());
+
+					}
 
 					super.paintComponent(g);
 				}

@@ -34,7 +34,7 @@ public class Iron extends Character {
 
 		} else {
 
-			setValues(true, SUPPORT, true, 6, 6, 5, 4, false);
+			setValues(true, SABER, true, 6, 6, 5, 4, false);
 
 			passiveSkills = new CharSkill[1];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
