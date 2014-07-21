@@ -82,10 +82,15 @@ public class Play extends JFrame {
 	public static Comparator<Character> charComparator = new Comparator<Character>() {
 		@Override
 		public int compare(Character c1, Character c2) {
-			if (c1.getSpeed() == c2.getSpeed())
-				return c1.getPlayer().isPlayer1() ? c1.getNumber() - 1 : c1.getNumber();
-			else
+			if (c1.getSpeed() == c2.getSpeed()) {
+				if (c1.getPlayer() == c2.getPlayer()) {
+					return c1.getNumber() - c2.getNumber();
+				} else {
+					return c1.getPlayer().isPlayer1() ? -1 : 1;
+				}
+			} else {
 				return c2.getSpeed() - c1.getSpeed();
+			}
 		}
 	};
 
@@ -468,10 +473,7 @@ public class Play extends JFrame {
 					public int compare(CharLabel l1, CharLabel l2) {
 						Character c1 = l1.character;
 						Character c2 = l2.character;
-						if (c1.getSpeed() == c2.getSpeed())
-							return c1.getPlayer().isPlayer1() ? c1.getNumber() - 1 : c1.getNumber();
-						else
-							return c2.getSpeed() - c1.getSpeed();
+						return charComparator.compare(c1, c2);
 					}
 				};
 
@@ -488,7 +490,7 @@ public class Play extends JFrame {
 				} catch (InvocationTargetException | InterruptedException e) {
 					e.printStackTrace();
 				}
-				
+
 				// Row 0
 				add(new BLabel(Lang.player + ": " + player1));
 				add(player1Actions[0]);
@@ -822,7 +824,7 @@ public class Play extends JFrame {
 
 				// Update Log Area automatically whenever text is appended
 				((DefaultCaret) logArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-				
+
 				logArea.setEditable(false);
 
 				// Print current Date to Log Area
@@ -895,7 +897,7 @@ public class Play extends JFrame {
 		 * Updates HP, MP meter and Card Area.
 		 */
 		public void updateArea() {
-			
+
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
 					@Override
@@ -1725,7 +1727,7 @@ public class Play extends JFrame {
 
 		// Check type and card number of the card for action
 
-		if (card instanceof Equipment) { // Equipment Card			
+		if (card instanceof Equipment) { // Equipment Card
 			int currentCharJob = currentChar.getJob();
 			switch (card.getNumber()) {
 			case 1: // Adventurer's Sword
@@ -1874,7 +1876,7 @@ public class Play extends JFrame {
 				break;
 
 			}
-			
+
 		} else if (card instanceof Item) { // Item Card
 			switch (card.getNumber()) {
 			case 1: // HP Potion
