@@ -181,7 +181,7 @@ public class Play extends JFrame {
 		Preload preload = new Preload(this);
 		add(preload);
 		setJMenuBar(new MenuBar());
-		setSize(new Dimension(600, 400));
+		setSize(new Dimension(935, 570));
 		locateCenter(this);
 		setResizable(false);
 		setVisible(true);
@@ -189,6 +189,8 @@ public class Play extends JFrame {
 		synchronized (this) {
 			this.wait();
 		}
+		
+		remove(preload);
 
 		/* Run main game GUI */
 		setVisible(false);

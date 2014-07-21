@@ -1,8 +1,17 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,6 +26,7 @@ import javax.swing.JToggleButton;
  * 
  */
 
+@SuppressWarnings("serial")
 public class Preload extends JPanel {
 
 	private Play play = null;
@@ -121,15 +131,14 @@ public class Preload extends JPanel {
 
 		private class CharButton extends JToggleButton implements ActionListener {
 			private int number;
+			private BufferedImage charImage = null;
 
 			public CharButton(int number) {
 				this.number = number;
+				setPreferredSize(new Dimension(150, 40));
 				setText(Lang.CharNames[number]);
+				setCharImage();
 				addActionListener(this);
-			}
-
-			public int getNumber() {
-				return number;
 			}
 
 			@Override
@@ -147,6 +156,43 @@ public class Preload extends JPanel {
 					count--;
 				}
 
+			}
+
+			public void setCharImage() {
+				BufferedImage src = null;
+				try {
+					src = ImageIO.read(getCharImageURL());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				// Crop Image
+				charImage = src.getSubimage(120, 195, 300, 100);
+				// Set Filter
+				RescaleOp rescaleOp = new RescaleOp(0.3f, 182, null);
+				rescaleOp.filter(charImage, charImage);
+			}
+
+			private URL getCharImageURL() {
+				URL imageURL = Play.class.getResource("/resources/CharPics/mC"
+						+ String.format("%03d", number) + "-1.png");
+				if (imageURL == null) {
+					imageURL = Play.class.getResource("/resources/CharPics/null.png");
+				}
+				return imageURL;
+			}
+
+			@Override
+			public void paintComponent(Graphics g) {
+				g.drawImage(charImage, 0, 0, null);				
+				if (!isSelected()) {
+					g.setColor(new Color(0, 0, 0, 150));
+					g.fillRect(0, 0, getWidth(), getHeight());
+					g.setColor(Color.LIGHT_GRAY);
+				} else {
+					g.setColor(Color.BLACK);
+				}
+				g.setFont(new Font(Lang.font, Font.PLAIN, 15));
+				g.drawString(Lang.CharNames[number], 5, 15);
 			}
 		}
 	}
