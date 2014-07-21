@@ -16,7 +16,7 @@ public class T8 extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using T8's 1stJob passive skill!");
+					Play.printlnLog("Using T8's 1stJob passive skill!");
 
 				}
 
@@ -27,7 +27,7 @@ public class T8 extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using T8's 1stJob active skill!");
+							Play.printlnLog("Using T8's 1stJob active skill!");
 
 						}
 
@@ -43,7 +43,7 @@ public class T8 extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using T8's 2ndJob passive skill 1!");
+					Play.printlnLog("Using T8's 2ndJob passive skill 1!");
 
 				}
 
@@ -52,7 +52,7 @@ public class T8 extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using T8's 2ndJob passive skill 2!");
+					Play.printlnLog("Using T8's 2ndJob passive skill 2!");
 
 				}
 
@@ -64,7 +64,7 @@ public class T8 extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using T8's 2ndJob active skill 1!");
+							Play.printlnLog("Using T8's 2ndJob active skill 1!");
 
 						}
 
@@ -74,7 +74,7 @@ public class T8 extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using T8's 2ndJob active skill 2!");
+							Play.printlnLog("Using T8's 2ndJob active skill 2!");
 
 						}
 
@@ -84,7 +84,7 @@ public class T8 extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using T8's 2ndJob active skill 3!");
+							Play.printlnLog("Using T8's 2ndJob active skill 3!");
 
 						}
 

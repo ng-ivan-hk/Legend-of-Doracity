@@ -14,7 +14,7 @@ public class Lang {
 	public final static String menu_option = "選項";
 	public final static String menu_help = "幫助";
 	public final static String menu_about = "關於";
-	public final static String menu_aboutInfo = "遊戲設計：烏龍茶<br>程式製作：古怪<br>程式協力：射手小朋友";
+	public final static String menu_aboutInfo = "遊戲設計：烏龍茶<br>程式製作：古怪<br>程式協力：射手小朋友<br>角色圖片：蝶、山大、烏龍茶等";
 	public final static String menu_exit = "結束";
 
 	public final static String help_debug = "DEBUG說明";
@@ -25,6 +25,7 @@ public class Lang {
 	public final static String help_cards = "卡牌種類";
 	public final static String help_QA = "Q & A";
 	public final static String help_appHelp = "程式教學";
+	public final static String help_preload = "起始畫面";
 	public final static String help_icons = "圖案說明";
 	public final static String help_appFAQ = "常見問題";
 
@@ -559,16 +560,17 @@ public class Lang {
 	public final static String log_jobChange = "轉成";
 
 	/* Log: Skill messages */
+	public final static String choose = "選擇了：";
 	// 1. Tea
 	public final static String tea_gentleman = "場上有女性角色，烏龍茶的紳士技能發動：";
 	public final static String tea_MSoul = "烏龍茶的M魂技能發動：受到女性角色攻擊時，回復1HP";
 	public final static String tea_DoM = "烏龍茶的抖M技能正在發動：";
-	public final static String tea_DoM_attackTeaOnly = tea_DoM + "女性只能攻擊茶";
+	public final static String tea_DoM_attackTeaOnly = tea_DoM + "女性只能攻擊烏龍茶";
 	public final static String tea_DoM_lessDamage = tea_DoM + "傷害-1";
 	public final static String tea_ero = "烏龍茶的工口技能發動：場上的女性角色數量是";
 	// 2. Livia
 	public final static String livia_together = "古怪在場，淋琳的相伴技能發動：";
-	public final static String livia_together_job1 = livia_together + "物防+1 魔防+1";
+	public final static String livia_together_job1 = livia_together;
 	public final static String livia_together_job2 = livia_together + "額外回復1HP";
 	// 3. Phoebell
 	public final static String phoebell_together = "淋琳在場，古怪的相伴技能發動：";
@@ -576,7 +578,7 @@ public class Lang {
 	// 4. Map
 	public final static String map_assassin = "地圖的刺殺技能正在發動：";
 	public final static String map_assassin_moreDamage = map_assassin + "傷害+1";
-	public final static String map_choose = "地圖選擇了：";
+	public final static String map_siscon = "場上有女性角色，地圖的妹控技能發動：";
 
 	/* Error Messages */
 	public final static String error = "錯誤";

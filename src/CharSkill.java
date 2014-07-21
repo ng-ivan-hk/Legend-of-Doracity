@@ -100,6 +100,7 @@ public class CharSkill {
 				@Override
 				public void actionPerformed(ActionEvent evt) {
 					CharSelectDialog.this.dispose();
+					Play.printlnLog(currentChar + Lang.choose + character);
 					method.targetMethod(currentChar, character);
 				}
 			}

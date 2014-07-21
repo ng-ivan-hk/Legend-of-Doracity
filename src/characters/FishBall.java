@@ -15,7 +15,7 @@ public class FishBall extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using FishBall's 1stJob passive skill 1!");
+					Play.printlnLog("Using FishBall's 1stJob passive skill 1!");
 
 				}
 
@@ -26,7 +26,7 @@ public class FishBall extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using FishBall's 1stJob active skill 1!");
+							Play.printlnLog("Using FishBall's 1stJob active skill 1!");
 
 						}
 
@@ -36,7 +36,7 @@ public class FishBall extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using FishBall's 1stJob active skill 2!");
+							Play.printlnLog("Using FishBall's 1stJob active skill 2!");
 
 						}
 
@@ -51,7 +51,7 @@ public class FishBall extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using FishBall's 2ndJob passive skill!");
+					Play.printlnLog("Using FishBall's 2ndJob passive skill!");
 
 				}
 
@@ -62,7 +62,7 @@ public class FishBall extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using FishBall's 2ndJob active skill!");
+							Play.printlnLog("Using FishBall's 2ndJob active skill!");
 
 						}
 

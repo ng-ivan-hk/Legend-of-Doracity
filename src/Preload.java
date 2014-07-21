@@ -50,6 +50,22 @@ public class Preload extends JPanel {
 		add(p2Name = new JTextField("B", 15));
 		add(p2 = new CharSelectPanel());
 		add(new StartButton());
+
+		// For debugging: auto character selector
+		JButton debugButton = new JButton();
+		debugButton.setText("DEBUG");
+		final Play debugPlay = play;
+		debugButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				debugPlay.setPlayer("A", "B", new int[] { 1, 7, 13, 19, 25 }, new int[] { 2, 8, 14,
+						20, 26 });
+				synchronized (debugPlay) {
+					debugPlay.notify();
+				}
+			}
+		});
+		add(debugButton);
 	}
 
 	private class StartButton extends JButton implements ActionListener {
@@ -183,7 +199,7 @@ public class Preload extends JPanel {
 
 			@Override
 			public void paintComponent(Graphics g) {
-				g.drawImage(charImage, 0, 0, null);				
+				g.drawImage(charImage, 0, 0, null);
 				if (!isSelected()) {
 					g.setColor(new Color(0, 0, 0, 150));
 					g.fillRect(0, 0, getWidth(), getHeight());

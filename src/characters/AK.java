@@ -15,7 +15,7 @@ public class AK extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using AK's 1stJob passive skill!");
+					Play.printlnLog("Using AK's 1stJob passive skill!");
 
 				}
 
@@ -26,7 +26,7 @@ public class AK extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using AK's 1stJob active skill!");
+							Play.printlnLog("Using AK's 1stJob active skill!");
 
 						}
 
@@ -41,7 +41,7 @@ public class AK extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using AK's 2ndJob passive skill!");
+					Play.printlnLog("Using AK's 2ndJob passive skill!");
 
 				}
 
@@ -52,7 +52,7 @@ public class AK extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using AK's 2ndJob active skill!");
+							Play.printlnLog("Using AK's 2ndJob active skill!");
 
 						}
 

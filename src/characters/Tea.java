@@ -119,7 +119,6 @@ public class Tea extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using Tea's 1stJob active skill!");
 							doM = true;
 						}
 
@@ -144,7 +143,6 @@ public class Tea extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using Tea's 2ndJob active skill!");
 							loliSoul = true;
 							setAttack(getAttack() + noOfGirls);
 						}

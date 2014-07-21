@@ -189,7 +189,7 @@ public class Play extends JFrame {
 		synchronized (this) {
 			this.wait();
 		}
-		
+
 		remove(preload);
 
 		/* Run main game GUI */
@@ -478,8 +478,17 @@ public class Play extends JFrame {
 				Arrays.sort(player1Chars, labelComparator);
 				Arrays.sort(player2Chars, labelComparator);
 
-				removeAll();
-
+				try {
+					SwingUtilities.invokeAndWait(new Runnable() {
+						@Override
+						public void run() {
+							removeAll();
+						}
+					});
+				} catch (InvocationTargetException | InterruptedException e) {
+					e.printStackTrace();
+				}
+				
 				// Row 0
 				add(new BLabel(Lang.player + ": " + player1));
 				add(player1Actions[0]);
@@ -622,9 +631,14 @@ public class Play extends JFrame {
 							Lang.job + ": " + character.getJobName() + "<br>" + Lang.property + ": "
 							+ (character.isPhysical() ? Lang.physical : Lang.mana) + "<br><br>" + 
 							
-							Lang.attack + ": " + character.getAttack() + "<br>" + Lang.defP + ": "
-							+ character.getDefP() + "<br>" + Lang.defM + ": " + character.getDefM()
-							+ "<br>" + Lang.speed + ": " + character.getSpeed() + "<br><br>" + 
+							Lang.attack + ": <b>" + character.getAttack()
+							+ "</b> (" + character.getInitAttack() + ")<br>" +
+							Lang.defP + ": <b>" + character.getDefP()
+							+ "</b> (" + character.getInitDefP() + ")<br>" +
+							Lang.defM + ": <b>" + character.getDefM()
+							+ "</b> (" + character.getInitDefM() + ")<br>" +
+							Lang.speed + ": <b>" + character.getSpeed()
+							+ "</b> (" + character.getInitSpeed() + ")<br><br>" + 
 							
 							Lang.side
 							+ ": " + (character.isDoracity() ? Lang.doracity : Lang.academy)
@@ -805,10 +819,11 @@ public class Play extends JFrame {
 				scrollPane = new JScrollPane(logArea = LOG_AREA = new JTextArea());
 				scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 				scrollPane.setPreferredSize(new Dimension(getWidth(), 100));
-				logArea.setEditable(false);
 
 				// Update Log Area automatically whenever text is appended
 				((DefaultCaret) logArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+				
+				logArea.setEditable(false);
 
 				// Print current Date to Log Area
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd '('E')' HH:mm:ss");
@@ -880,8 +895,17 @@ public class Play extends JFrame {
 		 * Updates HP, MP meter and Card Area.
 		 */
 		public void updateArea() {
-
-			cardArea.removeAll();
+			
+			try {
+				SwingUtilities.invokeAndWait(new Runnable() {
+					@Override
+					public void run() {
+						cardArea.removeAll();
+					}
+				});
+			} catch (InvocationTargetException | InterruptedException e) {
+				e.printStackTrace();
+			}
 
 			updateHPMP();
 
@@ -1701,7 +1725,7 @@ public class Play extends JFrame {
 
 		// Check type and card number of the card for action
 
-		if (card instanceof Equipment) { // Equipment Card
+		if (card instanceof Equipment) { // Equipment Card			
 			int currentCharJob = currentChar.getJob();
 			switch (card.getNumber()) {
 			case 1: // Adventurer's Sword
@@ -1850,6 +1874,7 @@ public class Play extends JFrame {
 				break;
 
 			}
+			
 		} else if (card instanceof Item) { // Item Card
 			switch (card.getNumber()) {
 			case 1: // HP Potion

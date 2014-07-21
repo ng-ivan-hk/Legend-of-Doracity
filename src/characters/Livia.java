@@ -90,7 +90,6 @@ public class Livia extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using Livia's 2ndJob active skill!");
 							getPlayer().changeHP(recoverHP);
 							if (recoverHP == 3) {
 								Play.printlnLog(Lang.livia_together_job2);

@@ -1,4 +1,22 @@
+import java.util.ArrayList;
+
 public class Map extends Character {
+	
+	@Override
+	public void jobChangeExtra() {
+		if (!isFirstJob()) { // Siscon: Any female character?
+			final ArrayList<Character> charList = Play.charList;
+			for (int i = 0; i < charList.size(); i++) {
+				if (!charList.get(i).isMale()) {
+					Play.printlnLog(Lang.map_siscon);
+					setDefP(getDefP() + 2);
+					break;
+				}
+			}
+		}
+	}
+
+	/* === Above are Map's unique fields and methods === */
 
 	public Map(Player player) {
 		super(player, 4);
@@ -16,7 +34,7 @@ public class Map extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using Map's 1stJob passive skill 1!");
+							Play.printlnLog("Using Map's 1stJob passive skill 1!");
 
 						}
 
@@ -27,7 +45,6 @@ public class Map extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using Map's 1stJob active skill!");
 
 							// Select character
 							new CharSkill.CharSelectDialog(currentChar, opponent,
@@ -36,7 +53,6 @@ public class Map extends Character {
 										@Override
 										public void targetMethod(Character currentChar,
 												Character target) {
-											Play.printlnLog(Lang.map_choose + target);
 											// set target assassin on
 											target.setAssassin(true);
 										}
@@ -55,8 +71,7 @@ public class Map extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					System.out.println("Using Map's 2ndJob passive skill!");
-
+					// COMPLETED
 				}
 
 			}, 0);
@@ -66,7 +81,7 @@ public class Map extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using Map's 2ndJob active skill!");
+							Play.printlnLog("Using Map's 2ndJob active skill!");
 
 						}
 

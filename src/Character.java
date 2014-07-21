@@ -180,6 +180,8 @@ abstract public class Character {
 	}
 
 	public void setDefP(int defP) {
+		int diff = defP - this.defP;
+		Play.printlnLog(this + " " + Lang.defP + (diff >= 0 ? "+" : "") + diff);
 		this.defP = defP;
 	}
 
@@ -188,6 +190,8 @@ abstract public class Character {
 	}
 
 	public void setDefM(int defM) {
+		int diff = defM - this.defM;
+		Play.printlnLog(this + " " + Lang.defM + (diff >= 0 ? "+" : "") + diff);
 		this.defM = defM;
 	}
 
@@ -196,6 +200,8 @@ abstract public class Character {
 	}
 
 	public void setSpeed(int speed) {
+		int diff = speed - this.speed;
+		Play.printlnLog(this + " " + Lang.speed + (diff >= 0 ? "+" : "") + diff);
 		this.speed = speed;
 	}
 
@@ -209,6 +215,22 @@ abstract public class Character {
 
 	public boolean isFirstJob() {
 		return firstJob;
+	}
+	
+	public int getInitAttack(){
+		return attack_init;
+	}
+	
+	public int getInitDefP(){
+		return defP_init;
+	}
+	
+	public int getInitDefM(){
+		return defM_init;
+	}
+	
+	public int getInitSpeed(){
+		return speed_init;
 	}
 
 	public void setEquipment(Equipment e) {

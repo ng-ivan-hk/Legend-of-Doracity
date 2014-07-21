@@ -86,6 +86,7 @@ public class Help extends JFrame {
 			category = new DefaultMutableTreeNode(Lang.help_appHelp);
 			top.add(category);
 
+			category.add(new DefaultMutableTreeNode(new HelpPage(Lang.help_preload, "preload")));
 			category.add(new DefaultMutableTreeNode(new HelpPage(Lang.help_icons, "icons")));
 			category.add(new DefaultMutableTreeNode(new HelpPage(Lang.help_appFAQ, "appFAQ")));
 		}

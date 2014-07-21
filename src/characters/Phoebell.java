@@ -91,7 +91,7 @@ public class Phoebell extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using Phoebell's 1stJob active skill!");
+							Play.printlnLog("Using Phoebell's 1stJob active skill!");
 
 						}
 
@@ -117,7 +117,7 @@ public class Phoebell extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							System.out.println("Using Phoebell's 2ndJob active skill!");
+							Play.printlnLog("Using Phoebell's 2ndJob active skill!");
 
 						}
 
