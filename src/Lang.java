@@ -30,8 +30,8 @@ public class Lang {
 
 	/* Character Names */
 	public final static String[] CharNames = new String[] { "", "烏龍茶", "淋琳", "古怪", "地圖", "鐵皮使",
-			"魚丸串", "白銀劍士", "悠閒的大雄", "奈奈由宇", "燒味", "山大", "彩蝶", "羽須智行", "黑川", "工口勇者謙", "奈特", "雲",
-			"蚊", "曹長", "AK", "古夢", "怪盜多啦", "小烤", "風音", "辛", "迷你", "T8", "安東尼", "射手小朋友", "心連心" };
+			"魚丸串", "白銀劍士", "悠閒的大雄", "奈奈由宇", "野味大雄", "山大", "七色彩蝶", "羽須智行", "黑川米古", "勇者謙", "奈特", "雲",
+			"蚊", "曹長", "AK", "古夢", "怪盜多啦", "小烤", "風音之鈴", "辛", "迷你", "T8", "安東尼", "射手小朋友", "心連心" };
 
 	/* Character Titles */
 	public final static String[] CharTitles1 = new String[] { "", "紳士的", "破壞女神", "魔劍士", "刺客",
@@ -499,6 +499,9 @@ public class Lang {
 	public final static String doracity = "小城";
 	public final static String academy = "學園";
 
+	public final static String job1 = "一職";
+	public final static String job2 = "二職";
+
 	/* Buttons */
 	public final static String normalAttack = "普通攻擊";
 	public final static String castSkill = "發動技能";
@@ -554,8 +557,6 @@ public class Lang {
 	public final static String log_skillEffect = "技能效果：";
 	public final static String log_lost = "戰敗！";
 	public final static String log_jobChange = "轉成";
-	public final static String log_job1 = "一職";
-	public final static String log_job2 = "二職";
 
 	/* Log: Skill messages */
 	// 1. Tea

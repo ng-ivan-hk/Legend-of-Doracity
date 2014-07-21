@@ -83,7 +83,7 @@ public class Play extends JFrame {
 		@Override
 		public int compare(Character c1, Character c2) {
 			if (c1.getSpeed() == c2.getSpeed())
-				return c1.getPlayer().isPlayer1() ? -1 : 1;
+				return c1.getPlayer().isPlayer1() ? c1.getNumber() - 1 : c1.getNumber();
 			else
 				return c2.getSpeed() - c1.getSpeed();
 		}
@@ -209,7 +209,7 @@ public class Play extends JFrame {
 		setSize(new Dimension(1100, 680));
 		locateCenter(this);
 		setResizable(true);
-		setVisible(true);
+
 	}
 
 	/**
@@ -404,15 +404,15 @@ public class Play extends JFrame {
 				add(player2Actions[0] = new BLabel("player2"));
 				add(new BLabel(Lang.player + ": " + player2));
 
-				// Row 1 - 6
+				// Row 1 - 5
 				Character[] player1CharTemp = player1.getCharacters();
 				Character[] player2CharTemp = player2.getCharacters();
 				for (int i = 0; i < CHAR_MAX; i++) {
 
 					add(player1Chars[i] = new CharLabel(player1CharTemp[i]));
 
-					add(player1Actions[i] = new BLabel("Player1 " + i));
-					add(player2Actions[i] = new BLabel("Player2 " + i));
+					add(player1Actions[i + 1] = new BLabel("Player1 " + i));
+					add(player2Actions[i + 1] = new BLabel("Player2 " + i));
 
 					add(player2Chars[i] = new CharLabel(player2CharTemp[i]));
 
@@ -459,17 +459,45 @@ public class Play extends JFrame {
 				}
 			}
 
-			public void updateCharOrder() {
-				// Row 1 - 6
-				Character[] player1CharTemp = player1.getCharacters();
-				Character[] player2CharTemp = player2.getCharacters();
+			public void updateCharOrder() { // TODO: update Char
+
+				Comparator<CharLabel> labelComparator = new Comparator<CharLabel>() {
+					@Override
+					public int compare(CharLabel l1, CharLabel l2) {
+						Character c1 = l1.character;
+						Character c2 = l2.character;
+						if (c1.getSpeed() == c2.getSpeed())
+							return c1.getPlayer().isPlayer1() ? c1.getNumber() - 1 : c1.getNumber();
+						else
+							return c2.getSpeed() - c1.getSpeed();
+					}
+				};
+
+				Arrays.sort(player1Chars, labelComparator);
+				Arrays.sort(player2Chars, labelComparator);
+
+				removeAll();
+
+				// Row 0
+				add(new BLabel(Lang.player + ": " + player1));
+				add(player1Actions[0]);
+				add(player2Actions[0]);
+				add(new BLabel(Lang.player + ": " + player2));
+
+				// Row 1 - 5
 				for (int i = 0; i < CHAR_MAX; i++) {
 
-					player1Chars[i].changeChar(player1CharTemp[i]);
-					player2Chars[i].changeChar(player2CharTemp[i]);
+					add(player1Chars[i]);
+					add(player1Actions[i + 1]);
+					add(player2Actions[i + 1]);
+					add(player2Chars[i]);
+
 				}
+
+				updateAllLabels();
+
 			}
-			
+
 			public void updateCharImages() {
 				for (int i = 0; i < CHAR_MAX; i++) {
 					player1Chars[i].setCharImage();
@@ -479,7 +507,7 @@ public class Play extends JFrame {
 					player2Chars[i].setJobIcon();
 					player2Chars[i].setPropertyIcon();
 				}
-				
+
 			}
 
 			private class BLabel extends JLabel {
@@ -511,14 +539,6 @@ public class Play extends JFrame {
 					setJobIcon();
 					setPropertyIcon();
 					setOpaque(false);
-				}
-
-				public void changeChar(Character character) {
-					this.character = character;
-					updateLabel();
-					setCharImage();
-					setJobIcon();
-					setPropertyIcon();
 					highLightLabel(false);
 				}
 
@@ -588,7 +608,8 @@ public class Play extends JFrame {
 							
 							/* === Right-Hand-Side BEGIN === */
 							"<font size=5><b>" + character.getTitle() + " " + character.toString()
-							+ "</b><br><br></font>" +
+							+ "</b></font> (" + (character.isFirstJob()? Lang.job1 :Lang.job2) 
+							+ ")<br><br><br>" +
 							
 							Lang.equipment + ": <font color=blue>"
 							+ character.getEquipmentName() + "</font><br><font color=green>"
@@ -1135,7 +1156,7 @@ public class Play extends JFrame {
 				}
 				// Print Log
 				Play.printlnLog(currentChar + " " + Lang.log_jobChange
-						+ (currentChar.isFirstJob() ? Lang.log_job2 : Lang.log_job1));
+						+ (currentChar.isFirstJob() ? Lang.job1 : Lang.job1));
 				// Remove Equipment effect
 				removeEquipmentEffect();
 				// Really Job Change
@@ -1288,6 +1309,9 @@ public class Play extends JFrame {
 			temp.gameStart();
 			temp.jobChange();
 		}
+		
+		displayArea.battleField.updateCharImages();
+		setVisible(true);
 
 		while (true) { // Loop until HP <= 0
 
@@ -1295,7 +1319,7 @@ public class Play extends JFrame {
 			round++;
 			displayArea.setRound(round);
 			printlnLog("========== " + Lang.round + round + " ==========");
-
+			
 			// Let's begin!
 			try {
 				stageDrawCards();
@@ -1312,17 +1336,13 @@ public class Play extends JFrame {
 				Character temp = charList.get(i);
 				temp.roundEnd();
 			}
-			// Update GUI
-			player1Area.updateArea();
-			player2Area.updateArea();
-			displayArea.battleField.updateAllLabels();
 
 		}
 	}
 
 	private void stageDrawCards() throws InterruptedException, InvocationTargetException {
-		/* === Draw Cards === */
 
+		sortAllChars();
 		displayArea.setStage(Lang.stage_drawCards);
 		printlnLog(">>>" + Lang.stage_drawCards + "<<<");
 
