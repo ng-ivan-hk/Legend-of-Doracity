@@ -503,9 +503,11 @@ public class Play extends JFrame {
 					player1Chars[i].setCharImage();
 					player1Chars[i].setJobIcon();
 					player1Chars[i].setPropertyIcon();
+					player1Chars[i].highLightLabel(false);
 					player2Chars[i].setCharImage();
 					player2Chars[i].setJobIcon();
 					player2Chars[i].setPropertyIcon();
+					player2Chars[i].highLightLabel(false);
 				}
 
 			}
@@ -1156,7 +1158,7 @@ public class Play extends JFrame {
 				}
 				// Print Log
 				Play.printlnLog(currentChar + " " + Lang.log_jobChange
-						+ (currentChar.isFirstJob() ? Lang.job1 : Lang.job1));
+						+ (currentChar.isFirstJob() ? Lang.job2 : Lang.job1));
 				// Remove Equipment effect
 				removeEquipmentEffect();
 				// Really Job Change
