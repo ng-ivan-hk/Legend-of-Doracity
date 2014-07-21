@@ -1309,7 +1309,7 @@ public class Play extends JFrame {
 			temp.gameStart();
 			temp.jobChange();
 		}
-		
+
 		displayArea.battleField.updateCharImages();
 		setVisible(true);
 
@@ -1319,7 +1319,7 @@ public class Play extends JFrame {
 			round++;
 			displayArea.setRound(round);
 			printlnLog("========== " + Lang.round + round + " ==========");
-			
+
 			// Let's begin!
 			try {
 				stageDrawCards();
@@ -1336,6 +1336,11 @@ public class Play extends JFrame {
 				Character temp = charList.get(i);
 				temp.roundEnd();
 			}
+
+			// Update GUI
+			player1Area.updateArea();
+			player2Area.updateArea();
+			displayArea.battleField.updateAllLabels();
 
 		}
 	}
