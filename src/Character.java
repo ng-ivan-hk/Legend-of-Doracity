@@ -216,24 +216,29 @@ abstract public class Character {
 	public boolean isFirstJob() {
 		return firstJob;
 	}
-	
-	public int getInitAttack(){
+
+	public int getInitAttack() {
 		return attack_init;
 	}
-	
-	public int getInitDefP(){
+
+	public int getInitDefP() {
 		return defP_init;
 	}
-	
-	public int getInitDefM(){
+
+	public int getInitDefM() {
 		return defM_init;
 	}
-	
-	public int getInitSpeed(){
+
+	public int getInitSpeed() {
 		return speed_init;
 	}
 
 	public void setEquipment(Equipment e) {
+		if (e == null) {
+			Play.printlnLog(this + " " + Lang.log_removeEquipment);
+		} else {
+			Play.printlnLog(this + " " + Lang.log_equip + " " + e);
+		}
 		this.equipment = e;
 	}
 

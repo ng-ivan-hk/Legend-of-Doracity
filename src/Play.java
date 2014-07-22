@@ -140,16 +140,16 @@ public class Play extends JFrame {
 					cards.push(new Equipment(i + 1));
 			}
 		}
-		for (int i = 0; i < ITEM_MAX.length; i++) {
-			for (int j = 0; j < ITEM_MAX[i]; j++) {
-				cards.push(new Item(i + 1));
-			}
-		}
-		for (int i = 0; i < SKILL_MAX.length; i++) {
-			for (int j = 0; j < SKILL_MAX[i]; j++) {
-				cards.push(new Skill(i + 1));
-			}
-		}
+//		for (int i = 0; i < ITEM_MAX.length; i++) {
+//			for (int j = 0; j < ITEM_MAX[i]; j++) {
+//				cards.push(new Item(i + 1));
+//			}
+//		}
+//		for (int i = 0; i < SKILL_MAX.length; i++) {
+//			for (int j = 0; j < SKILL_MAX[i]; j++) {
+//				cards.push(new Skill(i + 1));
+//			}
+//		}
 		Collections.shuffle(cards);
 
 		setGUI();
@@ -1189,24 +1189,27 @@ public class Play extends JFrame {
 				// Print Log
 				Play.printlnLog(currentChar + " " + Lang.log_jobChange
 						+ (currentChar.isFirstJob() ? Lang.job2 : Lang.job1));
-				// Remove Equipment effect
-				removeEquipmentEffect();
+				
+				//Remove Equipment temporarily
+				Equipment tempEquip = currentChar.getEquipment();
+				currentChar.setEquipment(null);
+
 				// Really Job Change
 				currentChar.jobChange();
 				// Equip again if extra requirement still matches
-				switch (useCard(player, currentChar.getEquipment())) {
+				switch (useCard(player, tempEquip)) {
 				case 1:
-					JOptionPane.showMessageDialog(this, currentChar.getEquipmentName() + ": "
+					JOptionPane.showMessageDialog(this, tempEquip + ": "
 							+ Lang.wrongJob + "\n" + Lang.removeEquip);
 					currentChar.setEquipment(null);
 					break;
 				case 10:
-					JOptionPane.showMessageDialog(this, currentChar.getEquipmentName() + ": "
+					JOptionPane.showMessageDialog(this, tempEquip + ": "
 							+ Lang.notAcademy + "\n" + Lang.removeEquip);
 					currentChar.setEquipment(null);
 					break;
 				case 11:
-					JOptionPane.showMessageDialog(this, currentChar.getEquipmentName() + ": "
+					JOptionPane.showMessageDialog(this, tempEquip + ": "
 							+ Lang.notDoracity + "\n" + Lang.removeEquip);
 					currentChar.setEquipment(null);
 					break;

@@ -558,7 +558,9 @@ public class Lang {
 	public final static String log_skillEffect = "技能效果：";
 	public final static String log_lost = "戰敗！";
 	public final static String log_jobChange = "轉成";
-
+	public final static String log_equip = "裝備了";
+	public final static String log_removeEquipment = "移除了裝備";
+	
 	/* Log: Skill messages */
 	public final static String choose = "選擇了：";
 	public final static String totalDamage = "總計：";
