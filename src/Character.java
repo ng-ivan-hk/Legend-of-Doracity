@@ -25,6 +25,7 @@ abstract public class Character {
 	private int defM_init; // mana defense
 	private int speed_init; // AT (who moves first)
 	private boolean doracity; // if false, academy
+	protected int jobChangeMP = 15; // How many MP is required for job change
 
 	/* Character's current properties */
 	private int attack;
@@ -212,6 +213,10 @@ abstract public class Character {
 	public boolean isDoracity() {
 		return doracity;
 	}
+	
+	public int getJobChangeMP(){
+		return jobChangeMP;
+	}
 
 	public boolean isFirstJob() {
 		return firstJob;
@@ -288,6 +293,14 @@ abstract public class Character {
 		if (target.isDefense()) {
 			return 2;
 		}
+		
+		/* Check skills */
+
+		// Iron's job 2 passive skill heroic
+		if (this instanceof Iron && !isFirstJob() && target.getJob() == SABER) {
+			Play.printlnLog(Lang.iron_heroic);
+			attack++;
+		}
 
 		/* Calculate damage */
 		int c2Def = isPhysical() ? target.getDefP() : target.getDefM();
@@ -308,13 +321,17 @@ abstract public class Character {
 
 			} else { // Attack success with damage!
 
-				// If Tea's doM is on, damage - 1
 				if (target instanceof Tea) {
+					// If Tea's doM is on, damage - 1
 					Tea tea = (Tea) target;
 					if (tea.isDoM() && !isMale()) {
 						damage--;
 						Play.printlnLog(Lang.tea_DoM_lessDamage);
 					}
+				} else if (target instanceof Iron && target.isFirstJob()) {
+					// Iron's job1 passive skill: damage - 1
+					damage--;
+					Play.printlnLog(Lang.iron_fortitude_lessDamage);
 				}
 
 				// If marked by Map's assassin, damage + 1
@@ -343,6 +360,11 @@ abstract public class Character {
 		// Set Phoebell's property back to physical
 		if (this instanceof Phoebell && isFirstJob()) {
 			setPhysical(true);
+		}
+
+		// Iron's job 2 passive skill heroic: back to normal
+		if (this instanceof Iron && !isFirstJob() && target.getJob() == SABER) {
+			attack--;
 		}
 
 		/* === Commond Route END === */

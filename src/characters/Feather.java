@@ -3,6 +3,16 @@ public class Feather extends Character {
 	public Feather(Player player) {
 		super(player, 13);
 	}
+	
+	@Override
+	public void jobChangeExtra() {
+		if (isFirstJob()) {
+			// Job 1 passive skill: Talent
+			jobChangeMP = 10;
+		} else {
+			jobChangeMP = 15;
+		}
+	}
 
 	@Override
 	protected void setCharacter() {
@@ -15,8 +25,7 @@ public class Feather extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					Play.printlnLog("Using Feather's 1stJob passive skill!");
-
+					// COMPLETED
 				}
 
 			}, 0);

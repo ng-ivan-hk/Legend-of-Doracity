@@ -182,6 +182,10 @@ public class Player {
 	 */
 	public int changeHP(int HP) {
 
+		if (HP < 0) {
+			Play.shake(5, 300);
+		}
+
 		this.HP += HP;
 		Play.printlnLog(Lang.player + ": " + name + " " + (HP >= 0 ? "+" : "") + HP + " HP");
 

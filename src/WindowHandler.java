@@ -23,8 +23,13 @@ public class WindowHandler {
 	 * Shake the window.
 	 * 
 	 * @param frame
+	 *            The frame to be shaken
+	 * @param distance
+	 *            Shake Distance
+	 * @param duration
+	 *            Shake Duration
 	 */
-	public static void shake(final Window frame) {
+	public static void shake(final Window frame, final int distance, final int duration) {
 
 		class ShakeHandler {
 			final Point naturalLocation = frame.getLocation();
@@ -40,13 +45,13 @@ public class WindowHandler {
 					double waveOffset = (elapsed % SHAKE_CYCLE) / SHAKE_CYCLE;
 					double angle = waveOffset * TWO_PI;
 
-					int SHAKE_DISTANCE = 10;
+					int SHAKE_DISTANCE = distance;
 
 					int shakenX = (int) ((Math.sin(angle) * SHAKE_DISTANCE) + naturalLocation.x);
 					frame.setLocation(shakenX, naturalLocation.y);
 					frame.repaint();
 
-					int SHAKE_DURATION = 1000;
+					int SHAKE_DURATION = duration;
 					if (elapsed >= SHAKE_DURATION) { // Stop shaking
 						shakeTimer.stop();
 						frame.setLocation(naturalLocation);

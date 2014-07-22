@@ -235,8 +235,8 @@ public class Play extends JFrame {
 	/**
 	 * Shake this JFrame.
 	 */
-	public static void shake(){
-		WindowHandler.shake(play);
+	public static void shake(final int distance, final int duration) {
+		WindowHandler.shake(play, distance, duration);
 	}
 
 	/**
@@ -979,6 +979,11 @@ public class Play extends JFrame {
 			}
 		}
 
+		public void setJobChangeButtonText() {
+			jobChangeButton.setToolTipText(Lang.jobChangeInfo[0] + currentChar.getJobChangeMP()
+					+ Lang.jobChangeInfo[1]);
+		}
+
 		public class AttackButton extends JButton implements ActionListener {
 			public AttackButton() {
 				setText(Lang.normalAttack);
@@ -1173,24 +1178,27 @@ public class Play extends JFrame {
 		}
 
 		private class JobChangeButton extends JButton implements ActionListener {
+			
 			public JobChangeButton() {
 				setText(Lang.jobChange);
-				setToolTipText(Lang.jobChangeInfo);
+				setToolTipText(Lang.jobChangeInfo[0] + "15" + Lang.jobChangeInfo[1]);
 				setEnabled(false);
 				addActionListener(this);
 			}
 
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				if (player.changeMP(-15) == 1) { // MP not enough
+
+				if (player.changeMP(-currentChar.getJobChangeMP()) == 1) {
+					// MP not enough
 					JOptionPane.showMessageDialog(this, Lang.noMP);
 					return;
 				}
 				// Print Log
 				Play.printlnLog(currentChar + " " + Lang.log_jobChange
 						+ (currentChar.isFirstJob() ? Lang.job2 : Lang.job1));
-				
-				//Remove Equipment temporarily
+
+				// Remove Equipment temporarily
 				Equipment tempEquip = currentChar.getEquipment();
 				currentChar.setEquipment(null);
 
@@ -1506,6 +1514,10 @@ public class Play extends JFrame {
 			currentChar = charList.get(i);
 			printCurrentChar();
 			// printLog(currentChar.getPlayer().indexOfChar(currentChar));
+
+			// Set Job Change Button ToolTip Text
+			(currentChar.getPlayer().isPlayer1() ? player1Area : player2Area)
+					.setJobChangeButtonText();
 
 			// Highlight the character on the battle field
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()

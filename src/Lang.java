@@ -18,6 +18,7 @@ public class Lang {
 	public final static String menu_exit = "結束";
 
 	public final static String help_debug = "DEBUG說明";
+	public final static String help_debugPast = "過往更新";
 	public final static String help_gameRules = "遊戲規則";
 	public final static String help_beforeGame = "遊戲開始前的準備";
 	public final static String help_gameFlow = "遊戲流程";
@@ -515,7 +516,7 @@ public class Lang {
 	public final static String normalAttackInfo = "選取對方一名角色，對其進行普通攻擊。";
 	public final static String castSkillInfo = "查看角色技能，並選擇使用其中一項。";
 	public final static String removeEquipmentInfo = "移除角色目前的裝備。";
-	public final static String jobChangeInfo = "消耗15MP進行轉職。";
+	public final static String[] jobChangeInfo = {"消耗", "MP進行轉職。"};
 	public final static String drawCardInfo = "抽一張手牌。";
 	public final static String passInfo = "結束此階段。";
 
@@ -582,6 +583,9 @@ public class Lang {
 	public final static String map_assassin = "地圖的刺殺技能正在發動：";
 	public final static String map_assassin_moreDamage = map_assassin + "傷害+1";
 	public final static String map_siscon = "場上有女性角色，地圖的妹控技能發動：";
+	// 5. Iron
+	public final static String iron_fortitude_lessDamage = "鐵皮的堅忍技能發動：傷害-1";
+	public final static String iron_heroic = "鐵皮的英勇技能發動：攻擊劍士時攻擊+1";
 
 	/* Error Messages */
 	public final static String error = "錯誤";

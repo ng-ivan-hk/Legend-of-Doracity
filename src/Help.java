@@ -70,6 +70,7 @@ public class Help extends JFrame {
 			DefaultMutableTreeNode category = null;
 
 			top.add(new DefaultMutableTreeNode(new HelpPage(Lang.help_debug, "debug")));
+			top.add(new DefaultMutableTreeNode(new HelpPage(Lang.help_debugPast, "debug_past")));
 
 			/* Game Rules */
 			category = new DefaultMutableTreeNode(Lang.help_gameRules);
