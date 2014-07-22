@@ -30,7 +30,7 @@ public class Help extends JFrame {
 		pack();
 		setMinimumSize(getBounds().getSize());
 		setSize(new Dimension(800,getWidth()));
-		Play.locateCenter(this);
+		WindowHandler.locateCenter(this);
 		setVisible(true);
 	}
 

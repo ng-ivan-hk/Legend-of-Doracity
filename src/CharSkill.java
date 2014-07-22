@@ -38,7 +38,7 @@ public class CharSkill {
 			setTitle(Lang.charSelection);
 			add(new CharSelectPanel(true));
 			pack();
-			Play.locateCenter(this);
+			WindowHandler.locateCenter(this);
 			setResizable(false);
 			setVisible(true);
 		}
@@ -122,7 +122,7 @@ public class CharSkill {
 			setTitle(Lang.cardSelection);
 			add(new CardSelectPanel()); // TODO: JScrollPane?
 			pack();
-			Play.locateCenter(this);
+			WindowHandler.locateCenter(this);
 			setResizable(false);
 			setVisible(true);
 		}

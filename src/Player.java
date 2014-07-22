@@ -228,7 +228,7 @@ public class Player {
 		return MP;
 	}
 
-	protected Character[] getCharacters() {
+	public Character[] getCharacters() {
 		return characters;
 	}
 

@@ -251,7 +251,7 @@ public class Lang {
 					// Passive
 					{ { "相伴", "若琳琳在場時，MP回復+1" } },
 					// Active
-					{ { "相伴", "對五名敵方造成5點魔法傷害" } } },
+					{ { "隕石術", "對敵方陣營造成(自身普攻)點魔法傷害及物理傷害" } } },
 			// 4. Map
 			{
 					// Passive
@@ -561,6 +561,7 @@ public class Lang {
 
 	/* Log: Skill messages */
 	public final static String choose = "選擇了：";
+	public final static String totalDamage = "總計：";
 	// 1. Tea
 	public final static String tea_gentleman = "場上有女性角色，烏龍茶的紳士技能發動：";
 	public final static String tea_MSoul = "烏龍茶的M魂技能發動：受到女性角色攻擊時，回復1HP";

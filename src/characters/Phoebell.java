@@ -81,7 +81,6 @@ public class Phoebell extends Character {
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
 					// COMPLETED
-
 				}
 
 			}, 0);
@@ -107,7 +106,6 @@ public class Phoebell extends Character {
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
 					// COMPLETED
-
 				}
 
 			}, 0);
@@ -117,8 +115,20 @@ public class Phoebell extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Phoebell's 2ndJob active skill!");
-
+							int oldHP = opponent.getHP();
+							Character[] characters = opponent.getCharacters();
+							for (int i = 0; i < characters.length; i++) {
+								setPhysical(true);
+								attack(characters[i]);
+								characters[i].setDefense(false);
+								setPhysical(false);
+								attack(characters[i]);
+								characters[i].setDefense(false);
+							}
+							;
+							int totalDamage = oldHP - opponent.getHP();
+							Play.printlnLog(Lang.totalDamage + " -" + totalDamage + "HP");
+							Play.shake();
 						}
 
 					}, 15);

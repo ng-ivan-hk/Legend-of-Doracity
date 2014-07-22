@@ -74,9 +74,9 @@ public class Play extends JFrame {
 	public final static int[] SKILL_MAX = new int[] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 5,
 			0, 5, 2, 2 };
 	public final static int MAX_HP = 50;
-	public final static int MAX_MP = 30;
-	public final static int INIT_HP = 10;
-	public final static int INIT_MP = 20;
+	public final static int MAX_MP = 150;
+	public final static int INIT_HP = 20;
+	public final static int INIT_MP = 100;
 
 	/* Defines how to compare and order characters */
 	public static Comparator<Character> charComparator = new Comparator<Character>() {
@@ -108,6 +108,7 @@ public class Play extends JFrame {
 	private int currentStatus = 0; // For checking occasion in battle
 
 	/* GUI objects */
+	private static Play play = null;
 	private DisplayArea displayArea = null;
 	private PlayerArea player1Area = null;
 	private PlayerArea player2Area = null;
@@ -119,12 +120,9 @@ public class Play extends JFrame {
 	private final static Color doracityColorLight = new Color(220, 242, 255);
 	private final static Color academyColorLight = new Color(255, 231, 210);
 
-	/* for threads */
-	public static CountDownLatch latch = null;
-
 	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
 
-		Play play = new Play();
+		play = new Play();
 		play.start();
 
 	}
@@ -187,7 +185,7 @@ public class Play extends JFrame {
 		add(preload);
 		setJMenuBar(new MenuBar());
 		setSize(new Dimension(935, 570));
-		locateCenter(this);
+		WindowHandler.locateCenter(this);
 		setResizable(false);
 		setVisible(true);
 
@@ -214,7 +212,7 @@ public class Play extends JFrame {
 		pack();
 		setMinimumSize(getBounds().getSize());
 		setSize(new Dimension(1100, 680));
-		locateCenter(this);
+		WindowHandler.locateCenter(this);
 		setResizable(true);
 
 	}
@@ -233,14 +231,12 @@ public class Play extends JFrame {
 		p.y += 15;
 		return p;
 	}
-
+	
 	/**
-	 * Locate the window (JFrame) at center.
+	 * Shake this JFrame.
 	 */
-	public static void locateCenter(Window frame) {
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setLocation(dim.width / 2 - frame.getSize().width / 2,
-				dim.height / 2 - frame.getSize().height / 2);
+	public static void shake(){
+		WindowHandler.shake(play);
 	}
 
 	/**
@@ -898,15 +894,21 @@ public class Play extends JFrame {
 		 */
 		public void updateArea() {
 
-			try {
-				SwingUtilities.invokeAndWait(new Runnable() {
-					@Override
-					public void run() {
-						cardArea.removeAll();
-					}
-				});
-			} catch (InvocationTargetException | InterruptedException e) {
-				e.printStackTrace();
+			Runnable r = new Runnable() {
+				@Override
+				public void run() {
+					cardArea.removeAll();
+				}
+			};
+			
+			if (SwingUtilities.isEventDispatchThread())
+				r.run();
+			else {
+				try {
+					SwingUtilities.invokeAndWait(r);
+				} catch (InvocationTargetException | InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 
 			updateHPMP();
