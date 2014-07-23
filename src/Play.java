@@ -101,7 +101,7 @@ public class Play extends JFrame {
 	private Player player1 = null; // Player who attacks first
 	private Player player2 = null; // Player who attacks next
 	private Player[] players = null;
-	private Stack<Card> cards = null; // card stack on the table
+	private static Stack<Card> cards = null; // card stack on the table
 	protected static ArrayList<Character> charList = null;
 	private Character currentChar = null;
 	private int round = 0;
@@ -109,7 +109,7 @@ public class Play extends JFrame {
 
 	/* GUI objects */
 	private static Play play = null;
-	private DisplayArea displayArea = null;
+	private static DisplayArea displayArea = null;
 	private PlayerArea player1Area = null;
 	private PlayerArea player2Area = null;
 	PlayerArea[] playerAreas = null; // refers to the 2 player areas
@@ -1720,15 +1720,14 @@ public class Play extends JFrame {
 	}
 
 	/**
-	 * Draw a card.
+	 * Draw a card. This method print "no cards left" in log if the card stack
+	 * is empty.
 	 * 
 	 * @param player
 	 *            the Player object who draws a card
 	 */
-	protected void draw(Player player) {
+	public static void draw(Player player) {
 
-		// System.out.println("--- Player: " + player.getName()
-		// + " is drawing a card...");
 		if (cards.empty()) {
 			printlnLog(Lang.noCardsLeft);
 		} else {

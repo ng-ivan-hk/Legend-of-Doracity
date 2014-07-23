@@ -26,8 +26,7 @@ public class Xander extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Xander's 1stJob active skill!");
-
+							setDefP(getDefP() + 1); // So easy T.T
 						}
 
 					}, 3);
@@ -52,19 +51,27 @@ public class Xander extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Xander's 2ndJob active skill 1!");
-
+							Play.draw(getPlayer());
+							Play.draw(getPlayer());
 						}
 
 					}, 5);
 
-			activeSkills[1] = new CharSkill(this, true, 0, Command.AFTER_BATTLE,
+			activeSkills[1] = new CharSkill(this, true, 1, Command.AFTER_BATTLE,
 					new CharSkillMethod() {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Xander's 2ndJob active skill 2!");
+							
+							new CharSkill.CardSelectDialog(getPlayer(), new TargetMethod() {
 
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									getPlayer().changeMP(2);
+								}
+
+							});
+							
 						}
 
 					}, 0);
