@@ -605,7 +605,9 @@ public class Play extends JFrame {
 					skillInfo += ("<br>" + Lang.active + Lang.skill + "<br>");
 					charSkills = character.activeSkills;
 					for (int i = 0; i < charSkills.length; i++) {
-						skillInfo += (charSkills[i] + ": " + charSkills[i].getInfo() + "<br>");
+						skillInfo += (charSkills[i] + " "
+								+ Lang.occasion[charSkills[i].getOccasion()] + ": "
+								+ charSkills[i].getInfo() + "<br>");
 					}
 
 					setToolTipText(//@formatter:off
@@ -1157,6 +1159,8 @@ public class Play extends JFrame {
 							/* Really use skill! */
 							charSkill.useSkill(currentChar.getPlayer().isPlayer1() ? player2
 									: player1);
+							
+							repaint();
 
 							// Update Area
 							updateArea();

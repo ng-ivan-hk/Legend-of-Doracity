@@ -26,7 +26,17 @@ public class MandyLee extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Mandy_Lee's 1stJob active skill!");
+
+							// Choose a constructor that only list my characters
+							new CharSkill.CharSelectDialog(currentChar, new TargetMethod() {
+
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									// set target defense on
+									target.setDefense(true);
+								}
+
+							});
 
 						}
 

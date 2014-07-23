@@ -589,6 +589,8 @@ public class Lang {
 	public final static String iron_heroic = "鐵皮的英勇技能發動：攻擊劍士時攻擊+1";
 	// 7. Shirogane
 	public final static String shirogane_resonance = "白銀的共鳴技能發動：每名法師額外回復1MP";
+	// 12. Buttefly
+	public final static String butterfly_squander_end = "七色辭蝶的揮霍技能效果完結";
 	// 29. Sasa
 	public final static String sasa_pharmacist = "射手的藥師技能發動：額外使用道具回復時+1HP";
 	// 30. SunnyShum

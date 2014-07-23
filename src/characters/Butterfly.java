@@ -1,4 +1,17 @@
 public class Butterfly extends Character {
+	
+	private boolean squander = false;
+	
+	@Override
+	public void roundEndExtra() {
+		if (squander) {
+			Play.printlnLog(Lang.butterfly_squander_end);
+			setAttack(getAttack() - 2);
+			squander = false;
+		}
+	}
+	
+	/* === Above are Butterfly's unique fields and methods === */
 
 	public Butterfly(Player player) {
 		super(player, 12);
@@ -52,7 +65,16 @@ public class Butterfly extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Butterfly's 2ndJob active skill!");
+
+							new CharSkill.CardSelectDialog(getPlayer(), new TargetMethod() {
+
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									squander = true;
+									setAttack(getAttack() + 2);
+								}
+
+							});
 
 						}
 
