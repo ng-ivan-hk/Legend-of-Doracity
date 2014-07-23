@@ -2,10 +2,6 @@ import java.util.ArrayList;
 
 public class Iron extends Character {
 
-	public Iron(Player player) {
-		super(player, 5);
-	}
-	
 	@Override
 	public void jobChangeExtra() {
 		if (isFirstJob()) {
@@ -14,6 +10,12 @@ public class Iron extends Character {
 		} else {
 			jobChangeMP = 15;
 		}
+	}
+
+	/* === Above are Iron's unique fields and methods === */
+
+	public Iron(Player player) {
+		super(player, 5);
 	}
 
 	@Override

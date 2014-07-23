@@ -26,8 +26,14 @@ public class Sasa extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Sasa's 1stJob active skill!");
+							new CharSkill.CardSelectDialog(getPlayer(), new TargetMethod() {
 
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									getPlayer().changeHP(3);
+								}
+
+							});
 						}
 
 					}, 0);

@@ -123,7 +123,7 @@ public class Phoebell extends Character {
 								characters[i].setDefense(false);
 								setPhysical(false);
 								attack(characters[i]);
-								characters[i].setDefense(false);
+								characters[i].setDefense(true);
 							}
 							int totalDamage = oldHP - opponent.getHP();
 							Play.printlnLog(Lang.totalDamage + " -" + totalDamage + "HP");

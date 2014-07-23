@@ -1,4 +1,41 @@
 public class SunnyShum extends Character {
+	
+	private boolean excite = false;
+
+	@Override
+	public void jobChangeExtra() {
+		if (isFirstJob()) {
+
+			// Check for job 1 passive skill: Chasteness
+			// If no female character on my side, attack+3
+			Character[] selfChars = getPlayer().getCharacters();
+			for (int i = 0; i < selfChars.length; i++) {
+				if (!selfChars[i].isMale()) {
+					return;
+				}
+			}
+			Play.printlnLog(Lang.sunnyshum_chasteness);
+			setAttack(getAttack() + 3);
+		} else {
+		}
+	}
+	
+	@Override
+	public void roundEndExtra() {
+		if (excite) {
+			Play.printlnLog(Lang.sunnyshum_excite_end);
+			Character[] selfChars = getPlayer().getCharacters();
+			for (int i = 0; i < selfChars.length; i++) {
+				if (selfChars[i].isMale()) {
+					selfChars[i].setAttack(selfChars[i].getAttack() - 1);
+				}
+			}
+			excite = false;
+		}
+		
+	}
+
+	/* === Above are SunnyShum's unique fields and methods === */
 
 	public SunnyShum(Player player) {
 		super(player, 30);
@@ -15,8 +52,7 @@ public class SunnyShum extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					Play.printlnLog("Using SunnyShum''s 1stJob passive skill!");
-
+					// COMPLETED
 				}
 
 			}, 0);
@@ -26,8 +62,13 @@ public class SunnyShum extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using SunnyShum''s 1stJob active skill!");
-
+							excite = true;
+							Character[] selfChars = getPlayer().getCharacters();
+							for (int i = 0; i < selfChars.length; i++) {
+								if (selfChars[i].isMale()) {
+									selfChars[i].setAttack(selfChars[i].getAttack() + 1);
+								}
+							}
 						}
 
 					}, 5);

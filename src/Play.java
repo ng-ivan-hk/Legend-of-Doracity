@@ -140,11 +140,11 @@ public class Play extends JFrame {
 					cards.push(new Equipment(i + 1));
 			}
 		}
-//		for (int i = 0; i < ITEM_MAX.length; i++) {
-//			for (int j = 0; j < ITEM_MAX[i]; j++) {
-//				cards.push(new Item(i + 1));
-//			}
-//		}
+		for (int i = 0; i < ITEM_MAX.length; i++) {
+			for (int j = 0; j < ITEM_MAX[i]; j++) {
+				cards.push(new Item(i + 1));
+			}
+		}
 //		for (int i = 0; i < SKILL_MAX.length; i++) {
 //			for (int j = 0; j < SKILL_MAX[i]; j++) {
 //				cards.push(new Skill(i + 1));
@@ -620,7 +620,7 @@ public class Play extends JFrame {
 							/* === Right-Hand-Side BEGIN === */
 							"<font size=5><b>" + character.getTitle() + " " + character.toString()
 							+ "</b></font> (" + (character.isFirstJob()? Lang.job1 :Lang.job2) 
-							+ ")<br><br><br>" +
+							+ ")<br>" + (character.isDefense()?Lang.charDefensing:"") + "<br><br>" +
 							
 							Lang.equipment + ": <font color=blue>"
 							+ character.getEquipmentName() + "</font><br><font color=green>"
@@ -788,7 +788,8 @@ public class Play extends JFrame {
 					g.drawString(charTitle, valuesX, valuesY * 3);
 					int titleWidth = g.getFontMetrics().stringWidth(charTitle);
 					g.setFont(new Font(Lang.font, Font.PLAIN, 15));
-					g.drawString(charName, valuesX + titleWidth + 2, valuesY * 3);
+					g.drawString(charName + (character.isDefense() ? "-" : ""), valuesX
+							+ titleWidth + 2, valuesY * 3);
 
 					// Write Character's values at right
 					valuesY += getHeight();
@@ -1045,7 +1046,8 @@ public class Play extends JFrame {
 								JOptionPane.showMessageDialog(this, Lang.attackFailed);
 								break;
 							case 2: // character is defensing
-								JOptionPane.showMessageDialog(this, Lang.charDefensing);
+								JOptionPane.showMessageDialog(this, Lang.charDefensing + "\n"
+										+ Lang.cannotAttack);
 								return; // Player can choose another character
 							case 3: // Game Over
 								CharSelectDialog.this.dispose();
@@ -1440,7 +1442,6 @@ public class Play extends JFrame {
 		printlnLog(">>>" + Lang.stage_prepare + "<<<");
 
 		/* Heal HP */
-
 		if (round > 1) { // No healing in round 1
 			player1.changeHP(2);
 			player2.changeHP(2);
@@ -1448,10 +1449,18 @@ public class Play extends JFrame {
 		}
 
 		/* Heal MP */
-		// TODO: Handle Shirogane & Anthony's case
 		for (int p = 0; p < players.length; p++) {
 			int healMP = 0;
 			Character[] playerCharTemp = players[p].getCharacters();
+
+			// Check for Shirogane
+			int casterMP = 2;
+			Character maybeShirogane = players[p].contains(Shirogane.class);
+			if (maybeShirogane != null && maybeShirogane.isFirstJob()) {
+				casterMP++;
+				Play.printlnLog(Lang.shirogane_resonance);
+			}
+
 			for (int i = 0; i < CHAR_MAX; i++) {
 				switch (playerCharTemp[i].getJob()) {
 				case Character.SABER:
@@ -1459,7 +1468,7 @@ public class Play extends JFrame {
 					healMP++;
 					break;
 				case Character.CASTER:
-					healMP += 2;
+					healMP += casterMP;
 					break;
 				case Character.SUPPORT:
 					healMP += 3;
@@ -1898,9 +1907,25 @@ public class Play extends JFrame {
 			switch (card.getNumber()) {
 			case 1: // HP Potion
 				player.changeHP(5);
+				
+				// Check for Sasa's job 1 passive skill: Pharmacist
+				Character maybeSasa = (player.contains(Sasa.class));
+				if (maybeSasa != null && maybeSasa.isFirstJob()) {
+					Play.printlnLog(Lang.sasa_pharmacist);
+					player.changeHP(1);
+				}
+
 				break;
 			case 2: // MP Potion
 				player.changeMP(5);
+
+				// Check for Sasa's job 1 passive skill: Pharmacist
+				Character maybeSasa1 = (player.contains(Sasa.class));
+				if (maybeSasa1 != null && maybeSasa1.isFirstJob()) {
+					Play.printlnLog(Lang.sasa_pharmacist);
+					player.changeHP(1);
+				}
+
 				break;
 			case 3: // Smoke Bomb
 				// TODO: Ignore attack once

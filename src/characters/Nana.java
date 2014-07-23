@@ -1,4 +1,13 @@
 public class Nana extends Character {
+	
+	@Override
+	public void jobChangeExtra(){
+		if(isFirstJob()){
+			
+		}
+	}
+	
+	/* === Above are Nana's unique fields and methods === */
 
 	public Nana(Player player) {
 		super(player, 9);

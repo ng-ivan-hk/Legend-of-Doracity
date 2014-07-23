@@ -516,7 +516,7 @@ public class Lang {
 	public final static String normalAttackInfo = "選取對方一名角色，對其進行普通攻擊。";
 	public final static String castSkillInfo = "查看角色技能，並選擇使用其中一項。";
 	public final static String removeEquipmentInfo = "移除角色目前的裝備。";
-	public final static String[] jobChangeInfo = {"消耗", "MP進行轉職。"};
+	public final static String[] jobChangeInfo = { "消耗", "MP進行轉職。" };
 	public final static String drawCardInfo = "抽一張手牌。";
 	public final static String passInfo = "結束此階段。";
 
@@ -561,7 +561,7 @@ public class Lang {
 	public final static String log_jobChange = "轉成";
 	public final static String log_equip = "裝備了";
 	public final static String log_removeEquipment = "移除了裝備";
-	
+
 	/* Log: Skill messages */
 	public final static String choose = "選擇了：";
 	public final static String totalDamage = "總計：";
@@ -572,6 +572,7 @@ public class Lang {
 	public final static String tea_DoM_attackTeaOnly = tea_DoM + "女性只能攻擊烏龍茶";
 	public final static String tea_DoM_lessDamage = tea_DoM + "傷害-1";
 	public final static String tea_ero = "烏龍茶的工口技能發動：場上的女性角色數量是";
+	public final static String tea_loliSoul_end = "烏龍茶的蘿莉之魂技能效果完結";
 	// 2. Livia
 	public final static String livia_together = "古怪在場，淋琳的相伴技能發動：";
 	public final static String livia_together_job1 = livia_together;
@@ -586,6 +587,13 @@ public class Lang {
 	// 5. Iron
 	public final static String iron_fortitude_lessDamage = "鐵皮的堅忍技能發動：傷害-1";
 	public final static String iron_heroic = "鐵皮的英勇技能發動：攻擊劍士時攻擊+1";
+	// 7. Shirogane
+	public final static String shirogane_resonance = "白銀的共鳴技能發動：每名法師額外回復1MP";
+	// 29. Sasa
+	public final static String sasa_pharmacist = "射手的藥師技能發動：額外使用道具回復時+1HP";
+	// 30. SunnyShum
+	public final static String sunnyshum_chasteness = "己方沒有女性角色，心連心的童貞技能發動：";
+	public final static String sunnyshum_excite_end = "心連心的激勵技能效果完結";
 
 	/* Error Messages */
 	public final static String error = "錯誤";
@@ -602,7 +610,8 @@ public class Lang {
 	public final static String attackFailed = "攻擊失敗";
 	public final static String noMP = "MP不足";
 	public final static String removeEquip = "角色裝備將被移除";
-	public final static String charDefensing = "角色正在防禦中，無法攻擊";
+	public final static String charDefensing = "角色正在防禦中";
+	public final static String cannotAttack = "無法攻擊";
 
 	public final static String badURL = "URL出錯";
 	public final static String fileNotFound = "找不到文件：";

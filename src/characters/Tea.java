@@ -73,8 +73,9 @@ public class Tea extends Character {
 		if (isFirstJob()) {
 			doM = false;
 		} else if (loliSoul) {
-			loliSoul = false;
+			Play.printlnLog(Lang.tea_loliSoul_end);
 			setAttack(getAttack() - noOfGirls);
+			loliSoul = false;
 		}
 	}
 
