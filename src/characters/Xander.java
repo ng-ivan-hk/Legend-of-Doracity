@@ -1,5 +1,18 @@
 public class Xander extends Character {
 
+	private boolean wall = false;
+
+	@Override
+	public void roundEndExtra() {
+		if (wall) {
+			Play.printlnLog(Lang.xander_wall_end);
+			setDefP(getDefP() - 1);
+			wall = false;
+		}
+	}
+
+	/* === Above are Xander's unique fields and methods === */
+
 	public Xander(Player player) {
 		super(player, 11);
 	}
@@ -26,7 +39,8 @@ public class Xander extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							setDefP(getDefP() + 1); // So easy T.T
+							wall = true;
+							setDefP(getDefP() + 1);
 						}
 
 					}, 3);
@@ -62,7 +76,7 @@ public class Xander extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							
+
 							new CharSkill.CardSelectDialog(getPlayer(), new TargetMethod() {
 
 								@Override
@@ -71,7 +85,7 @@ public class Xander extends Character {
 								}
 
 							});
-							
+
 						}
 
 					}, 0);

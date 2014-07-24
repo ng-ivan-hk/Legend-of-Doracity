@@ -589,6 +589,8 @@ public class Lang {
 	public final static String iron_heroic = "鐵皮的英勇技能發動：攻擊劍士時攻擊+1";
 	// 7. Shirogane
 	public final static String shirogane_resonance = "白銀的共鳴技能發動：每名法師額外回復1MP";
+	// 11. Xander
+	public final static String xander_wall_end = "山大的防壁技能效果完結";
 	// 12. Buttefly
 	public final static String butterfly_squander_end = "七色辭蝶的揮霍技能效果完結";
 	// 29. Sasa
