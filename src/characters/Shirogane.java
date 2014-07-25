@@ -26,8 +26,8 @@ public class Shirogane extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Shirogane's 1stJob active skill!");
-
+							setGiveUp(true);
+							getPlayer().changeMP(3);
 						}
 
 					}, 0);

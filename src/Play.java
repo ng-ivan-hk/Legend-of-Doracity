@@ -1630,6 +1630,12 @@ public class Play extends JFrame {
 
 			currentChar = charList.get(i);
 			printCurrentChar();
+			
+			// Check if the character has given up his/her action in this round
+			if (currentChar.isGiveUp()) {
+				Play.printlnLog(currentChar + Lang.givenUp);
+				continue;
+			}
 
 			// Highlight the character on the battle field
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
@@ -1679,6 +1685,12 @@ public class Play extends JFrame {
 
 			currentChar = charList.get(i);
 			printCurrentChar();
+			
+			// Check if the character has given up his/her action in this round
+			if (currentChar.isGiveUp()) {
+				Play.printlnLog(currentChar + Lang.givenUp);
+				continue;
+			}
 
 			// Highlight the character on the battle field
 			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()

@@ -158,7 +158,7 @@ public class Lang {
 					// Passive
 					{ { "過度善忘", "最高只能受到2點傷害" } },
 					// Active
-					{ { "兔兔！", "五名己方物防+1" } } },
+					{ { "兔兔！", " 選取一名已方進入防禦狀態" } } },
 			// 19. Kuru
 			{
 					// Passive
@@ -342,7 +342,7 @@ public class Lang {
 					// Passive
 					{ { "憐憫之心", "對目標造成傷害時，可選擇放棄攻擊並回復相當於傷害的HP" } },
 					// Active
-					{ { "休息", "放棄此回合行動，HP+5" } } },
+					{ { "休息", "放棄此回合行動，HP+2" } } },
 			// 19. Kuru
 			{
 					// Passive
@@ -565,6 +565,8 @@ public class Lang {
 	/* Log: Skill messages */
 	public final static String choose = "選擇了：";
 	public final static String totalDamage = "總計：";
+	public final static String giveUp = "放棄本回合行動";
+	public final static String givenUp = "已放棄本回合行動，因此自動跳過";
 	// 1. Tea
 	public final static String tea_gentleman = "場上有女性角色，烏龍茶的紳士技能發動：";
 	public final static String tea_MSoul = "烏龍茶的M魂技能發動：受到女性角色攻擊時，回復1HP";

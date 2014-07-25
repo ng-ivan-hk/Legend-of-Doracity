@@ -41,6 +41,7 @@ abstract public class Character {
 	private Equipment equipment = null;
 	protected boolean defense = false; // character will defense if attacked
 	protected boolean assassin = false; // Map's Active Skill
+	private boolean giveUp = false; // if true, this character will be passed
 
 	/**
 	 * @param player
@@ -84,8 +85,11 @@ abstract public class Character {
 	final public void roundEnd() {
 		// Defense off
 		defense = false;
+		// Give Up off
+		giveUp = false;
 		// Map's Assassin off
 		assassin = false;
+		// Any other things?
 		roundEndExtra();
 	}
 
@@ -281,6 +285,15 @@ abstract public class Character {
 
 	public boolean isAssassin() {
 		return assassin;
+	}
+	
+	protected void setGiveUp(boolean b) {
+		Play.printlnLog(this + Lang.giveUp);
+		giveUp = b;
+	}
+
+	public boolean isGiveUp() {
+		return giveUp;
 	}
 
 	final public int attack(Character target) { // Normal Attack (c1->c2)

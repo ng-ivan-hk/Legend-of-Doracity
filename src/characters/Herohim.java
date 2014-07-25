@@ -1,4 +1,16 @@
 public class Herohim extends Character {
+	
+	private boolean doll = false; // for job 1 active skill
+	
+	@Override
+	public void roundEndExtra() {
+		if (doll) {
+			//TODO: ???
+			doll = false;
+		}
+	}
+	
+	/* === Above are Herohim's unique fields and methods === */
 
 	public Herohim(Player player) {
 		super(player, 15);
@@ -27,7 +39,8 @@ public class Herohim extends Character {
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
 							Play.printlnLog("Using Herohim's 1stJob active skill!");
-
+							doll = true;
+							//TODO: ???
 						}
 
 					}, 3);

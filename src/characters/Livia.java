@@ -60,9 +60,9 @@ public class Livia extends Character {
 								@Override
 								public void targetMethod(Character currentChar, Character target) {
 									golem = true;
-									Livia.this.setAttack(getAttack() + 3);
-									Livia.this.setDefP(getDefP() + 2);
-									Livia.this.setDefM(getDefM() + 2);
+									setAttack(getAttack() + 3);
+									setDefP(getDefP() + 2);
+									setDefM(getDefM() + 2);
 								}
 
 							});

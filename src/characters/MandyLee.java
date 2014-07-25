@@ -62,8 +62,8 @@ public class MandyLee extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Mandy_Lee's 2ndJob active skill!");
-
+							setGiveUp(true);
+							getPlayer().changeHP(2);
 						}
 
 					}, 0);
