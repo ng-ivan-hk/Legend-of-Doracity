@@ -112,7 +112,8 @@ public class Play extends JFrame {
 	private static DisplayArea displayArea = null;
 	private PlayerArea player1Area = null;
 	private PlayerArea player2Area = null;
-	PlayerArea[] playerAreas = null; // refers to the 2 player areas
+	private PlayerArea[] playerAreas = null; // refers to the 2 player areas
+	private LoadingScreen loadingScreen = null;
 	// Constant objects
 	private final static int alpha = 200; // 0~255, 255 = no transparent
 	private final static Color doracityColor = new Color(6, 77, 144);
@@ -130,6 +131,10 @@ public class Play extends JFrame {
 	/* Methods */
 
 	public Play() throws InterruptedException {
+		
+		// Loading Window
+		loadingScreen = new LoadingScreen();
+		loadingScreen.setVisible(true);
 
 		/* Create card stack and shuffle */
 		cards = new Stack<Card>();
@@ -187,6 +192,7 @@ public class Play extends JFrame {
 		setSize(new Dimension(935, 570));
 		WindowHandler.locateCenter(this);
 		setResizable(false);
+		loadingScreen.setVisible(false);
 		setVisible(true);
 
 		synchronized (this) {
@@ -198,6 +204,9 @@ public class Play extends JFrame {
 		/* Run main game GUI */
 		setVisible(false);
 		remove(preload);
+		
+		// Loading Window again
+		loadingScreen.setVisible(true);		
 
 		add(BorderLayout.CENTER, displayArea = new DisplayArea());
 		add(BorderLayout.WEST, player1Area = new PlayerArea(player1));
@@ -1360,6 +1369,7 @@ public class Play extends JFrame {
 		}
 
 		displayArea.battleField.updateCharImages();
+		loadingScreen.dispose();		
 		setVisible(true);
 
 		while (true) { // Loop until HP <= 0

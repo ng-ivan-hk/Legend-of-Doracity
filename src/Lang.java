@@ -11,6 +11,7 @@ public class Lang {
 	public final static String frameTitle = legendOfDoracity + " - " + "Legend of Doracity";
 	public final static String font = "新細明體";
 	public final static String confirm = "決定";
+	public final static String loading = "載入中…";
 	public final static String menu_option = "選項";
 	public final static String menu_help = "幫助";
 	public final static String menu_about = "關於";
