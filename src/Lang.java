@@ -596,6 +596,9 @@ public class Lang {
 	public final static String xander_wall_end = "山大的防壁技能效果完結";
 	// 12. Buttefly
 	public final static String butterfly_squander_end = "七色辭蝶的揮霍技能效果完結";
+	// 24. WindSound
+	public final static String windsound_catForm_cat = "風音之鈴已轉為貓形態！";
+	public final static String windsound_catForm_human = "風音之鈴已轉回人形！";
 	// 29. Sasa
 	public final static String sasa_pharmacist = "射手的藥師技能發動：額外使用道具回復時+1HP";
 	// 30. SunnyShum
