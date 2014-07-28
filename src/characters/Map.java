@@ -81,7 +81,18 @@ public class Map extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Map's 2ndJob active skill!");
+							// Select character
+							new CharSkill.CharSelectDialog(currentChar, opponent,
+									new TargetMethod() {
+
+										@Override
+										public void targetMethod(Character currentChar,
+												Character target) {
+											// set target give up on
+											target.setGiveUp(true);
+										}
+
+									});
 
 						}
 

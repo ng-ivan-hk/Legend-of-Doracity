@@ -34,6 +34,7 @@ public class CharSkill {
 			this.currentChar = currentChar;
 			this.opponent = opponent;
 			this.method = method;
+			add(new CharSelectPanel(true));
 			setDialog();
 		}
 
@@ -47,12 +48,12 @@ public class CharSkill {
 			super((java.awt.Frame) null, true);
 			this.currentChar = currentChar;
 			this.method = method;
+			add(new CharSelectPanel(false));
 			setDialog();
 		}
 
 		private void setDialog() {
 			setTitle(Lang.charSelection);
-			add(new CharSelectPanel(false));
 			pack();
 			WindowHandler.locateCenter(this);
 			setResizable(false);

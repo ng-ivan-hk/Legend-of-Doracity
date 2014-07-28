@@ -72,7 +72,6 @@ public class WindSound extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Wind_Sound's 1stJob active skill!");
 
 							if (catForm) { // Turn back to human form
 								setAttack(getAttack() + humanFormValues[0] - catFormValues[0]);

@@ -259,7 +259,7 @@ public class Lang {
 					// Passive
 					{ { "妹控", "場上若有女性角色物防+2" } },
 					// Active
-					{ { "奏曲", "指定一名己方+2攻/+1物防/+1魔防" } } },
+					{ { "誘惑之歌", "選擇一名目標在該回合無法行動" } } },
 			// 5. Iron
 			{
 					// Passive
@@ -566,8 +566,8 @@ public class Lang {
 	/* Log: Skill messages */
 	public final static String choose = "選擇了：";
 	public final static String totalDamage = "總計：";
-	public final static String giveUp = "放棄本回合行動";
-	public final static String givenUp = "已放棄本回合行動，因此自動跳過";
+	public final static String giveUp = "於本回合無法行動";
+	public final static String givenUp = "已無法於本回合行動，因此自動跳過";
 	// 1. Tea
 	public final static String tea_gentleman = "場上有女性角色，烏龍茶的紳士技能發動：";
 	public final static String tea_MSoul = "烏龍茶的M魂技能發動：受到女性角色攻擊時，回復1HP";
