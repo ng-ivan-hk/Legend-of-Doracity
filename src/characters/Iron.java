@@ -1,6 +1,6 @@
-import java.util.ArrayList;
-
 public class Iron extends Character {
+
+	private boolean morale = false; // for job 1 active skill
 
 	@Override
 	public void jobChangeExtra() {
@@ -9,6 +9,22 @@ public class Iron extends Character {
 			jobChangeMP = 20;
 		} else {
 			jobChangeMP = 15;
+		}
+	}
+
+	@Override
+	public void roundEndExtra() {
+		if (morale) {
+			Play.printlnLog(Lang.iron_morale_end);
+			int addAttack = 1;
+			Character[] selfChars = getPlayer().getCharacters();
+			for (int i = 0; i < selfChars.length; i++) {
+				if (selfChars[i].getJob() == SUPPORT) {
+					addAttack++;
+				}
+			}
+			setAttack(getAttack() - addAttack);
+			morale = false;
 		}
 	}
 
@@ -47,8 +63,15 @@ public class Iron extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Iron's 1stJob active skill!");
-
+							morale = true;
+							int addAttack = 1;
+							Character[] selfChars = getPlayer().getCharacters();
+							for (int i = 0; i < selfChars.length; i++) {
+								if (selfChars[i].getJob() == SUPPORT) {
+									addAttack++;
+								}
+							}
+							setAttack(getAttack() + addAttack);
 						}
 
 					}, 3);

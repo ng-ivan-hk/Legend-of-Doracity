@@ -589,6 +589,7 @@ public class Lang {
 	public final static String map_siscon = "場上有女性角色，地圖的妹控技能發動：";
 	// 5. Iron
 	public final static String iron_fortitude_lessDamage = "鐵皮的堅忍技能發動：傷害-1";
+	public final static String iron_morale_end = "鐵皮的士氣技能效果完結";
 	public final static String iron_heroic = "鐵皮的英勇技能發動：攻擊劍士時攻擊+1";
 	// 7. Shirogane
 	public final static String shirogane_resonance = "白銀的共鳴技能發動：每名法師額外回復1MP";
