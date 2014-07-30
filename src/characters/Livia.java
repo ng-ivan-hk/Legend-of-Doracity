@@ -20,6 +20,7 @@ public class Livia extends Character {
 	@Override
 	public void roundEndExtra() {
 		if (golem) {
+			Play.printlnLog(Lang.livia_golem_end);
 			Livia.this.setAttack(getAttack() - 3);
 			Livia.this.setDefP(getDefP() - 2);
 			Livia.this.setDefM(getDefM() - 2);

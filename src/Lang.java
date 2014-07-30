@@ -580,6 +580,7 @@ public class Lang {
 	public final static String livia_together = "古怪在場，淋琳的相伴技能發動：";
 	public final static String livia_together_job1 = livia_together;
 	public final static String livia_together_job2 = livia_together + "額外回復1HP";
+	public final static String livia_golem_end = "淋琳的巨魔像技能效果完結";
 	// 3. Phoebell
 	public final static String phoebell_together = "淋琳在場，古怪的相伴技能發動：";
 	public final static String phoebell_together_job2 = "古怪的相伴技能發動：MP回復+1";
@@ -597,6 +598,8 @@ public class Lang {
 	public final static String xander_wall_end = "山大的防壁技能效果完結";
 	// 12. Buttefly
 	public final static String butterfly_squander_end = "七色辭蝶的揮霍技能效果完結";
+	// 14. Kurokawa
+	public final static String kurokawa_strong_end = "黑川米古的剛強技能效果完結";
 	// 24. WindSound
 	public final static String windsound_catForm_cat = "風音之鈴已轉為貓形態！";
 	public final static String windsound_catForm_human = "風音之鈴已轉回人形！";
