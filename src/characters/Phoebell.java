@@ -11,7 +11,7 @@ public class Phoebell extends Character {
 		if (getPlayer().contains(Livia.class) != null) {
 			if (isFirstJob()) {
 				Play.printlnLog(Lang.phoebell_together);
-				setAttack(getAttack() + 1);
+				changeAttack(+1, FOR_JOB_CHANGE);
 			}
 		}
 	}

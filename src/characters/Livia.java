@@ -1,6 +1,5 @@
 public class Livia extends Character {
 
-	private boolean golem = false;
 	private int recoverHP = 2;
 
 	@Override
@@ -8,23 +7,12 @@ public class Livia extends Character {
 		if (getPlayer().contains(Phoebell.class) != null) {
 			if (isFirstJob()) {
 				Play.printlnLog(Lang.livia_together_job1);
-				setDefP(getDefP() + 1);
-				setDefM(getDefM() + 1);
+				changeDefP(1, FOR_JOB_CHANGE);
+				changeDefM(1, FOR_JOB_CHANGE);
 			} else {
 				// No need to remove defP and defM since they are set by value
 				recoverHP = 3;
 			}
-		}
-	}
-
-	@Override
-	public void roundEndExtra() {
-		if (golem) {
-			Play.printlnLog(Lang.livia_golem_end);
-			Livia.this.setAttack(getAttack() - 3);
-			Livia.this.setDefP(getDefP() - 2);
-			Livia.this.setDefM(getDefM() - 2);
-			golem = false;
 		}
 	}
 
@@ -60,10 +48,9 @@ public class Livia extends Character {
 
 								@Override
 								public void targetMethod(Character currentChar, Character target) {
-									golem = true;
-									setAttack(getAttack() + 3);
-									setDefP(getDefP() + 2);
-									setDefM(getDefM() + 2);
+									changeAttack(3, FOR_ROUND_END);
+									changeDefP(2, FOR_ROUND_END);
+									changeDefM(2, FOR_ROUND_END);
 								}
 
 							});

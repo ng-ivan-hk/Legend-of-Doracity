@@ -12,6 +12,13 @@ abstract public class Character {
 	public final static int CASTER = 2;
 	public final static int SUPPORT = 3;
 	public final static int NA = 4;
+	
+	/* Static Values for change???() */
+	public final static int FOR_EVER = 0;
+	public final static int FOR_JOB_CHANGE = 1;
+	public final static int FOR_ROUND_END = 2;
+	public final static int FOR_EQUIPMENT = 3;
+	
 
 	/* Character's initial properties */
 	// Modify only when create character or job change
@@ -27,16 +34,33 @@ abstract public class Character {
 	private boolean doracity; // if false, academy
 	protected int jobChangeMP = 15; // How many MP is required for job change
 
-	/* Character's current properties */
-	private int attack;
-	private int defP;
-	private int defM;
-	private int speed;
-
-	protected CharSkill[] passiveSkills = null;
-	protected CharSkill[] activeSkills = null;
+	/* Extra effects on character's properties */
+	// forever
+	private int attack_ever = 0;
+	private int defP_ever = 0;
+	private int defM_ever = 0;
+	private int speed_ever = 0;
+	// for job change
+	private int attack_jobChange = 0;
+	private int defP_jobChange = 0;
+	private int defM_jobChange = 0;
+	private int speed_jobChange = 0;
+	// for round end
+	private int attack_roundEnd = 0;
+	private int defP_roundEnd = 0;
+	private int defM_roundEnd = 0;
+	private int speed_roundEnd = 0;
+	// for equipment
+	private int attack_equipment = 0;
+	private int defP_equipment = 0;
+	private int defM_equipment = 0;
+	private int speed_equipment = 0;
+	
 
 	/* Character variables */
+	protected CharSkill[] passiveSkills = null;
+	protected CharSkill[] activeSkills = null;
+	
 	private boolean firstJob = false; // if false, second job
 	private Equipment equipment = null;
 	protected boolean defense = false; // character will defense if attacked
@@ -56,6 +80,14 @@ abstract public class Character {
 	}
 
 	final public void jobChange() {
+		if (attack_jobChange != 0 || defP_jobChange != 0 || defM_jobChange != 0
+				|| speed_jobChange != 0) {
+			Play.printlnLog(this + Lang.log_passiveSkillEnd);
+			attack_jobChange = 0;
+			defP_jobChange = 0;
+			defM_jobChange = 0;
+			speed_jobChange = 0;
+		}
 		firstJob = !firstJob;
 		setCharacter();
 		jobChangeExtra();
@@ -83,6 +115,14 @@ abstract public class Character {
 	 * Do something when a round ends.
 	 */
 	final public void roundEnd() {
+		// Remove round end effects
+		if (attack_roundEnd != 0 || defP_roundEnd != 0 || defM_roundEnd != 0 || speed_roundEnd != 0) {
+			Play.printlnLog(this + Lang.log_activeSkillEnd);
+			attack_roundEnd = 0;
+			defP_roundEnd = 0;
+			defM_roundEnd = 0;
+			speed_roundEnd = 0;
+		}
 		// Defense off
 		defense = false;
 		// Give Up off
@@ -125,10 +165,10 @@ abstract public class Character {
 		this.male = male;
 		this.job = job;
 		this.physical = physical;
-		this.attack = this.attack_init = attack;
-		this.defP = this.defP_init = defP;
-		this.defM = this.defM_init = defM;
-		this.speed = this.speed_init = speed;
+		this.attack_init = attack;
+		this.defP_init = defP;
+		this.defM_init = defM;
+		this.speed_init = speed;
 		this.doracity = doracity;
 	}
 
@@ -174,44 +214,168 @@ abstract public class Character {
 		return physical;
 	}
 
-	public void setAttack(int attack) {
-		int diff = attack - this.attack;
-		Play.printlnLog(this + " " + Lang.attack + (diff >= 0 ? "+" : "") + diff);
-		this.attack = attack;
+	/**
+	 * @param attack How much attack is changed? (e.g. pass 2 if attack + 2,
+	 * pass -1 if attack - 1)
+	 * 
+	 * @param type
+	 *            <code>FOR_EVER</code> this effect will still take place even
+	 *            if round end or job change is performed (usually applied by
+	 *            equipment or skills from other character)<br>
+	 *            <code>FOR_JOB_CHANGE</code> this effect will disappear if
+	 *            character performs a job change (usually for passive skills)<br>
+	 *            <code>FOR_ROUND_END</code> this effect will disappear when a
+	 *            round ends (usually for active skills)<br>
+	 *            <code>FOR_EQUIPMENT</code> this effect will disappear if
+	 *            equipment is removed / changed
+	 */
+	public void changeAttack(int attack, int type) {
+		switch (type) {
+		case FOR_EVER:
+			attack_ever = attack;
+			break;
+		case FOR_JOB_CHANGE:
+			attack_jobChange = attack;
+			break;
+		case FOR_ROUND_END:
+			attack_roundEnd = attack;
+			break;
+		case FOR_EQUIPMENT:
+			attack_equipment = attack;
+			break;
+		default:
+			return;
+		}
+		if (attack != 0) {
+			Play.printlnLog(this + " " + Lang.attack + (attack >= 0 ? "+" : "") + attack);
+		} 
 	}
 
 	public int getAttack() {
-		return attack;
+		return attack_init + attack_ever + attack_jobChange + attack_roundEnd + attack_equipment;
 	}
 
-	public void setDefP(int defP) {
-		int diff = defP - this.defP;
-		Play.printlnLog(this + " " + Lang.defP + (diff >= 0 ? "+" : "") + diff);
-		this.defP = defP;
+	/**
+	 * @param defP
+	 *            How much Physical Defense is changed? (e.g. pass 2 if defP +
+	 *            2, pass -1 if defP - 1)
+	 * @param type
+	 *            <code>FOR_EVER</code> this effect will still take place even
+	 *            if round end or job change is performed (usually applied by
+	 *            equipment or skills from other character)<br>
+	 *            <code>FOR_JOB_CHANGE</code> this effect will disappear if
+	 *            character performs a job change (usually for passive skills)<br>
+	 *            <code>FOR_ROUND_END</code> this effect will disappear when a
+	 *            round ends (usually for active skills)<br>
+	 *            <code>FOR_EQUIPMENT</code> this effect will disappear if
+	 *            equipment is removed / changed
+	 */
+	public void changeDefP(int defP, int type) {
+		switch (type) {
+		case FOR_EVER:
+			defP_ever = defP;
+			break;
+		case FOR_JOB_CHANGE:
+			defP_jobChange = defP;
+			break;
+		case FOR_ROUND_END:
+			defP_roundEnd = defP;
+			break;
+		case FOR_EQUIPMENT:
+			defP_equipment = defP;
+			break;
+		default:
+			return;
+		}
+		if (defP != 0) {
+			Play.printlnLog(this + " " + Lang.defP + (defP >= 0 ? "+" : "") + defP);
+		}
 	}
 
 	public int getDefP() {
-		return defP;
+		return defP_init + defP_ever + defP_jobChange + defP_roundEnd + defP_equipment;
 	}
 
-	public void setDefM(int defM) {
-		int diff = defM - this.defM;
-		Play.printlnLog(this + " " + Lang.defM + (diff >= 0 ? "+" : "") + diff);
-		this.defM = defM;
+	/**
+	 * @param defM
+	 *            How much Mana Defense is changed? (e.g. pass 2 if defM + 2,
+	 *            pass -1 if defM - 1)
+	 * @param type
+	 *            <code>FOR_EVER</code> this effect will still take place even
+	 *            if round end or job change is performed (usually applied by
+	 *            equipment or skills from other character)<br>
+	 *            <code>FOR_JOB_CHANGE</code> this effect will disappear if
+	 *            character performs a job change (usually for passive skills)<br>
+	 *            <code>FOR_ROUND_END</code> this effect will disappear when a
+	 *            round ends (usually for active skills)<br>
+	 *            <code>FOR_EQUIPMENT</code> this effect will disappear if
+	 *            equipment is removed / changed
+	 */
+	public void changeDefM(int defM, int type) {
+		switch (type) {
+		case FOR_EVER:
+			defM_ever = defM;
+			break;
+		case FOR_JOB_CHANGE:
+			defM_jobChange = defM;
+			break;
+		case FOR_ROUND_END:
+			defM_roundEnd = defM;
+			break;
+		case FOR_EQUIPMENT:
+			defM_equipment = defM;
+			break;
+		default:
+			return;
+		}
+		if (defM != 0) {
+			Play.printlnLog(this + " " + Lang.defM + (defM >= 0 ? "+" : "") + defM);
+		}
 	}
 
 	public int getDefM() {
-		return defM;
+		return defM_init + defM_ever + defM_jobChange + defM_roundEnd + defM_equipment;
 	}
 
-	public void setSpeed(int speed) {
-		int diff = speed - this.speed;
-		Play.printlnLog(this + " " + Lang.speed + (diff >= 0 ? "+" : "") + diff);
-		this.speed = speed;
+	/**
+	 * @param speed
+	 *            How much speed is changed? (e.g. pass 2 if speed + 2, pass -1
+	 *            if speed - 1)
+	 * @param type
+	 *            <code>FOR_EVER</code> this effect will still take place even
+	 *            if round end or job change is performed (usually applied by
+	 *            equipment or skills from other character)<br>
+	 *            <code>FOR_JOB_CHANGE</code> this effect will disappear if
+	 *            character performs a job change (usually for passive skills)<br>
+	 *            <code>FOR_ROUND_END</code> this effect will disappear when a
+	 *            round ends (usually for active skills)<br>
+	 *            <code>FOR_EQUIPMENT</code> this effect will disappear if
+	 *            equipment is removed / changed
+	 */
+	public void changeSpeed(int speed, int type) {
+		switch (type) {
+		case FOR_EVER:
+			speed_ever = speed;
+			break;
+		case FOR_JOB_CHANGE:
+			speed_jobChange = speed;
+			break;
+		case FOR_ROUND_END:
+			speed_roundEnd = speed;
+			break;
+		case FOR_EQUIPMENT:
+			speed_equipment = speed;
+			break;
+		default:
+			return;
+		}
+		if (speed != 0) {
+			Play.printlnLog(this + " " + Lang.speed + (speed >= 0 ? "+" : "") + speed);
+		}
 	}
 
 	public int getSpeed() {
-		return speed;
+		return speed_init + speed_ever + speed_jobChange + speed_roundEnd  + speed_equipment;
 	}
 
 	public boolean isDoracity() {
@@ -243,12 +407,30 @@ abstract public class Character {
 	}
 
 	public void setEquipment(Equipment e) {
-		if (e == null) {
-			Play.printlnLog(this + " " + Lang.log_removeEquipment);
+		
+		if (equipment == null) {
+
+			if (e != null) { // Equip Equipment
+				this.equipment = e;
+				Play.printlnLog(this + " " + Lang.log_equip + " " + e);
+			}
+
 		} else {
-			Play.printlnLog(this + " " + Lang.log_equip + " " + e);
+			
+			// Remove current Equipment
+			attack_equipment = 0;
+			defP_equipment = 0;
+			defM_equipment = 0;
+			speed_equipment = 0;
+			
+			Play.printlnLog(this + " " + Lang.log_removeEquipment);
+
+			if (e != null) { // Equip new Equipment
+				this.equipment = e;
+				Play.printlnLog(this + " " + Lang.log_equip + " " + e);
+			}
 		}
-		this.equipment = e;
+
 	}
 
 	public Equipment getEquipment() {
@@ -312,7 +494,7 @@ abstract public class Character {
 		// Iron's job 2 passive skill heroic
 		if (this instanceof Iron && !isFirstJob() && target.getJob() == SABER) {
 			Play.printlnLog(Lang.iron_heroic);
-			attack++;
+			attack_ever++;
 		}
 
 		/* Calculate damage */
@@ -377,7 +559,7 @@ abstract public class Character {
 
 		// Iron's job 2 passive skill heroic: back to normal
 		if (this instanceof Iron && !isFirstJob() && target.getJob() == SABER) {
-			attack--;
+			attack_ever--;
 		}
 
 		/* === Commond Route END === */

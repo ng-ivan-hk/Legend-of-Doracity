@@ -1,6 +1,4 @@
 public class SunnyShum extends Character {
-	
-	private boolean excite = false;
 
 	@Override
 	public void jobChangeExtra() {
@@ -15,24 +13,9 @@ public class SunnyShum extends Character {
 				}
 			}
 			Play.printlnLog(Lang.sunnyshum_chasteness);
-			setAttack(getAttack() + 3);
+			changeAttack(3, FOR_JOB_CHANGE);
 		} else {
 		}
-	}
-	
-	@Override
-	public void roundEndExtra() {
-		if (excite) {
-			Play.printlnLog(Lang.sunnyshum_excite_end);
-			Character[] selfChars = getPlayer().getCharacters();
-			for (int i = 0; i < selfChars.length; i++) {
-				if (selfChars[i].isMale()) {
-					selfChars[i].setAttack(selfChars[i].getAttack() - 1);
-				}
-			}
-			excite = false;
-		}
-		
 	}
 
 	/* === Above are SunnyShum's unique fields and methods === */
@@ -62,11 +45,10 @@ public class SunnyShum extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							excite = true;
 							Character[] selfChars = getPlayer().getCharacters();
 							for (int i = 0; i < selfChars.length; i++) {
 								if (selfChars[i].isMale()) {
-									selfChars[i].setAttack(selfChars[i].getAttack() + 1);
+									selfChars[i].changeAttack(1, FOR_ROUND_END);
 								}
 							}
 						}

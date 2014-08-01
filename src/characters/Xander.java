@@ -1,16 +1,5 @@
 public class Xander extends Character {
 
-	private boolean wall = false;
-
-	@Override
-	public void roundEndExtra() {
-		if (wall) {
-			Play.printlnLog(Lang.xander_wall_end);
-			setDefP(getDefP() - 1);
-			wall = false;
-		}
-	}
-
 	/* === Above are Xander's unique fields and methods === */
 
 	public Xander(Player player) {
@@ -39,8 +28,7 @@ public class Xander extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							wall = true;
-							setDefP(getDefP() + 1);
+							changeDefP(+1, FOR_ROUND_END);
 						}
 
 					}, 3);

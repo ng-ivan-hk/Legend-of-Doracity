@@ -1219,22 +1219,26 @@ public class Play extends JFrame {
 
 				// Really Job Change
 				currentChar.jobChange();
+				
 				// Equip again if extra requirement still matches
 				switch (useCard(player, tempEquip)) {
 				case 1:
 					JOptionPane.showMessageDialog(this, tempEquip + ": "
 							+ Lang.wrongJob + "\n" + Lang.removeEquip);
 					currentChar.setEquipment(null);
+					removeEquipmentEffect();
 					break;
 				case 10:
 					JOptionPane.showMessageDialog(this, tempEquip + ": "
 							+ Lang.notAcademy + "\n" + Lang.removeEquip);
 					currentChar.setEquipment(null);
+					removeEquipmentEffect();
 					break;
 				case 11:
 					JOptionPane.showMessageDialog(this, tempEquip + ": "
 							+ Lang.notDoracity + "\n" + Lang.removeEquip);
 					currentChar.setEquipment(null);
+					removeEquipmentEffect();
 					break;
 
 				}
@@ -1788,7 +1792,7 @@ public class Play extends JFrame {
 						removeEquipmentEffect();
 					}
 					currentChar.setEquipment((Equipment) card);
-					currentChar.setAttack(currentChar.getAttack() + 1);
+					currentChar.changeAttack(1, Character.FOR_EQUIPMENT);
 				} else {
 					return 1;
 				}
@@ -1800,7 +1804,7 @@ public class Play extends JFrame {
 						removeEquipmentEffect();
 					}
 					currentChar.setEquipment((Equipment) card);
-					currentChar.setAttack(currentChar.getAttack() + 1);
+					currentChar.changeAttack(1, Character.FOR_EQUIPMENT);
 				} else {
 					return 1;
 				}
@@ -1811,7 +1815,7 @@ public class Play extends JFrame {
 					removeEquipmentEffect();
 				}
 				currentChar.setEquipment((Equipment) card);
-				currentChar.setSpeed(currentChar.getSpeed() + 1);
+				currentChar.changeSpeed(1, Character.FOR_EQUIPMENT);
 
 				break;
 			case 4: // Gambeson (Cloth armor)
@@ -1819,7 +1823,7 @@ public class Play extends JFrame {
 					removeEquipmentEffect();
 				}
 				currentChar.setEquipment((Equipment) card);
-				currentChar.setDefP(currentChar.getDefP() + 1);
+				currentChar.changeDefP(1, Character.FOR_EQUIPMENT);
 
 				break;
 			case 5: // Mana-resistant Cloak
@@ -1827,7 +1831,7 @@ public class Play extends JFrame {
 					removeEquipmentEffect();
 				}
 				currentChar.setEquipment((Equipment) card);
-				currentChar.setDefM(currentChar.getDefM() + 1);
+				currentChar.changeDefM(1, Character.FOR_EQUIPMENT);
 
 				break;
 			case 6: // Armor of Knight
@@ -1860,10 +1864,10 @@ public class Play extends JFrame {
 						removeEquipmentEffect();
 					}
 					currentChar.setEquipment((Equipment) card);
-					currentChar.setDefP(currentChar.getDefP() + 1);
+					currentChar.changeDefP(1, Character.FOR_EQUIPMENT);
 					Character[] charTemp = currentChar.getPlayer().getCharacters();
 					for (int i = 0; i < CHAR_MAX; i++) {
-						charTemp[i].setDefP(charTemp[i].getDefP() + 1);
+						charTemp[i].changeDefP(1, Character.FOR_EQUIPMENT);
 					}
 				} else {
 					return 1;
@@ -1896,8 +1900,8 @@ public class Play extends JFrame {
 					Character[] charTemp = currentChar.getPlayer().getCharacters();
 					for (int i = 0; i < CHAR_MAX; i++) {
 						if (!charTemp[i].isDoracity()) {
-							charTemp[i].setDefP(charTemp[i].getDefP() + 1);
-							charTemp[i].setDefM(charTemp[i].getDefM() + 1);
+							charTemp[i].changeDefP(1, Character.FOR_EQUIPMENT);
+							charTemp[i].changeDefM(1, Character.FOR_EQUIPMENT);
 						}
 					}
 				} else {
@@ -1914,8 +1918,8 @@ public class Play extends JFrame {
 					Character[] charTemp = currentChar.getPlayer().getCharacters();
 					for (int i = 0; i < CHAR_MAX; i++) {
 						if (charTemp[i].isDoracity()) {
-							charTemp[i].setDefP(charTemp[i].getDefP() + 1);
-							charTemp[i].setDefM(charTemp[i].getDefM() + 1);
+							charTemp[i].changeDefP(1, Character.FOR_EQUIPMENT);
+							charTemp[i].changeDefM(1, Character.FOR_EQUIPMENT);
 						}
 					}
 				} else {
@@ -2010,16 +2014,16 @@ public class Play extends JFrame {
 		switch (currentChar.getEquipment().getNumber()) {
 		case 1:
 		case 2: // Adventurer's Sword
-			currentChar.setAttack(currentChar.getAttack() - 1);
+
 			break;
 		case 3: // Floating Shoes
-			currentChar.setSpeed(currentChar.getSpeed() - 1);
+
 			break;
 		case 4: // Gambeson (Cloth armor)
-			currentChar.setDefP(currentChar.getDefP() - 1);
+
 			break;
 		case 5: // Mana-resistant Cloak
-			currentChar.setDefM(currentChar.getDefM() - 1);
+
 			break;
 		case 6: // Armor of Knight
 
@@ -2046,10 +2050,10 @@ public class Play extends JFrame {
 
 			break;
 		case 14: // Holy Shield
-			currentChar.setDefP(currentChar.getDefP() - 1);
+			currentChar.changeDefP(1, Character.FOR_EQUIPMENT);
 			Character[] charTemp14 = currentChar.getPlayer().getCharacters();
 			for (int i = 0; i < CHAR_MAX; i++) {
-				charTemp14[i].setDefP(charTemp14[i].getDefP() - 1);
+				charTemp14[i].changeDefP(-1, Character.FOR_EQUIPMENT);
 			}
 			break;
 		case 15: // Berserk Shoes
@@ -2074,8 +2078,8 @@ public class Play extends JFrame {
 			Character[] charTemp21 = currentChar.getPlayer().getCharacters();
 			for (int i = 0; i < CHAR_MAX; i++) {
 				if (!charTemp21[i].isDoracity()) {
-					charTemp21[i].setDefP(charTemp21[i].getDefP() - 1);
-					charTemp21[i].setDefM(charTemp21[i].getDefM() - 1);
+					charTemp21[i].changeDefP(-1, Character.FOR_EQUIPMENT);
+					charTemp21[i].changeDefM(-1, Character.FOR_EQUIPMENT);
 				}
 			}
 			break;
@@ -2083,8 +2087,8 @@ public class Play extends JFrame {
 			Character[] charTemp22 = currentChar.getPlayer().getCharacters();
 			for (int i = 0; i < CHAR_MAX; i++) {
 				if (charTemp22[i].isDoracity()) {
-					charTemp22[i].setDefP(charTemp22[i].getDefP() - 1);
-					charTemp22[i].setDefM(charTemp22[i].getDefM() - 1);
+					charTemp22[i].changeDefP(-1, Character.FOR_EQUIPMENT);
+					charTemp22[i].changeDefM(-1, Character.FOR_EQUIPMENT);
 				}
 			}
 			break;

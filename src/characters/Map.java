@@ -9,7 +9,7 @@ public class Map extends Character {
 			for (int i = 0; i < charList.size(); i++) {
 				if (!charList.get(i).isMale()) {
 					Play.printlnLog(Lang.map_siscon);
-					setDefP(getDefP() + 2);
+					changeDefP(2, FOR_JOB_CHANGE);
 					break;
 				}
 			}

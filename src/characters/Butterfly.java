@@ -1,16 +1,5 @@
 public class Butterfly extends Character {
-	
-	private boolean squander = false;
-	
-	@Override
-	public void roundEndExtra() {
-		if (squander) {
-			Play.printlnLog(Lang.butterfly_squander_end);
-			setAttack(getAttack() - 2);
-			squander = false;
-		}
-	}
-	
+
 	/* === Above are Butterfly's unique fields and methods === */
 
 	public Butterfly(Player player) {
@@ -70,8 +59,7 @@ public class Butterfly extends Character {
 
 								@Override
 								public void targetMethod(Character currentChar, Character target) {
-									squander = true;
-									setAttack(getAttack() + 2);
+									changeAttack(2, FOR_ROUND_END);
 								}
 
 							});

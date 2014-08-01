@@ -38,7 +38,7 @@ public class Lang {
 
 	/* Character Titles */
 	public final static String[] CharTitles1 = new String[] { "", "紳士的", "破壞女神", "魔劍士", "刺客",
-			"新手的", "格鬥家", "魔法之劍", "祌射手", "黑魔女", "十歲打倒熊的", "德魯依學徒", "狂暴的", "初心者", "無情之箭", "人偶師",
+			"新手的", "格鬥家", "魔法之劍", "祌射手", "黑魔女", "十歲打倒熊的", "德魯依學徒", "狂暴的", "普通的魔法使", "無情之箭", "人偶師",
 			"唱詠使", "學習中的", "呆呆的", "不明的科學家", "流浪者", "魔術師", "DX", "狂戰士", "喵", "便利店職員", "狂氣科學者",
 			"魔賦師", "畫家", "藥師", "童貞魔法師" };
 
@@ -564,6 +564,8 @@ public class Lang {
 	public final static String log_removeEquipment = "移除了裝備";
 
 	/* Log: Skill messages */
+	public final static String log_passiveSkillEnd = "的前職被動技能效果完結";
+	public final static String log_activeSkillEnd = "的主動能效果完結";
 	public final static String choose = "選擇了：";
 	public final static String totalDamage = "總計：";
 	public final static String giveUp = "於本回合無法行動";
@@ -594,6 +596,11 @@ public class Lang {
 	public final static String iron_heroic = "鐵皮的英勇技能發動：攻擊劍士時攻擊+1";
 	// 7. Shirogane
 	public final static String shirogane_resonance = "白銀的共鳴技能發動：每名法師額外回復1MP";
+	// 10. GameNobita
+	public final static String gamenobita_doracity[] = { "己方陣型共有", "名小城陣型角色，因此技能效果為：每名小城陣型角色" };
+	public final static String gamenobita_doracity_effect[] = { "物防+1", "物防+1、魔防+1", "物防+2、魔防+1",
+			"物防+2、魔防+2" };
+	public final static String gamenobita_doracity_end = "野味大雄的小城技能效果完結";
 	// 11. Xander
 	public final static String xander_wall_end = "山大的防壁技能效果完結";
 	// 12. Buttefly

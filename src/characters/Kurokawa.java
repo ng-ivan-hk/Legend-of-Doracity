@@ -1,16 +1,5 @@
 public class Kurokawa extends Character {
 
-	private boolean strong = false; // for job 1 active skill
-
-	@Override
-	public void roundEndExtra() {
-		if (strong) {
-			Play.printlnLog(Lang.kurokawa_strong_end);
-			setAttack(getAttack() - 1);
-			strong = false;
-		}
-	}
-
 	/* === Above are Kurokawa's unique fields and methods === */
 
 	public Kurokawa(Player player) {
@@ -39,8 +28,7 @@ public class Kurokawa extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							strong = true;
-							setAttack(getAttack() + 1);
+							changeAttack(1, FOR_ROUND_END);
 						}
 
 					}, 3);

@@ -74,16 +74,12 @@ public class WindSound extends Character {
 						public void skillMethod(Character currentChar, Player opponent) {
 
 							if (catForm) { // Turn back to human form
-								setAttack(getAttack() + humanFormValues[0] - catFormValues[0]);
-								setDefP(getDefP() + humanFormValues[1] - catFormValues[1]);
-								setDefM(getDefM() + humanFormValues[2] - catFormValues[2]);
-								setSpeed(getSpeed() + humanFormValues[3] - catFormValues[3]);
+								setValues(false, SABER, true, humanFormValues[0], humanFormValues[1],
+										humanFormValues[2], humanFormValues[3], false);
 								Play.printlnLog(Lang.windsound_catForm_human);
 							} else { // Change to cat form!!!
-								setAttack(getAttack() + catFormValues[0] - humanFormValues[0]);
-								setDefP(getDefP() + catFormValues[1] - humanFormValues[1]);
-								setDefM(getDefM() + catFormValues[2] - humanFormValues[2]);
-								setSpeed(getSpeed() + catFormValues[3] - humanFormValues[3]);
+								setValues(false, SABER, true, catFormValues[0], catFormValues[1],
+										catFormValues[2], catFormValues[3], false);
 								Play.printlnLog(Lang.windsound_catForm_cat);
 							}
 							catForm = !catForm;

@@ -17,7 +17,6 @@ public class Tea extends Character {
 	/**
 	 * for Job 2 Active Skill Loli Soul
 	 */
-	private boolean loliSoul = false;
 	private int noOfGirls = 0;
 
 	@Override
@@ -60,11 +59,11 @@ public class Tea extends Character {
 			System.out.println(noOfGirls);
 			if (noOfGirls > 0) {
 				Play.printlnLog(Lang.tea_gentleman);
-				setAttack(getAttack() + 2);
+				changeAttack(+2, FOR_JOB_CHANGE);
 			}
 		} else { // Ero
 			Play.printlnLog(Lang.tea_ero + noOfGirls);
-			setAttack(getAttack() + noOfGirls);
+			changeAttack(noOfGirls, FOR_JOB_CHANGE);
 		}
 	}
 
@@ -72,10 +71,6 @@ public class Tea extends Character {
 	public void roundEndExtra() {
 		if (isFirstJob()) {
 			doM = false;
-		} else if (loliSoul) {
-			Play.printlnLog(Lang.tea_loliSoul_end);
-			setAttack(getAttack() - noOfGirls);
-			loliSoul = false;
 		}
 	}
 
@@ -144,8 +139,7 @@ public class Tea extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							loliSoul = true;
-							setAttack(getAttack() + noOfGirls);
+							changeAttack(noOfGirls, FOR_ROUND_END);
 						}
 
 					}, 7);
