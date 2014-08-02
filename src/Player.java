@@ -11,6 +11,7 @@ public class Player {
 
 	private String name; // player's name
 	private boolean player1;
+	private Player opponent = null;
 	private int HP = Play.INIT_HP;
 	private int MP = Play.INIT_MP;
 	private Character[] characters = new Character[Play.CHAR_MAX];
@@ -222,6 +223,14 @@ public class Player {
 		}
 
 		return 0;
+	}
+	
+	public void setOpponent(Player opponent){
+		this.opponent = opponent;
+	}
+	
+	public Player getOpponent() {
+		return opponent;
 	}
 
 	public int getHP() {

@@ -201,12 +201,9 @@ public class CharSkill {
 
 	/**
 	 * Call this to use the skill.
-	 * 
-	 * @param opponent
-	 *            Opponent Player
 	 */
-	public void useSkill(Player opponent) {
-		skillMethod.skillMethod(character, opponent);
+	public void useSkill() {
+		skillMethod.skillMethod(character, character.getPlayer().getOpponent());
 	}
 
 	public boolean isActive() {

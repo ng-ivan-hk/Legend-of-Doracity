@@ -4,15 +4,16 @@
  * @author Ivan Ng
  * 
  */
-public class Item extends Card {
+abstract public class Item extends Card {
 
 	public Item(int number) {
 		super(Lang.ItemTypes[number], number);
 	}
 
-	public String getInfo() {
+	final public String getInfo() {
 		return Lang.ItemInfos[number];
-
 	}
+	
+	abstract public void useItem(Player player);
 
 }

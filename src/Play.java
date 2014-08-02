@@ -68,10 +68,10 @@ public class Play extends JFrame {
 	/* Constant Values */
 	public final static int CHAR_MAX = 5; // No. of char per player
 	public final static int DRAW_CARD_MAX = 3; // draw ? hand cards each turn
-	public final static int[] EQUIPMENT_MAX = new int[] { 3, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1,
+	public final static int[] EQUIPMENT_MAX = new int[] { 0, 3, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1 };
-	public final static int[] ITEM_MAX = new int[] { 15, 15, 5 };
-	public final static int[] SKILL_MAX = new int[] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 5,
+	public final static int[] ITEM_MAX = new int[] { 0, 17, 17, 6 };
+	public final static int[] SKILL_MAX = new int[] { 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 5,
 			0, 5, 2, 2 };
 	public final static int MAX_HP = 50;
 	public final static int MAX_MP = 150;
@@ -136,25 +136,28 @@ public class Play extends JFrame {
 		loadingScreen = new LoadingScreen();
 		loadingScreen.setVisible(true);
 
-		/* Create card stack and shuffle */
+		/* Create card stack @formatter:off */
 		cards = new Stack<Card>();
-		for (int i = 0; i < EQUIPMENT_MAX.length; i++) {
-			for (int j = 0; j < EQUIPMENT_MAX[i]; j++) {
-				if (i + 1 == 1 || i + 1 == 2 || i + 1 == 3 || i + 1 == 4 || i + 1 == 5
-						|| i + 1 == 14 || i + 1 == 21 || i + 1 == 22) // DEBUG
-					cards.push(new Equipment(i + 1));
-			}
-		}
-		for (int i = 0; i < ITEM_MAX.length; i++) {
-			for (int j = 0; j < ITEM_MAX[i]; j++) {
-				cards.push(new Item(i + 1));
-			}
-		}
+		// Push Equipment Cards
+//		for (int i = 0; i < EQUIPMENT_MAX[1]; i++) cards.push(new AdventurerSword());
+//		for (int i = 0; i < EQUIPMENT_MAX[2]; i++) cards.push(new ManaStudentWand());
+//		for (int i = 0; i < EQUIPMENT_MAX[3]; i++) cards.push(new FloatingShoes());
+//		for (int i = 0; i < EQUIPMENT_MAX[4]; i++) cards.push(new Gambeson());
+//		for (int i = 0; i < EQUIPMENT_MAX[5]; i++) cards.push(new AntiManaCloak());
+//		for (int i = 0; i < EQUIPMENT_MAX[14]; i++) cards.push(new HolyShield());
+		for (int i = 0; i < 22; i++) cards.push(new FieldAcademy());
+		for (int i = 0; i < 22; i++) cards.push(new WallDoracity());
+		// Push Item Cards
+//		for (int i = 0; i < ITEM_MAX[1]; i++) cards.push(new HPPotion());
+//		for (int i = 0; i < ITEM_MAX[2]; i++) cards.push(new MPPotion());
+//		for (int i = 0; i < ITEM_MAX[3]; i++) cards.push(new SmokeBomb());
+		// Push Skill Cards
 //		for (int i = 0; i < SKILL_MAX.length; i++) {
 //			for (int j = 0; j < SKILL_MAX[i]; j++) {
 //				cards.push(new Skill(i + 1));
 //			}
 //		}
+		// Shuffle randomly @formatter:on
 		Collections.shuffle(cards);
 
 		setGUI();
@@ -275,6 +278,9 @@ public class Play extends JFrame {
 		// player2.setCharacters(new FishBall(player2), new Shirogane(player2),
 		// new NonkiNobita(
 		// player2), new Nana(player2), new GameNobita(player2));
+		
+		player1.setOpponent(player2);
+		player2.setOpponent(player1);
 
 		players = new Player[2];
 		players[0] = player1;
@@ -1024,14 +1030,13 @@ public class Play extends JFrame {
 				public class CharSelectPanel extends SuperCharSelectPanel {
 					public CharSelectPanel() {
 						setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-						Character[] charTemp = player.isPlayer1() ? player2.getCharacters()
-								: player1.getCharacters();
+						Character[] charTemp = player.getOpponent().getCharacters();
 						for (int i = 0; i < CHAR_MAX; i++) {
 							add(new CharButton(charTemp[i]));
 						}
 
 						// For Tea's active skill
-						Tea.checkDoM(currentChar, player.isPlayer1() ? player2 : player1, this);
+						Tea.checkDoM(currentChar, player.getOpponent(), this);
 						// For Phoebell's passive skill
 						Phoebell.checkPhoebell(currentChar, this);
 					}
@@ -1062,7 +1067,7 @@ public class Play extends JFrame {
 								return; // Player can choose another character
 							case 3: // Game Over
 								CharSelectDialog.this.dispose();
-								gameOver(player, player.isPlayer1() ? player2 : player1);
+								gameOver(player, player.getOpponent());
 								return;
 							}
 
@@ -1165,13 +1170,11 @@ public class Play extends JFrame {
 							Play.printlnLog(currentChar + Lang.log_castSkill + charSkill + " ("
 									+ Lang.log_skillEffect + charSkill.getInfo() + ")");
 
-							/* Really use skill! */
-							charSkill.useSkill(currentChar.getPlayer().isPlayer1() ? player2
-									: player1);
+							// Really use skill!
+							charSkill.useSkill();
 							
-							repaint();
-
 							// Update Area
+							repaint();
 							updateArea();
 							player1Area.updateHPMP();
 							player2Area.updateHPMP();
@@ -1331,17 +1334,33 @@ public class Play extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 
-				switch (useCard(player, card)) {
-				case 1:
-					JOptionPane.showMessageDialog(this, Lang.wrongJob);
-					return;
-				case 10:
-					JOptionPane.showMessageDialog(this, Lang.notAcademy);
-					return;
-				case 11:
-					JOptionPane.showMessageDialog(this, Lang.notDoracity);
-					return;
+				if (card instanceof Equipment) {
+					
+					Equipment equipment = (Equipment) card;
+					switch (equipment.useEquipment(currentChar)) {
+					case 1:
+						JOptionPane.showMessageDialog(this, Lang.wrongJob);
+						return;
+					case 10:
+						JOptionPane.showMessageDialog(this, Lang.notAcademy);
+						return;
+					case 11:
+						JOptionPane.showMessageDialog(this, Lang.notDoracity);
+						return;
+					}
+
+				} else if (card instanceof Item) {
+					
+					Item item = (Item) card;
+					item.useItem(player);
+					
+				} else if (card instanceof Skill) {
+					
+					Skill skill = (Skill) card;
+					
 				}
+
+				
 
 				setVisible(false);
 				player.removeCard(card);

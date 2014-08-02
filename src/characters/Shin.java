@@ -34,7 +34,7 @@ public class Shin extends Character {
 
 		} else {
 
-			setValues(true, ARCHER, true, 4, 3, 3, 4, false);
+			setValues(true, ARCHER, true, 4, 3, 3, 4, true);
 
 			passiveSkills = new CharSkill[1];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
