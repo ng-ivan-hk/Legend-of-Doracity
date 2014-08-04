@@ -139,12 +139,12 @@ public class Play extends JFrame {
 		/* Create card stack @formatter:off */
 		cards = new Stack<Card>();
 		// Push Equipment Cards
-//		for (int i = 0; i < EQUIPMENT_MAX[1]; i++) cards.push(new AdventurerSword());
-//		for (int i = 0; i < EQUIPMENT_MAX[2]; i++) cards.push(new ManaStudentWand());
-//		for (int i = 0; i < EQUIPMENT_MAX[3]; i++) cards.push(new FloatingShoes());
-//		for (int i = 0; i < EQUIPMENT_MAX[4]; i++) cards.push(new Gambeson());
-//		for (int i = 0; i < EQUIPMENT_MAX[5]; i++) cards.push(new AntiManaCloak());
-//		for (int i = 0; i < EQUIPMENT_MAX[14]; i++) cards.push(new HolyShield());
+		for (int i = 0; i < EQUIPMENT_MAX[1]; i++) cards.push(new AdventurerSword());
+		for (int i = 0; i < EQUIPMENT_MAX[2]; i++) cards.push(new ManaStudentWand());
+		for (int i = 0; i < EQUIPMENT_MAX[3]; i++) cards.push(new FloatingShoes());
+		for (int i = 0; i < EQUIPMENT_MAX[4]; i++) cards.push(new Gambeson());
+		for (int i = 0; i < EQUIPMENT_MAX[5]; i++) cards.push(new AntiManaCloak());
+		for (int i = 0; i < EQUIPMENT_MAX[14]; i++) cards.push(new HolyShield());
 		for (int i = 0; i < 22; i++) cards.push(new FieldAcademy());
 		for (int i = 0; i < 22; i++) cards.push(new WallDoracity());
 		// Push Item Cards
@@ -1216,35 +1216,30 @@ public class Play extends JFrame {
 				Play.printlnLog(currentChar + " " + Lang.log_jobChange
 						+ (currentChar.isFirstJob() ? Lang.job2 : Lang.job1));
 
-				// Remove Equipment temporarily
-				Equipment tempEquip = currentChar.getEquipment();
-				currentChar.setEquipment(null);
-
 				// Really Job Change
 				currentChar.jobChange();
 				
-				// Equip again if extra requirement still matches
-				switch (useCard(player, tempEquip)) {
+				// Check if Equipment's extra requirement still matches
+				Equipment tempEquip = currentChar.getEquipment();
+				switch (tempEquip.check(currentChar)) {
 				case 1:
 					JOptionPane.showMessageDialog(this, tempEquip + ": "
 							+ Lang.wrongJob + "\n" + Lang.removeEquip);
 					currentChar.setEquipment(null);
-					removeEquipmentEffect();
 					break;
 				case 10:
 					JOptionPane.showMessageDialog(this, tempEquip + ": "
 							+ Lang.notAcademy + "\n" + Lang.removeEquip);
 					currentChar.setEquipment(null);
-					removeEquipmentEffect();
 					break;
 				case 11:
 					JOptionPane.showMessageDialog(this, tempEquip + ": "
 							+ Lang.notDoracity + "\n" + Lang.removeEquip);
 					currentChar.setEquipment(null);
-					removeEquipmentEffect();
 					break;
 
 				}
+				
 				// Update Area
 				player1Area.updateHPMP();
 				player2Area.updateHPMP();
@@ -1335,9 +1330,9 @@ public class Play extends JFrame {
 			public void actionPerformed(ActionEvent ae) {
 
 				if (card instanceof Equipment) {
-					
+
 					Equipment equipment = (Equipment) card;
-					switch (equipment.useEquipment(currentChar)) {
+					switch (currentChar.setEquipment(equipment)) { // Equip!
 					case 1:
 						JOptionPane.showMessageDialog(this, Lang.wrongJob);
 						return;
@@ -1790,6 +1785,16 @@ public class Play extends JFrame {
 		}
 	}
 
+	/**
+	 * This function is replaced by methods defined in <code>Card</code> and its
+	 * sub classes. It is being kept as a reference only and should not be used
+	 * anymore.
+	 * 
+	 * @param player
+	 * @param card
+	 * @return
+	 */
+	@Deprecated
 	protected int useCard(Player player, Card card) {
 
 		// Return 0 if success
@@ -2023,8 +2028,11 @@ public class Play extends JFrame {
 	}
 
 	/**
-	 * Every time you remove an equipment from a character you must call this.
+	 * This function is replaced by
+	 * <code>Equipment.removeEquipmentEffect()</code>. Use this as a reference
+	 * only.
 	 */
+	@Deprecated
 	protected void removeEquipmentEffect() { // remove equipment for currentChar
 
 		if (currentChar.getEquipment() == null)

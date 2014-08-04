@@ -11,5 +11,10 @@ public class HolyShield extends Equipment {
 	public void equipmentEffect(Character c) {
 		Play.printlnLog("Using Holy Shit!");
 	}
+	
+	@Override
+	protected void removeEquipmentEffect(Character c) {
+		Play.printlnLog("Removing Holy Shit!");
+	}
 
 }

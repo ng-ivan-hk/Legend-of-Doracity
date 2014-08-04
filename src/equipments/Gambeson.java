@@ -12,4 +12,9 @@ public class Gambeson extends Equipment { // = Cloth Armor
 		Play.printlnLog("Using Gamebeson (Cloth Armor)!");
 	}
 
+	@Override
+	protected void removeEquipmentEffect(Character c) {
+		Play.printlnLog("Removing Gamebeson (Cloth Armor)!");
+	}
+
 }

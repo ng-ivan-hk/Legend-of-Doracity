@@ -12,4 +12,9 @@ public class WallDoracity extends Equipment {
 		Play.printlnLog("Using Wall Doracity!");
 	}
 
+	@Override
+	protected void removeEquipmentEffect(Character c) {
+		Play.printlnLog("Removing Wall Doracity!");
+	}
+
 }

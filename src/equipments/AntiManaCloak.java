@@ -12,4 +12,9 @@ public class AntiManaCloak extends Equipment {
 		Play.printlnLog("Using Anti Mana Cloak!");
 	}
 
+	@Override
+	protected void removeEquipmentEffect(Character c) {
+		Play.printlnLog("Removing Anti Mana Cloak!");
+	}
+
 }

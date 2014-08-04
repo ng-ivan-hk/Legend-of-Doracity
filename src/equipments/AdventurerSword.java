@@ -12,4 +12,9 @@ public class AdventurerSword extends Equipment {
 		Play.printlnLog("Using Adventurer's Sword!");
 	}
 
+	@Override
+	protected void removeEquipmentEffect(Character c) {
+		Play.printlnLog("Removing Adventurer's Sword!");
+	}
+
 }

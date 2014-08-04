@@ -11,5 +11,10 @@ public class FieldAcademy extends Equipment {
 	public void equipmentEffect(Character c) {
 		Play.printlnLog("Using Field Academy!");
 	}
+	
+	@Override
+	protected void removeEquipmentEffect(Character c) {
+		Play.printlnLog("Removing Field Academy!");
+	}
 
 }

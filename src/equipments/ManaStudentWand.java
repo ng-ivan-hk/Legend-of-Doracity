@@ -12,4 +12,8 @@ public class ManaStudentWand extends Equipment {
 		Play.printlnLog("Using Mana Student's Wand!");
 	}
 
+	@Override
+	protected void removeEquipmentEffect(Character c) {
+		Play.printlnLog("Removing Mana Student's Wand!");
+	}
 }

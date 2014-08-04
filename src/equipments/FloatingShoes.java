@@ -11,5 +11,10 @@ public class FloatingShoes extends Equipment {
 	public void equipmentEffect(Character c) {
 		Play.printlnLog("Using Floating Shoes!");
 	}
+	
+	@Override
+	protected void removeEquipmentEffect(Character c) {
+		Play.printlnLog("Removing Adventurer's Sword!");
+	}
 
 }

@@ -406,30 +406,62 @@ abstract public class Character {
 		return speed_init;
 	}
 
-	public void setEquipment(Equipment e) {
-		
+	/**
+	 * Call this to equip an {@link Equipment}.
+	 * 
+	 * @param e
+	 *            Equipment to be equipped on this Character. If simply remove
+	 *            Equipment, pass null.
+	 * @return 0 if success. Otherwise returns error code returned by
+	 *         {@link Equipment#check(Character)}.
+	 */
+	public int setEquipment(Equipment e) {
+
 		if (equipment == null) {
 
 			if (e != null) { // Equip Equipment
+
+				int code = e.check(this);
+
+				if (code != 0) {
+					return code;
+				}
+
 				this.equipment = e;
 				Play.printlnLog(this + " " + Lang.log_equip + " " + e);
+				e.equipmentEffect(this);
+				
 			}
 
 		} else {
 			
+			if (e != null) {
+				
+				int code = e.check(this);
+
+				if (code != 0) {
+					return code;
+				}
+			}
+
 			// Remove current Equipment
 			attack_equipment = 0;
 			defP_equipment = 0;
 			defM_equipment = 0;
 			speed_equipment = 0;
 			
-			Play.printlnLog(this + " " + Lang.log_removeEquipment);
-
-			if (e != null) { // Equip new Equipment
-				this.equipment = e;
+			Play.printlnLog(this + " " + Lang.log_removeEquipment + " " + equipment);
+			equipment.removeEquipmentEffect(this);
+			
+			// Equip new Equipment or null
+			this.equipment = e;
+			if (e != null) {
 				Play.printlnLog(this + " " + Lang.log_equip + " " + e);
+				e.equipmentEffect(this);
 			}
 		}
+		
+		return 0;
 
 	}
 

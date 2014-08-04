@@ -45,17 +45,17 @@ abstract public class Equipment extends Card {
 	}
 
 	/**
-	 * Check if the Character can use the card. If yes, use. Otherwise, return
-	 * an error code.
+	 * Check if the Character can use the card (matches this Equipment's
+	 * requirement).
 	 * 
 	 * @param c
-	 *            the Character who uses the card
+	 *            the Character who uses the card (to be equipped)
 	 * @return 0 if success<br>
 	 *         1 if wrong job<br>
 	 *         10 if not Academy<br>
 	 *         11 if not Doracity
 	 */
-	final public int useEquipment(Character c) {
+	final public int check(Character c) {
 
 		if ((saberOK && c.getJob() == Character.SABER)
 				|| (archerOK && c.getJob() == Character.ARCHER)
@@ -67,7 +67,6 @@ abstract public class Equipment extends Card {
 			} else if (!academyOK && !c.isDoracity()) { // Not Doracity
 				return 11;
 			} else {
-				equipmentEffect(c);
 				return 0;
 			}
 
@@ -77,10 +76,19 @@ abstract public class Equipment extends Card {
 	}
 
 	/**
-	 * Really use the equipment.
+	 * Actions to be performed when equipping this Equipment. Should be only
+	 * called by {@link Character#setEquipment(Equipment)}.
 	 * 
 	 * @param c
 	 */
 	abstract protected void equipmentEffect(Character c);
+
+	/**
+	 * Actions to be performed when removing this Equipment. Should be only
+	 * called by {@link Character#setEquipment(Equipment)}.
+	 * 
+	 * @param c
+	 */
+	abstract protected void removeEquipmentEffect(Character c);
 
 }
