@@ -41,7 +41,29 @@ abstract public class Equipment extends Card {
 	}
 
 	final public String getInfo() {
-		return Lang.EquipmentInfos[number];
+		String info = Lang.EquipmentInfos[number] + "<br>" + Lang.availableJob
+				+ "<font color=blue>";
+		if (saberOK) {
+			info += Lang.JobNames[Character.SABER] + Lang.comma2;
+		}
+		if (archerOK) {
+			info += Lang.JobNames[Character.ARCHER] + Lang.comma2;
+		}
+		if (casterOK) {
+			info += Lang.JobNames[Character.CASTER] + Lang.comma2;
+		}
+		if (supportOK) {
+			info += Lang.JobNames[Character.SUPPORT] + Lang.comma2;
+		}
+
+		// Remove the last comma2
+		if (info.length() > 0) {
+			info = info.substring(0, info.length() - 1);
+		}
+
+		info += "</font>";
+
+		return info;
 	}
 
 	/**

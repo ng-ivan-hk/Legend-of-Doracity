@@ -1,12 +1,22 @@
 public class Nana extends Character {
-	
+
 	@Override
-	public void jobChangeExtra(){
-		if(isFirstJob()){
-			
+	public void jobChangeExtra() {
+		if (isFirstJob()) {
+			Play.printlnLog(Lang.nana_evil);
+			Character[] opponentChars = getPlayer().getOpponent().getCharacters();
+			for (int i = 0; i < opponentChars.length; i++) {
+				opponentChars[i].changeSpeed(-1, FOR_EVER);
+			}
+		} else {
+			Play.printlnLog(Lang.nana_evil_end);
+			Character[] opponentChars = getPlayer().getOpponent().getCharacters();
+			for (int i = 0; i < opponentChars.length; i++) {
+				opponentChars[i].changeSpeed(1, FOR_EVER);
+			}
 		}
 	}
-	
+
 	/* === Above are Nana's unique fields and methods === */
 
 	public Nana(Player player) {
@@ -24,8 +34,7 @@ public class Nana extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					Play.printlnLog("Using Nana's 1stJob passive skill 1!");
-
+					// COMPLETED
 				}
 
 			}, 0);

@@ -31,6 +31,9 @@ public class Lang {
 	public final static String help_icons = "圖案說明";
 	public final static String help_appFAQ = "常見問題";
 
+	public final static String comma = "，";
+	public final static String comma2 = "、";
+
 	/* Character Names */
 	public final static String[] CharNames = new String[] { "", "烏龍茶", "淋琳", "古怪", "地圖", "鐵皮使",
 			"魚丸串", "白銀劍士", "悠閒的大雄", "奈奈由宇", "野味大雄", "山大", "七色彩蝶", "羽須智行", "黑川米古", "勇者謙", "奈特", "雲",
@@ -425,32 +428,16 @@ public class Lang {
 	/* Card Names and Descriptions */
 	public final static String equipment = "裝備";
 
-	public final static String[] EquipmentTypes = new String[] { "", "冒險者之劍", "魔法學徒杖", "輕飄飄鞋",
-			"布甲", "抗魔法蓬", "騎士之鎧", "羽毛弓", "法師帽", "救護服", "吸血鐮刀", "真實之刃", "雙影狂舞", "狙擊槍", "神聖之盾",
-			"暴走鞋", "寒冰杖", "火炎杖", "充雷杖", "巫師袍", "治療杖", "學園之界", "小城之壁", "先制之爪" };
+	public final static String[] EquipmentTypes = new String[] { "", "騎士之鎧", "神聖之盾", "雙影狂舞", "暴走鞋",
+			"羽毛弓", "狙擊槍", "法師帽", "寒冰杖", "火炎杖", "充雷杖", "救護服", "物理結界", "魔法結界", "魔法石", "冒險者之劍",
+			"吸血鐮刀", "真實之刃", "先制之爪", "魔法學徒杖", "巫師袍", "治療杖", "輕飄飄鞋", "布甲", "抗魔法蓬", "學園之界", "小城之壁" };
 
-	public final static String[] EquipmentInfos = new String[] {
-			"",
-			"攻擊+1<br><font color=red>只限劍士和弓手</font>", // 這是冒險者之劍
-			"攻擊+1<br><font color=red>只限法師和支援</font>", "速度+1", "物防+1", "魔防+1",
-			"物防+2, 格檔1點普攻傷害<br><font color=red>只限劍士</font>",
-			"攻擊+1,速度+1,增加1點普攻穿透<br><font color=red>只限弓手</font>",
-			"攻擊+1,魔防+1<br>使用技能時回復1MP<br><font color=red>只限法師</font>",
-			"物防+1,魔防+1<br>使用技能時回復1HP<br><font color=red>只限支援</font>",
-			"攻擊+1<br>攻擊成功時額外偷取對方1HP回復<br><font color=red>只限劍士和弓手</font>",
-			"攻擊+1<br>攻擊成功時額外造成1點真實傷害<br><font color=red>只限劍士和弓手</font>",
-			"速度+1<br>對相同目標進行兩次普攻<br><font color=red>只限劍士</font>",
-			"攻擊+1<br>普通攻擊無視防禦狀態<br><font color=red>只限弓手</font>",
-			"物防+1,魔防+1<br>已方陣營角色獲得此道具效果<br><font color=red>只限劍士</font>",
-			"速度+2<br>先制: 順位時將在最先行動<br><font color=red>只限弓手</font>",
-			"攻擊+1<br>使用技能攻擊成功時降底目標速度<br><font color=red>只限法師和支援</font>",
-			"攻擊+1<br>使用技能攻擊成功時追+1點真實傷害<br><font color=red>只限法師和支援</font>",
-			"攻擊+1<br>使用技能攻擊成功減少對方1MP<br><font color=red>只限法師和支援</font>",
-			"攻擊+1,魔防+2<br>使用技能攻擊成功時回復2MP<br><font color=red>只限法師和支援</font>",
-			"攻擊+1,物防+2<br>使用技能攻擊成功時回復1HP<br><font color=red>只限法師和支援</font>",
-			"所有學園陣營角色物防+1,魔防+1<br><font color=red>只限學園陣營角色</font>",
-			"所有小城陣營角色物防+1,魔防+1<br><font color=red>只限小城陣營角色</font>",
-			"攻擊+1,速度+1<br>先制: 順位時將在最先行動<br><font color=red>只限劍士和弓手</font>" };
+	public final static String[] EquipmentInfos = new String[] { "", "減少1點所受的普攻傷害",
+			"已方陣營角色獲得此道具效果", "對相同目標進行額外一次普攻", "先制: 順位時將在最先行動", "增加1點普攻傷害", "普通攻擊無視防禦狀態",
+			"使用技能攻擊時傷害+1", "使用技能攻擊成功時減少敵方1MP", "使用技能攻擊成功時追+1點真實傷害", "使用技能攻擊成功增加回復1MP",
+			"使用技能時回復1HP", "提升己方陣營1點物防", "提升己方陣營1點魔防", "增加1點MP回復量", "", "攻擊成功時額外偷取對方1HP回復",
+			"攻擊成功時額外造成1點真實傷害", "先制: 順位時將在最先行動", "", "減少1點所受的技能傷害", "使用技能時若消耗3MP以上則回復1HP", "", "",
+			"", "限「學園」陣營角色裝備, 已方學園陣營角色獲得此道具效果", "限「小城」陣營角色裝備, 已方小城陣營角色獲得此道具效果" };
 
 	public final static String[] ItemTypes = new String[] { "", "生命水", "魔法水", "煙霧彈" };
 
@@ -486,6 +473,9 @@ public class Lang {
 			"提升己方陣營1點魔防，無限維持(維持時不能發動任何技能卡)<br><font color=red>需要5MP<br>只限支援</font>",
 			"此回合不會進入任何異常狀態及降底能力值<br><font color=red>需要5MP<br>只限法師和支援</font>",
 			"吸取相當於自身攻擊的HP並回復<br><font color=red>需要5MP<br>只限法師</font>" };
+	
+	public final static String availableJob = "可用職業：";
+
 
 	/* Properties */
 	public final static String HP = "HP";
@@ -596,6 +586,9 @@ public class Lang {
 	public final static String iron_heroic = "鐵皮的英勇技能發動：攻擊劍士時攻擊+1";
 	// 7. Shirogane
 	public final static String shirogane_resonance = "白銀的共鳴技能發動：每名法師額外回復1MP";
+	// 9. Nana
+	public final static String nana_evil = "奈奈的邪氣技能發動：敵方速度-1";
+	public final static String nana_evil_end = "奈奈的邪氣技能效果完結";
 	// 10. GameNobita
 	public final static String gamenobita_doracity[] = { "己方陣型共有", "名小城陣型角色，因此技能效果為：每名小城陣型角色" };
 	public final static String gamenobita_doracity_effect[] = { "物防+1", "物防+1、魔防+1", "物防+2、魔防+1",
