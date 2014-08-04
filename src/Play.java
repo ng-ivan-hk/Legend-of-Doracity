@@ -1221,23 +1221,25 @@ public class Play extends JFrame {
 				
 				// Check if Equipment's extra requirement still matches
 				Equipment tempEquip = currentChar.getEquipment();
-				switch (tempEquip.check(currentChar)) {
-				case 1:
-					JOptionPane.showMessageDialog(this, tempEquip + ": "
-							+ Lang.wrongJob + "\n" + Lang.removeEquip);
-					currentChar.setEquipment(null);
-					break;
-				case 10:
-					JOptionPane.showMessageDialog(this, tempEquip + ": "
-							+ Lang.notAcademy + "\n" + Lang.removeEquip);
-					currentChar.setEquipment(null);
-					break;
-				case 11:
-					JOptionPane.showMessageDialog(this, tempEquip + ": "
-							+ Lang.notDoracity + "\n" + Lang.removeEquip);
-					currentChar.setEquipment(null);
-					break;
+				if (tempEquip != null) {
+					switch (tempEquip.check(currentChar)) {
+					case 1:
+						JOptionPane.showMessageDialog(this, tempEquip + ": " + Lang.wrongJob + "\n"
+								+ Lang.removeEquip);
+						currentChar.setEquipment(null);
+						break;
+					case 10:
+						JOptionPane.showMessageDialog(this, tempEquip + ": " + Lang.notAcademy
+								+ "\n" + Lang.removeEquip);
+						currentChar.setEquipment(null);
+						break;
+					case 11:
+						JOptionPane.showMessageDialog(this, tempEquip + ": " + Lang.notDoracity
+								+ "\n" + Lang.removeEquip);
+						currentChar.setEquipment(null);
+						break;
 
+					}
 				}
 				
 				// Update Area
