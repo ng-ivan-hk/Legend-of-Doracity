@@ -1,20 +1,20 @@
 public class Gambeson extends Equipment { // = Cloth Armor
 
 	/**
-	 * Card Number: 4
+	 * Card Number: 23
 	 */
 	public Gambeson() {
-		super(4, true, true, true, true, true, true);
+		super(23, true, true, true, true, true, true);
 	}
 
 	@Override
 	public void equipmentEffect(Character c) {
-		Play.printlnLog("Using Gamebeson (Cloth Armor)!");
+		c.changeDefP(1, Character.FOR_EQUIPMENT);
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		Play.printlnLog("Removing Gamebeson (Cloth Armor)!");
+		// COMPLETED
 	}
 
 }

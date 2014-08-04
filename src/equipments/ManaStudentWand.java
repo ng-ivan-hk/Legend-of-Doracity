@@ -1,19 +1,19 @@
 public class ManaStudentWand extends Equipment {
 
 	/**
-	 * Card Number: 2
+	 * Card Number: 19
 	 */
 	public ManaStudentWand() {
-		super(2, false, false, true, true, true, true);
+		super(19, false, false, true, true, true, true);
 	}
 
 	@Override
 	public void equipmentEffect(Character c) {
-		Play.printlnLog("Using Mana Student's Wand!");
+		c.changeAttack(1, Character.FOR_EQUIPMENT);
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		Play.printlnLog("Removing Mana Student's Wand!");
+		// COMPLETED
 	}
 }

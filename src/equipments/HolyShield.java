@@ -1,20 +1,31 @@
 public class HolyShield extends Equipment {
 
 	/**
-	 * Card Number: 14
+	 * Card Number: 2
 	 */
 	public HolyShield() {
-		super(14, true, false, false, false, true, true);
+		super(2, true, false, false, false, true, true);
 	}
 
 	@Override
 	public void equipmentEffect(Character c) {
-		Play.printlnLog("Using Holy Shit!");
+
+		Character[] charTemp = c.getPlayer().getCharacters();
+		for (int i = 0; i < charTemp.length; i++) {
+			charTemp[i].changeDefP(1, Character.FOR_EVER);
+			charTemp[i].changeDefM(1, Character.FOR_EVER);
+		}
 	}
-	
+
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		Play.printlnLog("Removing Holy Shit!");
+
+		Character[] charTemp = c.getPlayer().getCharacters();
+		for (int i = 0; i < charTemp.length; i++) {
+			charTemp[i].changeDefP(-1, Character.FOR_EVER);
+			charTemp[i].changeDefM(-1, Character.FOR_EVER);
+		}
+
 	}
 
 }

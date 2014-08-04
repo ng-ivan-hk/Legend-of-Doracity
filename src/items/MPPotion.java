@@ -10,8 +10,8 @@ public class MPPotion extends Item {
 		player.changeMP(5);
 
 		// Check for Sasa's job 1 passive skill: Pharmacist
-		Character maybeSasa1 = (player.contains(Sasa.class));
-		if (maybeSasa1 != null && maybeSasa1.isFirstJob()) {
+		Character maybeSasa = (player.contains(Sasa.class));
+		if (maybeSasa != null && maybeSasa.isFirstJob()) {
 			Play.printlnLog(Lang.sasa_pharmacist);
 			player.changeHP(1);
 		}

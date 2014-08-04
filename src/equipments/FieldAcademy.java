@@ -1,20 +1,36 @@
 public class FieldAcademy extends Equipment {
 
 	/**
-	 * Card Number: 21
+	 * Card Number: 25
 	 */
 	public FieldAcademy() {
-		super(21, true, true, true, true, false, true);
+		super(25, true, true, true, true, false, true);
 	}
 
 	@Override
 	public void equipmentEffect(Character c) {
-		Play.printlnLog("Using Field Academy!");
+
+		Character[] charTemp = c.getPlayer().getCharacters();
+		for (int i = 0; i < charTemp.length; i++) {
+			if (!charTemp[i].isDoracity()) {
+				charTemp[i].changeDefP(1, Character.FOR_EVER);
+				charTemp[i].changeDefM(1, Character.FOR_EVER);
+			}
+		}
+
 	}
-	
+
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		Play.printlnLog("Removing Field Academy!");
+
+		Character[] charTemp = c.getPlayer().getCharacters();
+		for (int i = 0; i < charTemp.length; i++) {
+			if (!charTemp[i].isDoracity()) {
+				charTemp[i].changeDefP(-1, Character.FOR_EVER);
+				charTemp[i].changeDefM(-1, Character.FOR_EVER);
+			}
+		}
+
 	}
 
 }

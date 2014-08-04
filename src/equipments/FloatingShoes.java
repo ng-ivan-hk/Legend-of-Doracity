@@ -1,20 +1,20 @@
 public class FloatingShoes extends Equipment {
 
 	/**
-	 * Card Number: 3
+	 * Card Number: 22
 	 */
 	public FloatingShoes() {
-		super(3, true, true, true, true, true, true);
+		super(22, true, true, true, true, true, true);
 	}
 
 	@Override
 	public void equipmentEffect(Character c) {
-		Play.printlnLog("Using Floating Shoes!");
+		c.changeSpeed(1, Character.FOR_EQUIPMENT);
 	}
-	
+
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		Play.printlnLog("Removing Adventurer's Sword!");
+		// COMPLETED
 	}
 
 }

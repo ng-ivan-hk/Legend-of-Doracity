@@ -232,16 +232,16 @@ abstract public class Character {
 	public void changeAttack(int attack, int type) {
 		switch (type) {
 		case FOR_EVER:
-			attack_ever = attack;
+			attack_ever += attack;
 			break;
 		case FOR_JOB_CHANGE:
-			attack_jobChange = attack;
+			attack_jobChange += attack;
 			break;
 		case FOR_ROUND_END:
-			attack_roundEnd = attack;
+			attack_roundEnd += attack;
 			break;
 		case FOR_EQUIPMENT:
-			attack_equipment = attack;
+			attack_equipment += attack;
 			break;
 		default:
 			return;
@@ -273,16 +273,16 @@ abstract public class Character {
 	public void changeDefP(int defP, int type) {
 		switch (type) {
 		case FOR_EVER:
-			defP_ever = defP;
+			defP_ever += defP;
 			break;
 		case FOR_JOB_CHANGE:
-			defP_jobChange = defP;
+			defP_jobChange += defP;
 			break;
 		case FOR_ROUND_END:
-			defP_roundEnd = defP;
+			defP_roundEnd += defP;
 			break;
 		case FOR_EQUIPMENT:
-			defP_equipment = defP;
+			defP_equipment += defP;
 			break;
 		default:
 			return;
@@ -314,16 +314,16 @@ abstract public class Character {
 	public void changeDefM(int defM, int type) {
 		switch (type) {
 		case FOR_EVER:
-			defM_ever = defM;
+			defM_ever += defM;
 			break;
 		case FOR_JOB_CHANGE:
-			defM_jobChange = defM;
+			defM_jobChange += defM;
 			break;
 		case FOR_ROUND_END:
-			defM_roundEnd = defM;
+			defM_roundEnd += defM;
 			break;
 		case FOR_EQUIPMENT:
-			defM_equipment = defM;
+			defM_equipment += defM;
 			break;
 		default:
 			return;
@@ -355,16 +355,16 @@ abstract public class Character {
 	public void changeSpeed(int speed, int type) {
 		switch (type) {
 		case FOR_EVER:
-			speed_ever = speed;
+			speed_ever += speed;
 			break;
 		case FOR_JOB_CHANGE:
-			speed_jobChange = speed;
+			speed_jobChange += speed;
 			break;
 		case FOR_ROUND_END:
-			speed_roundEnd = speed;
+			speed_roundEnd += speed;
 			break;
 		case FOR_EQUIPMENT:
-			speed_equipment = speed;
+			speed_equipment += speed;
 			break;
 		default:
 			return;

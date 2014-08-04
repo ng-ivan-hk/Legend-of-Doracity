@@ -80,6 +80,7 @@ abstract public class Equipment extends Card {
 	 * called by {@link Character#setEquipment(Equipment)}.
 	 * 
 	 * @param c
+	 *            <code>Character</code> who equips this Equipment
 	 */
 	abstract protected void equipmentEffect(Character c);
 
@@ -88,6 +89,7 @@ abstract public class Equipment extends Card {
 	 * called by {@link Character#setEquipment(Equipment)}.
 	 * 
 	 * @param c
+	 *            <code>Character</code> who equips this Equipment
 	 */
 	abstract protected void removeEquipmentEffect(Character c);
 

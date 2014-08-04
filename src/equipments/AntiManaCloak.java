@@ -1,20 +1,20 @@
 public class AntiManaCloak extends Equipment {
 
 	/**
-	 * Card Number: 5
+	 * Card Number: 24
 	 */
 	public AntiManaCloak() {
-		super(5, true, true, true, true, true, true);
+		super(24, true, true, true, true, true, true);
 	}
 
 	@Override
 	public void equipmentEffect(Character c) {
-		Play.printlnLog("Using Anti Mana Cloak!");
+		c.changeDefM(1, Character.FOR_EQUIPMENT);
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		Play.printlnLog("Removing Anti Mana Cloak!");
+		// COMPLETED
 	}
 
 }

@@ -1,20 +1,36 @@
 public class WallDoracity extends Equipment {
 
 	/**
-	 * Card Number: 22
+	 * Card Number: 26
 	 */
 	public WallDoracity() {
-		super(22, true, true, true, true, true, false);
+		super(26, true, true, true, true, true, false);
 	}
 
 	@Override
 	public void equipmentEffect(Character c) {
-		Play.printlnLog("Using Wall Doracity!");
+
+		Character[] charTemp = c.getPlayer().getCharacters();
+		for (int i = 0; i < charTemp.length; i++) {
+			if (charTemp[i].isDoracity()) {
+				charTemp[i].changeDefP(1, Character.FOR_EVER);
+				charTemp[i].changeDefM(1, Character.FOR_EVER);
+			}
+		}
+
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		Play.printlnLog("Removing Wall Doracity!");
+
+		Character[] charTemp = c.getPlayer().getCharacters();
+		for (int i = 0; i < charTemp.length; i++) {
+			if (charTemp[i].isDoracity()) {
+				charTemp[i].changeDefP(-1, Character.FOR_EVER);
+				charTemp[i].changeDefM(-1, Character.FOR_EVER);
+			}
+		}
+
 	}
 
 }

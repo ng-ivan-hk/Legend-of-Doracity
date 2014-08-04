@@ -1,20 +1,20 @@
 public class AdventurerSword extends Equipment {
 
 	/**
-	 * Card Number: 1
+	 * Card Number: 15
 	 */
 	public AdventurerSword() {
-		super(1, true, true, false, false, true, true);
+		super(15, true, true, false, false, true, true);
 	}
 
 	@Override
 	public void equipmentEffect(Character c) {
-		Play.printlnLog("Using Adventurer's Sword!");
+		c.changeAttack(1, Character.FOR_EQUIPMENT);
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		Play.printlnLog("Removing Adventurer's Sword!");
+		// COMPLETED
 	}
 
 }

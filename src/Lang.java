@@ -441,7 +441,7 @@ public class Lang {
 			"攻擊+1<br>攻擊成功時額外造成1點真實傷害<br><font color=red>只限劍士和弓手</font>",
 			"速度+1<br>對相同目標進行兩次普攻<br><font color=red>只限劍士</font>",
 			"攻擊+1<br>普通攻擊無視防禦狀態<br><font color=red>只限弓手</font>",
-			"物防+2<br>提升已方陣營1物防<br><font color=red>只限劍士</font>",
+			"物防+1,魔防+1<br>已方陣營角色獲得此道具效果<br><font color=red>只限劍士</font>",
 			"速度+2<br>先制: 順位時將在最先行動<br><font color=red>只限弓手</font>",
 			"攻擊+1<br>使用技能攻擊成功時降底目標速度<br><font color=red>只限法師和支援</font>",
 			"攻擊+1<br>使用技能攻擊成功時追+1點真實傷害<br><font color=red>只限法師和支援</font>",
