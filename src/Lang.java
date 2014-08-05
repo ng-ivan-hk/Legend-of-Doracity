@@ -555,11 +555,12 @@ public class Lang {
 
 	/* Log: Skill messages */
 	public final static String log_passiveSkillEnd = "的前職被動技能效果完結";
-	public final static String log_activeSkillEnd = "的主動能效果完結";
+	public final static String[] log_for_round_end = { "回合結束，施加在", "上的技能效果移除" };
 	public final static String choose = "選擇了：";
 	public final static String totalDamage = "總計：";
 	public final static String giveUp = "於本回合無法行動";
 	public final static String givenUp = "已無法於本回合行動，因此自動跳過";
+	public final static String giveUpSkills = "於本回合無法使用技能";
 	// 1. Tea
 	public final static String tea_gentleman = "場上有女性角色，烏龍茶的紳士技能發動：";
 	public final static String tea_MSoul = "烏龍茶的M魂技能發動：受到女性角色攻擊時，回復1HP";
@@ -584,6 +585,9 @@ public class Lang {
 	public final static String iron_fortitude_lessDamage = "鐵皮的堅忍技能發動：傷害-1";
 	public final static String iron_morale_end = "鐵皮的士氣技能效果完結";
 	public final static String iron_heroic = "鐵皮的英勇技能發動：攻擊劍士時攻擊+1";
+	// 6. FishBall
+	public final static String fishball_limit = "魚丸的極限技能發動：攻擊+1，並在戰鬥後回復2MP";
+	public final static String fishball_limit2 = "魚丸的極限技能發動：戰鬥後回復2MP";
 	// 7. Shirogane
 	public final static String shirogane_resonance = "白銀的共鳴技能發動：每名法師額外回復1MP";
 	// 9. Nana

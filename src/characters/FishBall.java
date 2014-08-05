@@ -1,4 +1,26 @@
 public class FishBall extends Character {
+	
+	private boolean limit = false;
+	
+	/**
+	 * For Job 1 Passive Skill
+	 */
+	private void limit(){
+		Play.printlnLog(Lang.fishball_limit);
+		changeAttack(1, FOR_ROUND_END);
+		limit = true;
+	}
+	
+	public boolean isLimit(){
+		return limit;
+	}
+	
+	@Override
+	public void roundEndExtra(){
+		limit = false;
+	}
+	
+	/* === Above are FishBall's unique fields and methods === */
 
 	public FishBall(Player player) {
 		super(player, 6);
@@ -15,8 +37,7 @@ public class FishBall extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					Play.printlnLog("Using FishBall's 1stJob passive skill 1!");
-
+					// COMPLETED
 				}
 
 			}, 0);
@@ -26,8 +47,21 @@ public class FishBall extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using FishBall's 1stJob active skill 1!");
 
+							// Select character
+							new CharSkill.CharSelectDialog(currentChar, opponent,
+									new TargetMethod() {
+
+										@Override
+										public void targetMethod(Character currentChar,
+												Character target) {
+											target.changeDefP(-target.getDefP(), FOR_ROUND_END);
+										}
+
+									});
+							
+							limit();
+							
 						}
 
 					}, 5);
@@ -36,8 +70,21 @@ public class FishBall extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using FishBall's 1stJob active skill 2!");
 
+							// Select character
+							new CharSkill.CharSelectDialog(currentChar, opponent,
+									new TargetMethod() {
+
+										@Override
+										public void targetMethod(Character currentChar,
+												Character target) {
+											target.setGiveUpSkills(true);
+										}
+
+									});
+							
+							limit();
+							
 						}
 
 					}, 5);
@@ -66,7 +113,7 @@ public class FishBall extends Character {
 
 						}
 
-					}, 5); //TODO: This skill can be used many times unless no MP
+					}, 5); // TODO: This skill can be used many times unless no MP
 		}
 	}
 

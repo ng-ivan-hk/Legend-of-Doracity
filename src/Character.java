@@ -66,6 +66,7 @@ abstract public class Character {
 	protected boolean defense = false; // character will defense if attacked
 	protected boolean assassin = false; // Map's Active Skill
 	private boolean giveUp = false; // if true, this character will be passed
+	private boolean giveUpSkills = false; // if true, this character cannot use skills
 
 	/**
 	 * @param player
@@ -117,7 +118,8 @@ abstract public class Character {
 	final public void roundEnd() {
 		// Remove round end effects
 		if (attack_roundEnd != 0 || defP_roundEnd != 0 || defM_roundEnd != 0 || speed_roundEnd != 0) {
-			Play.printlnLog(this + Lang.log_activeSkillEnd);
+			Play.printlnLog(Lang.log_for_round_end[0] + " " + this + " "
+					+ Lang.log_for_round_end[1]);
 			attack_roundEnd = 0;
 			defP_roundEnd = 0;
 			defM_roundEnd = 0;
@@ -127,6 +129,7 @@ abstract public class Character {
 		defense = false;
 		// Give Up off
 		giveUp = false;
+		giveUpSkills = false;
 		// Map's Assassin off
 		assassin = false;
 		// Any other things?
@@ -508,6 +511,15 @@ abstract public class Character {
 
 	public boolean isGiveUp() {
 		return giveUp;
+	}
+
+	protected void setGiveUpSkills(boolean b) {
+		Play.printlnLog(this + Lang.giveUpSkills);
+		giveUpSkills = b;
+	}
+
+	public boolean isGiveUpSkills() {
+		return giveUpSkills;
 	}
 
 	final public int attack(Character target) { // Normal Attack (c1->c2)

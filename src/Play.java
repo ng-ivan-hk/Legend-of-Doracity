@@ -131,26 +131,26 @@ public class Play extends JFrame {
 		/* Create card stack @formatter:off */
 		cards = new Stack<Card>();
 		// Push Equipment Cards
-		for (int i = 0; i < 5; i++) cards.push(new AdventurerSword());
-		for (int i = 0; i < 5; i++) cards.push(new ManaStudentWand());
-		for (int i = 0; i < 5; i++) cards.push(new FloatingShoes());
-		for (int i = 0; i < 5; i++) cards.push(new Gambeson());
-		for (int i = 0; i < 5; i++) cards.push(new AntiManaCloak());
-		for (int i = 0; i < 5; i++) cards.push(new HolyShield());
-		for (int i = 0; i < 50; i++) cards.push(new PhysicalField());
-		for (int i = 0; i < 50; i++) cards.push(new ManaField());
-		for (int i = 0; i < 5; i++) cards.push(new FieldAcademy());
-		for (int i = 0; i < 5; i++) cards.push(new WallDoracity());
+//		for (int i = 0; i < 5; i++) cards.push(new AdventurerSword());
+//		for (int i = 0; i < 5; i++) cards.push(new ManaStudentWand());
+//		for (int i = 0; i < 5; i++) cards.push(new FloatingShoes());
+//		for (int i = 0; i < 5; i++) cards.push(new Gambeson());
+//		for (int i = 0; i < 5; i++) cards.push(new AntiManaCloak());
+//		for (int i = 0; i < 5; i++) cards.push(new HolyShield());
+//		for (int i = 0; i < 50; i++) cards.push(new PhysicalField());
+//		for (int i = 0; i < 50; i++) cards.push(new ManaField());
+//		for (int i = 0; i < 5; i++) cards.push(new FieldAcademy());
+//		for (int i = 0; i < 5; i++) cards.push(new WallDoracity());
 		// Push Item Cards
 //		for (int i = 0; i < ITEM_MAX[1]; i++) cards.push(new HPPotion());
 //		for (int i = 0; i < ITEM_MAX[2]; i++) cards.push(new MPPotion());
 //		for (int i = 0; i < ITEM_MAX[3]; i++) cards.push(new SmokeBomb());
 		// Push Skill Cards
-//		for (int i = 0; i < SKILL_MAX.length; i++) {
-//			for (int j = 0; j < SKILL_MAX[i]; j++) {
-//				cards.push(new Skill(i + 1));
-//			}
-//		}
+		for (int i = 0; i < SKILL_MAX.length; i++) {
+			for (int j = 0; j < SKILL_MAX[i]; j++) {
+				cards.push(new Skill(i + 1));
+			}
+		}
 		// Shuffle randomly @formatter:on
 		Collections.shuffle(cards);
 
@@ -1672,10 +1672,13 @@ public class Play extends JFrame {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				@Override
 				public void run() {
+					if (!currentChar.isGiveUpSkills()) {
+						areaTemp.setEnableSkill(true);
+						areaTemp.castSkillButton.setEnabled(true);
+					}
 					areaTemp.attackButton.setEnabled(true);
-					areaTemp.castSkillButton.setEnabled(true);
 					areaTemp.passButton.setEnabled(true);
-					areaTemp.setEnableSkill(true);
+					
 				}
 			});
 
@@ -1704,6 +1707,15 @@ public class Play extends JFrame {
 		printlnLog(">>>" + Lang.stage_afterBattle + "<<<");
 		displayArea.setStage(Lang.stage_afterBattle);
 		currentStatus = Command.AFTER_BATTLE;
+		
+		// Check for FishBall's job 1 passive skill
+		FishBall maybeFishBall = (FishBall) player1.contains(FishBall.class);
+		if (maybeFishBall == null)
+			maybeFishBall = (FishBall) player2.contains(FishBall.class);
+		if (maybeFishBall != null && maybeFishBall.isLimit()) {
+			Play.printlnLog(Lang.fishball_limit2);
+			maybeFishBall.getPlayer().changeMP(2);
+		}
 
 		// Skills according to charList
 		for (int i = 0; i < charList.size(); i++) {
@@ -1727,7 +1739,9 @@ public class Play extends JFrame {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				@Override
 				public void run() {
-					areaTemp.castSkillButton.setEnabled(true);
+					if (!currentChar.isGiveUpSkills()) {
+						areaTemp.castSkillButton.setEnabled(true);
+					}
 					areaTemp.passButton.setEnabled(true);
 				}
 			});
