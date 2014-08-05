@@ -1,3 +1,5 @@
+import javax.swing.JLabel;
+
 public class Iron extends Character {
 
 	@Override
@@ -75,9 +77,56 @@ public class Iron extends Character {
 			activeSkills[0] = new CharSkill(this, true, 0, Command.DURING_BATTLE,
 					new CharSkillMethod() {
 
+						@SuppressWarnings("serial")
 						@Override
-						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Iron's 2ndJob active skill!");
+						public void skillMethod(Character currentChar, final Player opponent) {
+
+							// Override CharSelectPanel.add()
+							class CharSelectDialog extends CharSkill.CharSelectDialog {
+
+								public CharSelectDialog(Character currentChar, Player opponent,
+										TargetMethod method) {
+									super(currentChar, opponent, method);
+								}
+
+								@Override
+								// Need to override this so CharSelectPanel
+								// refers to here but not superclass
+								protected CharSelectPanel getCharSelectPanel(boolean b) {
+									return new CharSelectPanel(b);
+								}
+
+								class CharSelectPanel extends
+										CharSkill.CharSelectDialog.CharSelectPanel {
+
+									public CharSelectPanel(boolean listOpponent) {
+										super(listOpponent);
+									}
+
+									@Override
+									public void add(Character character) {
+										CharButton charButton = new CharButton(character);
+										if (!character.isDefense()) {
+											charButton.setEnabled(false);
+										}
+										add(charButton);
+									}
+
+								}
+
+							}
+
+							// Select Character
+							new CharSelectDialog(currentChar, opponent, new TargetMethod() {
+
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									target.setDefense(false);
+									attack(target);
+									target.setDefense(true);
+								}
+
+							});
 
 						}
 

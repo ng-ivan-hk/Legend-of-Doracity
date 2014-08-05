@@ -18,6 +18,7 @@ public class CharSkill {
 	/* CharSelectPanel for CharSkill */
 	@SuppressWarnings("serial")
 	public static class CharSelectDialog extends JDialog {
+		
 		private Character currentChar = null;
 		private Player opponent = null; // be null if list my character's only
 		private TargetMethod method = null;
@@ -34,7 +35,7 @@ public class CharSkill {
 			this.currentChar = currentChar;
 			this.opponent = opponent;
 			this.method = method;
-			add(new CharSelectPanel(true));
+			add(getCharSelectPanel(true));
 			setDialog();
 		}
 
@@ -48,7 +49,7 @@ public class CharSkill {
 			super((java.awt.Frame) null, true);
 			this.currentChar = currentChar;
 			this.method = method;
-			add(new CharSelectPanel(false));
+			add(getCharSelectPanel(false));
 			setDialog();
 		}
 
@@ -60,7 +61,13 @@ public class CharSkill {
 			setVisible(true);
 		}
 
+		protected CharSelectPanel getCharSelectPanel(boolean b) {
+			return new CharSelectPanel(b);
+		}
+
 		public class CharSelectPanel extends SuperCharSelectPanel {
+			private boolean listOpponent;
+			
 			/**
 			 * @param listOpponent
 			 *            Pass true if list opponent's characters, false if list
@@ -68,7 +75,12 @@ public class CharSkill {
 			 */
 			public CharSelectPanel(boolean listOpponent) {
 				setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+				this.listOpponent = listOpponent;
+				setCharButtons();
+			}
 
+			public void setCharButtons() {
+				
 				if (listOpponent) {
 					Character[] charTemp = opponent.getCharacters();
 					for (int i = 0; i < Play.CHAR_MAX; i++) {
