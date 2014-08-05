@@ -1,10 +1,7 @@
-public class HolyShield extends Equipment {
+public class PhysicalField extends Equipment {
 
-	/**
-	 * Card Number: 2
-	 */
-	public HolyShield() {
-		super(2, true, false, false, false, true, true);
+	public PhysicalField() {
+		super(12, false, false, false, true, true, true);
 	}
 
 	@Override
@@ -12,10 +9,8 @@ public class HolyShield extends Equipment {
 
 		Character[] charTemp = c.getPlayer().getCharacters();
 		for (int i = 0; i < charTemp.length; i++) {
-			charTemp[i].changeDefP(1, Character.FOR_EVER);
 			charTemp[i].changeDefM(1, Character.FOR_EVER);
 		}
-		
 	}
 
 	@Override
@@ -23,7 +18,6 @@ public class HolyShield extends Equipment {
 
 		Character[] charTemp = c.getPlayer().getCharacters();
 		for (int i = 0; i < charTemp.length; i++) {
-			charTemp[i].changeDefP(-1, Character.FOR_EVER);
 			charTemp[i].changeDefM(-1, Character.FOR_EVER);
 		}
 

@@ -145,6 +145,8 @@ public class Play extends JFrame {
 		for (int i = 0; i < 5; i++) cards.push(new Gambeson());
 		for (int i = 0; i < 5; i++) cards.push(new AntiManaCloak());
 		for (int i = 0; i < 5; i++) cards.push(new HolyShield());
+		for (int i = 0; i < 50; i++) cards.push(new PhysicalField());
+		for (int i = 0; i < 50; i++) cards.push(new ManaField());
 		for (int i = 0; i < 5; i++) cards.push(new FieldAcademy());
 		for (int i = 0; i < 5; i++) cards.push(new WallDoracity());
 		// Push Item Cards
@@ -1755,7 +1757,7 @@ public class Play extends JFrame {
 		}
 	}
 
-	protected void sortAllChars() {
+	private void sortAllChars() {
 		/* Reorder characters according to their speeds */
 		// Reorder the 10-chars list
 		Collections.sort(charList, charComparator);
