@@ -2,22 +2,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.QuadCurve2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -29,7 +23,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Stack;
-import java.util.concurrent.CountDownLatch;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -50,7 +43,6 @@ import javax.swing.JTextArea;
 import javax.swing.JToolTip;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
@@ -180,7 +172,8 @@ public class Play extends JFrame {
 
 		/* Set App Icon */
 		try {
-			setIconImage(new ImageIcon(Play.class.getResource("/resources/xander.png")).getImage());
+			setIconImage(new ImageIcon(Play.class.getResource("/resources/app_icon.png"))
+					.getImage().getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING));
 		} catch (NullPointerException e) {
 		}
 

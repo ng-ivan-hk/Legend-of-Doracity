@@ -15,7 +15,7 @@ public class Lang {
 	public final static String menu_option = "選項";
 	public final static String menu_help = "幫助";
 	public final static String menu_about = "關於";
-	public final static String menu_aboutInfo = "遊戲設計：烏龍茶<br>程式製作：古怪<br>程式協力：射手小朋友<br>角色圖片：蝶、山大、烏龍茶等";
+	public final static String menu_aboutInfo = "遊戲設計：烏龍茶<br>程式製作：古怪<br>程式協力：射手小朋友<br>角色圖片：蝶、山大、烏龍茶、淋琳";
 	public final static String menu_exit = "結束";
 
 	public final static String help_debug = "DEBUG說明";
