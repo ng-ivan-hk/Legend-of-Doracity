@@ -6,6 +6,8 @@ import javax.swing.JRadioButton;
 
 public class Phoebell extends Character {
 
+	private boolean reduceDefP = false; // for job 1 active skill
+
 	@Override
 	public void jobChangeExtra() {
 		if (getPlayer().contains(Livia.class) != null) {
@@ -90,8 +92,77 @@ public class Phoebell extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Phoebell's 1stJob active skill!");
+							
+							// Override CharSelectPanel.setCharButtons()
+							@SuppressWarnings("serial")
+							class CharSelectDialog extends CharSkill.CharSelectDialog {
 
+								public CharSelectDialog(Character currentChar, Player opponent,
+										TargetMethod method) {
+									super(currentChar, opponent, method);
+								}
+
+								@Override
+								// Need to override this so CharSelectPanel
+								// refers to here but not superclass
+								protected CharSelectPanel getCharSelectPanel(boolean b) {
+									return new CharSelectPanel(b);
+								}
+
+								class CharSelectPanel extends
+										CharSkill.CharSelectDialog.CharSelectPanel {
+
+									public CharSelectPanel(boolean listOpponent) {
+										super(listOpponent);
+									}
+
+									@Override
+									public void setCharButtons() {
+										super.setCharButtons();
+										ActionListener l = new ActionListener() {
+											@Override
+											public void actionPerformed(ActionEvent evt) {
+												if (evt.getActionCommand() == "Physical") {
+													reduceDefP = true;
+												} else {
+													reduceDefP = false;
+												}
+											}
+										};
+										// Create Radio Buttons
+										JRadioButton physicalButton = new JRadioButton(Lang.defP);
+										physicalButton.setActionCommand("Physical");
+										physicalButton.addActionListener(l);
+										physicalButton.setSelected(true);
+										JRadioButton manaButton = new JRadioButton(Lang.defM);
+										manaButton.setActionCommand("Mana");
+										manaButton.addActionListener(l);
+										// Group the Buttons
+										ButtonGroup group = new ButtonGroup();
+										group.add(physicalButton);
+										group.add(manaButton);
+										// Add to panel
+										add(physicalButton);
+										add(manaButton);
+									}
+
+								}
+
+							}
+
+							// Select Character
+							new CharSelectDialog(currentChar, opponent, new TargetMethod() {
+
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									if (reduceDefP) {
+										target.changeDefP(-1, FOR_ROUND_END);
+									} else {
+										target.changeDefM(-1, FOR_ROUND_END);
+									}
+								}
+
+							});
 						}
 
 					}, 3);
