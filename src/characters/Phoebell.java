@@ -6,7 +6,10 @@ import javax.swing.JRadioButton;
 
 public class Phoebell extends Character {
 
-	private boolean reduceDefP = false; // for job 1 active skill
+	/**
+	 * For Job 1 active skill: if false, reduce DefM (Mana Defense)
+	 */
+	private boolean reduceDefP = true;
 
 	@Override
 	public void jobChangeExtra() {

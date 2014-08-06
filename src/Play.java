@@ -1397,8 +1397,8 @@ public class Play extends JFrame {
 			try {
 				stageDrawCards();
 				stagePrepare();
-				//stageBeforeBattle();
-				//stageDuringBattle();
+				stageBeforeBattle();
+				stageDuringBattle();
 				stageAfterBattle();
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
