@@ -30,8 +30,8 @@ public class Help extends JFrame {
 		add(BorderLayout.WEST, new TreePanel());
 		add(BorderLayout.CENTER, contentPane = new ContentPane());
 		pack();
-		setMinimumSize(getBounds().getSize());
-		setSize(new Dimension(800,getWidth()));
+		setMinimumSize(new Dimension(400, 100));
+		setSize(new Dimension(900, getWidth()));
 		WindowHandler.locateCenter(this);
 		setVisible(true);
 	}
