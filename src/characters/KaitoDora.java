@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Random;
+
 public class KaitoDora extends Character {
 
 	public KaitoDora(Player player) {
@@ -6,7 +9,6 @@ public class KaitoDora extends Character {
 
 	@Override
 	protected void setCharacter() {
-		// TODO Auto-generated method stub
 		if (isFirstJob()) {
 
 			setValues(true, SUPPORT, true, 3, 2, 2, 2, true);
@@ -27,8 +29,12 @@ public class KaitoDora extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using KaitoDora's 1stJob active skill!");
-
+							ArrayList<Card> opponentHandCards = opponent.getHandCards();
+							int randomIndex = new Random().nextInt(opponentHandCards.size());
+							Card randomCard = opponentHandCards.get(randomIndex);
+							Play.printlnLog(KaitoDora.this + Lang.kaitodora_steal + randomCard);
+							getPlayer().addCard(randomCard);
+							getPlayer().getOpponent().removeCard(randomCard);
 						}
 
 					}, 3);

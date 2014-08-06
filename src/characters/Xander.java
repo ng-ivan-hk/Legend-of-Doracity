@@ -42,8 +42,7 @@ public class Xander extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					Play.printlnLog("Using Xander's 2ndJob passive skill!");
-
+					// COMPLETED
 				}
 
 			}, 0);

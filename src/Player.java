@@ -162,12 +162,16 @@ public class Player {
 		handCards.add(card);
 	}
 
-	public void removeCard(int index) {
-		handCards.remove(index - 1);
-	}
-
 	public void removeCard(Card card) {
 		handCards.remove(card);
+		if (handCards.size() == 0) {
+			// Check for Xander's job 2 passive skill
+			Xander maybeXander = (Xander) contains(Xander.class);
+			if (maybeXander != null && !maybeXander.isFirstJob()) {
+				Play.printlnLog(Lang.xander_manaForming);
+				changeMP(2);
+			}
+		}
 	}
 
 	public void listStatus() {
@@ -270,7 +274,7 @@ public class Player {
 		return -1;
 	}
 
-	protected ArrayList<Card> getHandCards() {
+	public ArrayList<Card> getHandCards() {
 		return handCards;
 	}
 

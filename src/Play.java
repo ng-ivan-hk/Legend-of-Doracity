@@ -131,20 +131,20 @@ public class Play extends JFrame {
 		/* Create card stack @formatter:off */
 		cards = new Stack<Card>();
 		// Push Equipment Cards
-//		for (int i = 0; i < 5; i++) cards.push(new AdventurerSword());
-//		for (int i = 0; i < 5; i++) cards.push(new ManaStudentWand());
-//		for (int i = 0; i < 5; i++) cards.push(new FloatingShoes());
-//		for (int i = 0; i < 5; i++) cards.push(new Gambeson());
-//		for (int i = 0; i < 5; i++) cards.push(new AntiManaCloak());
-//		for (int i = 0; i < 5; i++) cards.push(new HolyShield());
-//		for (int i = 0; i < 50; i++) cards.push(new PhysicalField());
-//		for (int i = 0; i < 50; i++) cards.push(new ManaField());
-//		for (int i = 0; i < 5; i++) cards.push(new FieldAcademy());
-//		for (int i = 0; i < 5; i++) cards.push(new WallDoracity());
+		for (int i = 0; i < 5; i++) cards.push(new AdventurerSword());
+		for (int i = 0; i < 5; i++) cards.push(new ManaStudentWand());
+		for (int i = 0; i < 5; i++) cards.push(new FloatingShoes());
+		for (int i = 0; i < 5; i++) cards.push(new Gambeson());
+		for (int i = 0; i < 5; i++) cards.push(new AntiManaCloak());
+		for (int i = 0; i < 5; i++) cards.push(new HolyShield());
+		for (int i = 0; i < 50; i++) cards.push(new PhysicalField());
+		for (int i = 0; i < 50; i++) cards.push(new ManaField());
+		for (int i = 0; i < 5; i++) cards.push(new FieldAcademy());
+		for (int i = 0; i < 5; i++) cards.push(new WallDoracity());
 		// Push Item Cards
-//		for (int i = 0; i < ITEM_MAX[1]; i++) cards.push(new HPPotion());
-//		for (int i = 0; i < ITEM_MAX[2]; i++) cards.push(new MPPotion());
-//		for (int i = 0; i < ITEM_MAX[3]; i++) cards.push(new SmokeBomb());
+		for (int i = 0; i < ITEM_MAX[1]; i++) cards.push(new HPPotion());
+		for (int i = 0; i < ITEM_MAX[2]; i++) cards.push(new MPPotion());
+		for (int i = 0; i < ITEM_MAX[3]; i++) cards.push(new SmokeBomb());
 		// Push Skill Cards
 		for (int i = 0; i < SKILL_MAX.length; i++) {
 			for (int j = 0; j < SKILL_MAX[i]; j++) {
@@ -1170,9 +1170,8 @@ public class Play extends JFrame {
 							
 							// Update Area
 							repaint();
-							updateArea();
-							player1Area.updateHPMP();
-							player2Area.updateHPMP();
+							player1Area.updateArea();
+							player2Area.updateArea();
 							displayArea.battleField.updateAllLabels();
 
 							// Pass
@@ -1398,8 +1397,8 @@ public class Play extends JFrame {
 			try {
 				stageDrawCards();
 				stagePrepare();
-				stageBeforeBattle();
-				stageDuringBattle();
+				//stageBeforeBattle();
+				//stageDuringBattle();
 				stageAfterBattle();
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
