@@ -49,7 +49,17 @@ public class Sasa extends Character {
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
 							Play.printlnLog("Using Sasa's 2ndJob passive skill!");
+						
+							
+							new CharSkill.CardSelectDialog(getPlayer(), new TargetMethod() {
 
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									//TO_DO
+								}
+
+							});
+							
 						}
 
 					}, 0);
@@ -60,7 +70,17 @@ public class Sasa extends Character {
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
 							Play.printlnLog("Using Sasa's 2ndJob active skill!");
+							
+							
+							new CharSkill.CardSelectDialog(getPlayer(), new TargetMethod() {
 
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									//TO_DO
+								}
+
+							});
+							
 						}
 
 					}, 0);
