@@ -22,7 +22,7 @@ public class Tea extends Character {
 	@Override
 	public void gameStart() {
 		// Find out how many girls are there in total
-		final ArrayList<Character> charList = Play.charList;
+		final ArrayList<Character> charList = Play.getCharList();
 		for (int i = 0; i < charList.size(); i++) {
 			if (!charList.get(i).isMale()) {
 				noOfGirls++;

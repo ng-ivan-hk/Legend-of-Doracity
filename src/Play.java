@@ -94,7 +94,7 @@ public class Play extends JFrame {
 	private Player player2 = null; // Player who attacks next
 	private Player[] players = null;
 	private static Stack<Card> cards = null; // card stack on the table
-	protected static ArrayList<Character> charList = null;
+	private static ArrayList<Character> charList = null;
 	private Character currentChar = null;
 	private int round = 0;
 	private int currentStatus = 0; // For checking occasion in battle
@@ -348,7 +348,7 @@ public class Play extends JFrame {
 		private JLabel stageLabel = null;
 		private JLabel cardsLeft = null;
 
-		protected BattleField battleField = null;
+		private BattleField battleField = null;
 
 		private BottomField bottomField = null;
 		private JTextArea logArea = null;
@@ -847,7 +847,7 @@ public class Play extends JFrame {
 
 	}
 
-	protected class PlayerArea extends JPanel {
+	private class PlayerArea extends JPanel {
 
 		private Player player = null;
 		private JLabel HPmeter = null;
@@ -855,9 +855,9 @@ public class Play extends JFrame {
 		private AttackButton attackButton = null;
 		private CastSkillButton castSkillButton = null;
 		private JobChangeButton jobChangeButton = null;
-		protected DrawButton drawButton = null;
-		protected PassButton passButton = null;
-		protected JPanel cardArea = null;
+		private DrawButton drawButton = null;
+		private PassButton passButton = null;
+		private JPanel cardArea = null;
 
 		public PlayerArea(Player player) {
 			this.player = player;
@@ -995,6 +995,10 @@ public class Play extends JFrame {
 		public void setJobChangeButtonText() {
 			jobChangeButton.setToolTipText(Lang.jobChangeInfo[0] + currentChar.getJobChangeMP()
 					+ Lang.jobChangeInfo[1]);
+		}
+		
+		public Player getPlayer() {
+			return player;
 		}
 
 		public class AttackButton extends JButton implements ActionListener {
@@ -1295,8 +1299,8 @@ public class Play extends JFrame {
 
 		}
 
-		protected class CardButton extends JButton implements ActionListener {
-			protected Card card = null;
+		private class CardButton extends JButton implements ActionListener {
+			private Card card = null;
 
 			public CardButton(Card card) {
 				this.card = card;
@@ -1344,11 +1348,12 @@ public class Play extends JFrame {
 					
 					Item item = (Item) card;
 					item.useItem(player);
-					
+
 				} else if (card instanceof Skill) {
-					
+
 					Skill skill = (Skill) card;
-					
+					// TODO
+
 				}
 
 				
@@ -1439,8 +1444,19 @@ public class Play extends JFrame {
 				SwingUtilities.invokeAndWait(new Runnable() {
 					@Override
 					public void run() {
-						playerAreaTemp.drawButton.setDrawCard(DRAW_CARD_MAX);
+						
+						// Check for Butterfly's job 2 passive skill
+						Butterfly maybeButterfly = (Butterfly) playerAreaTemp.getPlayer().contains(
+								Butterfly.class);
+						if (maybeButterfly != null && !maybeButterfly.isFirstJob()) {
+							Play.printlnLog(maybeButterfly + Lang.butterfly_wealth);
+							playerAreaTemp.drawButton.setDrawCard(DRAW_CARD_MAX + 1);
+						} else {
+							playerAreaTemp.drawButton.setDrawCard(DRAW_CARD_MAX);
+						}
+
 						playerAreaTemp.passButton.setEnabled(true);
+						
 					}
 				});
 
@@ -1811,6 +1827,15 @@ public class Play extends JFrame {
 	 */
 	public static void printlnLog(Object object) {
 		printLog("\n" + object);
+	}
+	
+	/**
+	 * Usually called by CharSkill.
+	 * 
+	 * @return Character List (Sorted)
+	 */
+	public static ArrayList<Character> getCharList() {
+		return charList;
 	}
 
 	/**

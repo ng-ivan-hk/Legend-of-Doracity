@@ -5,7 +5,7 @@ public class Map extends Character {
 	@Override
 	public void jobChangeExtra() {
 		if (!isFirstJob()) { // Siscon: Any female character?
-			final ArrayList<Character> charList = Play.charList;
+			final ArrayList<Character> charList = Play.getCharList();
 			for (int i = 0; i < charList.size(); i++) {
 				if (!charList.get(i).isMale()) {
 					Play.printlnLog(Lang.map_siscon);

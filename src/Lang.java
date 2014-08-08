@@ -308,7 +308,7 @@ public class Lang {
 			// 12. Butterfly
 			{
 					// Passive
-					{ { "富貴", "摸牌階段可獲得兩張手牌" } },
+					{ { "富貴", "摸牌數量額外+1" } },
 					// Active
 					{ { "揮霍", "使用一張祭品，攻擊+2" } } },
 			// 13. Feather
@@ -604,6 +604,7 @@ public class Lang {
 	public final static String xander_wall_end = "山大的防壁技能效果完結";
 	public final static String xander_manaForming = "山大的魔凝技能發動：沒手牌時+2MP";
 	// 12. Buttefly
+	public final static String butterfly_wealth = "的富貴技能發動：摸牌數量+1";
 	public final static String butterfly_squander_end = "七色辭蝶的揮霍技能效果完結";
 	// 14. Kurokawa
 	public final static String kurokawa_strong_end = "黑川米古的剛強技能效果完結";
