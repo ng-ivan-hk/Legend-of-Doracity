@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
@@ -145,9 +147,10 @@ public class Preload extends JPanel {
 			return array;
 		}
 
-		private class CharButton extends JToggleButton implements ActionListener {
+		private class CharButton extends JToggleButton implements ActionListener, MouseListener {
 			private int number;
 			private BufferedImage charImage = null;
+			private boolean mouseOver = false;
 
 			public CharButton(int number) {
 				this.number = number;
@@ -155,6 +158,7 @@ public class Preload extends JPanel {
 				setText(Lang.CharNames[number]);
 				setCharImage();
 				addActionListener(this);
+				addMouseListener(this);
 			}
 
 			@Override
@@ -196,19 +200,48 @@ public class Preload extends JPanel {
 				}
 				return imageURL;
 			}
+			
 
 			@Override
 			public void paintComponent(Graphics g) {
 				g.drawImage(charImage, 0, 0, null);
 				if (!isSelected()) {
-					g.setColor(new Color(0, 0, 0, 150));
+					if (!mouseOver) {
+						g.setColor(new Color(0, 0, 0, 150));
+					} else {
+						g.setColor(new Color(0, 0, 0, 50));
+					}
 					g.fillRect(0, 0, getWidth(), getHeight());
-					g.setColor(Color.LIGHT_GRAY);
+					g.setColor(mouseOver ? Color.WHITE : Color.LIGHT_GRAY);
 				} else {
 					g.setColor(Color.BLACK);
 				}
 				g.setFont(new Font(Lang.font, Font.PLAIN, 15));
 				g.drawString(Lang.CharNames[number], 5, 15);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				mouseOver = true;
+				repaint();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				mouseOver = false;
+				repaint();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
 			}
 		}
 	}
