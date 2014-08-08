@@ -5,8 +5,64 @@ public class Herohim extends Character {
 	@Override
 	public void roundEndExtra() {
 		if (doll) {
-			//TODO: ???
 			doll = false;
+			Play.printlnLog(this + Lang.herohim_doll_end);
+		}
+	}
+	
+	// For job 1 active skill
+
+	@Override
+	public String toString() {
+		if (doll) {
+			return super.toString() + Lang.herohim_doll_toString;
+		} else {
+			return super.toString();
+		}
+	}
+	
+	@Override
+	public String getTitle() {
+		if (doll) {
+			return "";
+		} else {
+			return super.getTitle();
+		}
+	}
+	
+	@Override
+	public boolean isPhysical() {
+		if (doll) {
+			return false;
+		} else {
+			return super.isPhysical();
+		}
+	}
+
+	@Override
+	public int getAttack() {
+		if (doll) {
+			return 5;
+		} else {
+			return super.getAttack();
+		}
+	}
+
+	@Override
+	public int getDefP() {
+		if (doll) {
+			return 2;
+		} else {
+			return super.getDefP();
+		}
+	}
+
+	@Override
+	public int getDefM() {
+		if (doll) {
+			return 3;
+		} else {
+			return super.getDefM();
 		}
 	}
 	
@@ -38,9 +94,7 @@ public class Herohim extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Herohim's 1stJob active skill!");
 							doll = true;
-							//TODO: ???
 						}
 
 					}, 3);
