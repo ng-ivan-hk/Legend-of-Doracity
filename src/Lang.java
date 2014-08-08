@@ -477,6 +477,7 @@ public class Lang {
 			"吸取相當於自身攻擊的HP並回復<br><font color=red>需要5MP<br>只限法師</font>" };
 	
 	public final static String availableJob = "可用職業：";
+	public final static String consume = "消耗";
 
 
 	/* Properties */

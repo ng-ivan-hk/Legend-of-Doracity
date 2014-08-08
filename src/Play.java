@@ -1722,15 +1722,6 @@ public class Play extends JFrame {
 		printlnLog(">>>" + Lang.stage_afterBattle + "<<<");
 		displayArea.setStage(Lang.stage_afterBattle);
 		currentStatus = Command.AFTER_BATTLE;
-		
-		// Check for FishBall's job 1 passive skill
-		FishBall maybeFishBall = (FishBall) player1.contains(FishBall.class);
-		if (maybeFishBall == null)
-			maybeFishBall = (FishBall) player2.contains(FishBall.class);
-		if (maybeFishBall != null && maybeFishBall.isLimit()) {
-			Play.printlnLog(Lang.fishball_limit2);
-			maybeFishBall.getPlayer().changeMP(2);
-		}
 
 		// Skills according to charList
 		for (int i = 0; i < charList.size(); i++) {
@@ -1760,6 +1751,17 @@ public class Play extends JFrame {
 					areaTemp.passButton.setEnabled(true);
 				}
 			});
+			
+			// Check for FishBall's job 1 passive skill
+			if (currentChar instanceof FishBall) {
+				FishBall fishBall = (FishBall) currentChar;
+				if (fishBall.isLimit()) {
+					Play.printlnLog(Lang.fishball_limit2);
+					fishBall.getPlayer().changeMP(2);
+					player1Area.updateHPMP();
+					player2Area.updateHPMP();
+				}
+			}
 
 			synchronized (this) {
 				this.wait();

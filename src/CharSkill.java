@@ -241,7 +241,8 @@ public class CharSkill {
 
 	public String getInfo() {
 		return (character.isFirstJob() ? Lang.CharSkills1 : Lang.CharSkills2)[character.getNumber()][active ? 1
-				: 0][number][1];
+				: 0][number][1]
+				+ (requiredMP == 0 ? "" : "(" + Lang.consume + requiredMP + "MP)");
 	}
 
 }
