@@ -1,4 +1,24 @@
 public class Cloud extends Character {
+	
+	private boolean focus = false;
+
+	@Override
+	public void roundEndExtra() {
+		if (focus) {
+			focus = false;
+		}
+	}
+	
+	@Override
+	public int getDefM() {
+		if (focus) {
+			return 0;
+		} else {
+			return super.getDefM();
+		}
+	}
+	
+	/* === Above are Cloud's unique fields and methods === */
 
 	public Cloud(Player player) {
 		super(player, 17);
@@ -52,8 +72,8 @@ public class Cloud extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Cloud's 2ndJob active skill!");
-
+							focus = true;
+							changeAttack(3, FOR_ROUND_END);
 						}
 
 					}, 0);
