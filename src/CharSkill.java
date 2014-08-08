@@ -124,7 +124,7 @@ public class CharSkill {
 	@SuppressWarnings("serial")
 	public static class CardSelectDialog extends JDialog {
 		private Player player = null;
-		private TargetMethod method = null;
+		protected TargetMethod method = null;
 
 		public CardSelectDialog(Player player, TargetMethod method) {
 			super((java.awt.Frame) null, true);
@@ -132,11 +132,15 @@ public class CharSkill {
 			this.method = method;
 
 			setTitle(Lang.cardSelection);
-			add(new CardSelectPanel()); // TODO: JScrollPane?
+			add(getCardSelectPanel()); // TODO: JScrollPane?
 			pack();
 			WindowHandler.locateCenter(this);
 			setResizable(false);
 			setVisible(true);
+		}
+		
+		protected CardSelectPanel getCardSelectPanel() {
+			return new CardSelectPanel();
 		}
 
 		public class CardSelectPanel extends JPanel {
@@ -147,12 +151,16 @@ public class CharSkill {
 				ArrayList<Card> cards = player.getHandCards();
 
 				for (int i = cards.size() - 1; i >= 0; i--) {
-					add(new CardButton(cards.get(i)));
+					add(getCardButton(cards.get(i)));
 				}
+			}
+			
+			protected CardButton getCardButton(Card card) {
+				return new CardButton(card);
 			}
 
 			public class CardButton extends JButton implements ActionListener {
-				private Card card = null;
+				protected Card card = null;
 
 				public CardButton(Card card) {
 					this.card = card;

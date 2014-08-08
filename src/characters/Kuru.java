@@ -1,3 +1,8 @@
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 public class Kuru extends Character {
 
 	public Kuru(Player player) {
@@ -52,7 +57,72 @@ public class Kuru extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Kuru's 2ndJob active skill!");
+
+							// Override CardSelectPanel.actionPerformed()
+							@SuppressWarnings("serial")
+							class CardSelectDialog extends CharSkill.CardSelectDialog {
+
+								public CardSelectDialog(Player player, TargetMethod method) {
+									super(player, method);
+								}
+								
+								@Override
+								protected CardSelectPanel getCardSelectPanel() {
+									return new CardSelectPanel();
+								}
+								
+								class CardSelectPanel extends
+										CharSkill.CardSelectDialog.CardSelectPanel {
+									@Override
+									protected CardButton getCardButton(Card card) {
+										return new CardButton(card);
+									}
+
+									class CardButton extends
+											CharSkill.CardSelectDialog.CardSelectPanel.CardButton {
+
+										public CardButton(Card card) {
+											super(card);
+										}
+
+										@Override
+										public void actionPerformed(ActionEvent evt) {
+											CardSelectDialog.this.dispose();
+											Play.draw(getPlayer());
+
+											ArrayList<Card> handCards = getPlayer().getHandCards();
+											Card newestCard = handCards.get(handCards.size() - 1);
+
+											String message = Lang.kuru_gambling_result + newestCard
+													+ "\n";
+
+											if (newestCard instanceof Equipment) {
+												message += Lang.kuru_gambling_equipment;
+												JOptionPane.showMessageDialog(this, message);
+											} else {
+												message += Lang.kuru_gambling_notEquipment;
+												JOptionPane.showMessageDialog(this, message);
+												handCards.remove(card);
+												handCards.remove(newestCard);
+											}
+
+											Play.printlnLog(message);
+										}
+
+									}
+								}
+
+							}
+							
+							// Select a Card
+							new CardSelectDialog(getPlayer(), new TargetMethod() {
+
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									// This will not be called...
+								}
+
+							});
 
 						}
 

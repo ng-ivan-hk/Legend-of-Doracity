@@ -609,6 +609,10 @@ public class Lang {
 	public final static String butterfly_squander_end = "七色辭蝶的揮霍技能效果完結";
 	// 14. Kurokawa
 	public final static String kurokawa_strong_end = "黑川米古的剛強技能效果完結";
+	// 19. Kuru
+	public final static String kuru_gambling_result = "抽到的卡是：";
+	public final static String kuru_gambling_equipment = "此卡乃裝備卡，因此兩張卡均得以保留";
+	public final static String kuru_gambling_notEquipment = "此卡並非裝備卡，因此兩張卡均無法獲得";
 	// 22. KaitoDora
 	public final static String kaitodora_steal = "偷竊了";
 	// 24. WindSound

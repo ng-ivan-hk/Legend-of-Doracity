@@ -432,7 +432,7 @@ abstract public class Character {
 
 				this.equipment = e;
 				Play.printlnLog(this + " " + Lang.log_equip + " " + e);
-				e.equipmentEffect(this);
+				e.useEquipment(this);
 				
 			}
 
@@ -460,7 +460,7 @@ abstract public class Character {
 			this.equipment = e;
 			if (e != null) {
 				Play.printlnLog(this + " " + Lang.log_equip + " " + e);
-				e.equipmentEffect(this);
+				e.useEquipment(this);
 			}
 		}
 		

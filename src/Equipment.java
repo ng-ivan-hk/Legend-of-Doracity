@@ -97,6 +97,11 @@ abstract public class Equipment extends Card {
 		}
 	}
 
+	final public void useEquipment(Character c) {
+		// Really equip!!!
+		equipmentEffect(c);
+	}
+
 	/**
 	 * Actions to be performed when equipping this Equipment. Should be only
 	 * called by {@link Character#setEquipment(Equipment)}.
