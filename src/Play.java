@@ -60,8 +60,8 @@ public class Play extends JFrame {
 	/* Constant Values */
 	public final static int CHAR_MAX = 5; // No. of char per player
 	public final static int DRAW_CARD_MAX = 3; // draw ? hand cards each turn
-	public final static int[] EQUIPMENT_MAX = new int[] { 0, 3, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1 };
+	public final static int[] EQUIPMENT_MAX = new int[] { 0, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1,
+			1, 3, 1, 1, 1, 3, 1, 1, 3, 3, 3, 1, 1 };
 	public final static int[] ITEM_MAX = new int[] { 0, 17, 17, 6 };
 	public final static int[] SKILL_MAX = new int[] { 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 5,
 			0, 5, 2, 2 };
@@ -130,17 +130,33 @@ public class Play extends JFrame {
 
 		/* Create card stack @formatter:off */
 		cards = new Stack<Card>();
-		// Push Equipment Cards
-		for (int i = 0; i < 5; i++) cards.push(new AdventurerSword());
-		for (int i = 0; i < 5; i++) cards.push(new ManaStudentWand());
-		for (int i = 0; i < 5; i++) cards.push(new FloatingShoes());
-		for (int i = 0; i < 5; i++) cards.push(new Gambeson());
-		for (int i = 0; i < 5; i++) cards.push(new AntiManaCloak());
-		for (int i = 0; i < 5; i++) cards.push(new HolyShield());
-		for (int i = 0; i < 50; i++) cards.push(new PhysicalField());
-		for (int i = 0; i < 50; i++) cards.push(new ManaField());
-		for (int i = 0; i < 5; i++) cards.push(new FieldAcademy());
-		for (int i = 0; i < 5; i++) cards.push(new WallDoracity());
+		// Push Equipment Cards		
+		for (int i = 0; i < EQUIPMENT_MAX[1]; i++) cards.push(new KnightArmor());
+		for (int i = 0; i < EQUIPMENT_MAX[2]; i++) cards.push(new HolyShield());
+		for (int i = 0; i < EQUIPMENT_MAX[3]; i++) cards.push(new TwinDancer());
+		for (int i = 0; i < EQUIPMENT_MAX[4]; i++) cards.push(new MobilityBoots());
+		for (int i = 0; i < EQUIPMENT_MAX[5]; i++) cards.push(new FeatherBow());
+		for (int i = 0; i < EQUIPMENT_MAX[6]; i++) cards.push(new Sniper());
+		for (int i = 0; i < EQUIPMENT_MAX[7]; i++) cards.push(new WitchHat());
+		for (int i = 0; i < EQUIPMENT_MAX[8]; i++) cards.push(new IceWand());
+		for (int i = 0; i < EQUIPMENT_MAX[9]; i++) cards.push(new FireWand());
+		for (int i = 0; i < EQUIPMENT_MAX[10]; i++) cards.push(new LightningWand());
+		for (int i = 0; i < EQUIPMENT_MAX[11]; i++) cards.push(new RescueSuit());
+		for (int i = 0; i < EQUIPMENT_MAX[12]; i++) cards.push(new PhysicalField());
+		for (int i = 0; i < EQUIPMENT_MAX[13]; i++) cards.push(new ManaField());
+		for (int i = 0; i < EQUIPMENT_MAX[14]; i++) cards.push(new ManaStone());
+		for (int i = 0; i < EQUIPMENT_MAX[15]; i++) cards.push(new AdventurerSword());
+		for (int i = 0; i < EQUIPMENT_MAX[16]; i++) cards.push(new VampireSickle());
+		for (int i = 0; i < EQUIPMENT_MAX[17]; i++) cards.push(new TruthBlade());
+		for (int i = 0; i < EQUIPMENT_MAX[18]; i++) cards.push(new PriorityClaw());
+		for (int i = 0; i < EQUIPMENT_MAX[19]; i++) cards.push(new ManaStudentWand());
+		for (int i = 0; i < EQUIPMENT_MAX[20]; i++) cards.push(new WizardRobe());
+		for (int i = 0; i < EQUIPMENT_MAX[21]; i++) cards.push(new HealingWand());
+		for (int i = 0; i < EQUIPMENT_MAX[22]; i++) cards.push(new FloatingShoes());
+		for (int i = 0; i < EQUIPMENT_MAX[23]; i++) cards.push(new Gambeson());
+		for (int i = 0; i < EQUIPMENT_MAX[24]; i++) cards.push(new AntiManaCloak());
+		for (int i = 0; i < EQUIPMENT_MAX[25]; i++) cards.push(new FieldAcademy());
+		for (int i = 0; i < EQUIPMENT_MAX[26]; i++) cards.push(new WallDoracity());
 		// Push Item Cards
 		for (int i = 0; i < ITEM_MAX[1]; i++) cards.push(new HPPotion());
 		for (int i = 0; i < ITEM_MAX[2]; i++) cards.push(new MPPotion());

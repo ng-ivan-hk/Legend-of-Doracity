@@ -24,7 +24,7 @@ public class Help extends JFrame {
 
 		try {
 			setIconImage(new ImageIcon(Play.class.getResource("/resources/app_help.png"))
-					.getImage().getScaledInstance(16, 16, Image.SCALE_AREA_AVERAGING));
+					.getImage().getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING));
 		} catch (NullPointerException e) {
 		}
 		add(BorderLayout.WEST, new TreePanel());
