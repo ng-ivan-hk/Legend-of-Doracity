@@ -1,4 +1,3 @@
-
 public class WitchHat extends Equipment {
 
 	/**
@@ -17,8 +16,6 @@ public class WitchHat extends Equipment {
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		//completed
-	
 
 	}
 

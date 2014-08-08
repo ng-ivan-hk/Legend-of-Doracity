@@ -1,4 +1,3 @@
-
 public class LightningWand extends Equipment {
 
 	/**
@@ -12,14 +11,12 @@ public class LightningWand extends Equipment {
 	public void equipmentEffect(Character c) {
 
 		c.changeAttack(1, Character.FOR_EQUIPMENT);
-		
+
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		//completed
-	
-
+		// COMPLETED
 	}
 
 }

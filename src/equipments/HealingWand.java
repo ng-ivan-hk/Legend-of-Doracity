@@ -1,4 +1,3 @@
-
 public class HealingWand extends Equipment {
 
 	/**
@@ -12,15 +11,13 @@ public class HealingWand extends Equipment {
 	public void equipmentEffect(Character c) {
 
 		c.changeAttack(1, Character.FOR_EQUIPMENT);
-		c.changeDefP(1, Character.FOR_EQUIPMENT);
-		
+		c.changeDefP(2, Character.FOR_EQUIPMENT);
+
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		//completed
-	
-
+		// COMPLETED
 	}
 
 }

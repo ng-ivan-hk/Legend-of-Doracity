@@ -1,4 +1,3 @@
-
 public class FireWand extends Equipment {
 
 	/**
@@ -10,16 +9,12 @@ public class FireWand extends Equipment {
 
 	@Override
 	public void equipmentEffect(Character c) {
-
 		c.changeAttack(1, Character.FOR_EQUIPMENT);
-		
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		//completed
-	
-
+		// COMPLETED
 	}
 
 }

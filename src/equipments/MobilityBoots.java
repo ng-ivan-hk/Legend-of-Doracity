@@ -1,4 +1,3 @@
-
 public class MobilityBoots extends Equipment {
 
 	/**
@@ -12,14 +11,12 @@ public class MobilityBoots extends Equipment {
 	public void equipmentEffect(Character c) {
 
 		c.changeSpeed(2, Character.FOR_EQUIPMENT);
-		
+
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		//completed
-	
-
+		// COMPLETED
 	}
 
 }

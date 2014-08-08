@@ -1,4 +1,3 @@
-
 public class RescueSuit extends Equipment {
 
 	/**
@@ -17,9 +16,7 @@ public class RescueSuit extends Equipment {
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		//completed
-	
-
+		// COMPLETED
 	}
 
 }

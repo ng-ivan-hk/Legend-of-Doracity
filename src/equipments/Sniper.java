@@ -1,4 +1,3 @@
-
 public class Sniper extends Equipment {
 
 	/**
@@ -16,9 +15,7 @@ public class Sniper extends Equipment {
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		//completed
-	
-
+		// COMPLETED
 	}
 
 }

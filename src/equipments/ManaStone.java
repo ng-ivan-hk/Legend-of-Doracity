@@ -1,4 +1,3 @@
-
 public class ManaStone extends Equipment {
 
 	/**
@@ -11,14 +10,11 @@ public class ManaStone extends Equipment {
 	@Override
 	public void equipmentEffect(Character c) {
 
-		
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		//completed
-	
-
+		// COMPLETED
 	}
 
 }

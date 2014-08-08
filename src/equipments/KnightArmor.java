@@ -1,4 +1,3 @@
-
 public class KnightArmor extends Equipment {
 
 	/**
@@ -12,14 +11,12 @@ public class KnightArmor extends Equipment {
 	public void equipmentEffect(Character c) {
 
 		c.changeDefP(2, Character.FOR_EQUIPMENT);
-		
+
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-
-		//completed
-
+		// COMPLETED
 	}
 
 }

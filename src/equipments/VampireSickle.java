@@ -1,4 +1,3 @@
-
 public class VampireSickle extends Equipment {
 
 	/**
@@ -11,13 +10,10 @@ public class VampireSickle extends Equipment {
 	@Override
 	public void equipmentEffect(Character c) {
 
-		
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		//completed
-	
 
 	}
 
