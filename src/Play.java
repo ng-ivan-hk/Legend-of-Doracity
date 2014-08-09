@@ -1520,6 +1520,13 @@ public class Play extends JFrame {
 				casterMP++;
 				Play.printlnLog(Lang.shirogane_resonance);
 			}
+			
+			// Check for Kuru's job 1 passive skill: Bad Intention
+			Kuru maybeKuru = (Kuru) players[p].contains(Kuru.class);
+			if (maybeKuru != null && maybeKuru.isFirstJob() && maybeKuru.getEquipment() != null) {
+				healMP++;
+				Play.printlnLog(maybeKuru + Lang.kuru_badIntention);
+			}
 
 			for (int i = 0; i < CHAR_MAX; i++) {
 				switch (playerCharTemp[i].getJob()) {

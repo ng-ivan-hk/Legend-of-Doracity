@@ -20,8 +20,7 @@ public class Kuru extends Character {
 
 				@Override
 				public void skillMethod(Character currentChar, Player opponent) {
-					Play.printlnLog("Using Kuru's 1stJob passive skill!");
-
+					// COMPLETETD
 				}
 
 			}, 0);

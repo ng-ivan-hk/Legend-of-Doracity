@@ -613,6 +613,7 @@ public class Lang {
 	public final static String herohim_doll_toString = "的人偶";
 	public final static String herohim_doll_end = "的人偶消失";
 	// 19. Kuru
+	public final static String kuru_badIntention = "的陰謀技能發動：使用裝備時，MP回復+1";
 	public final static String kuru_gambling_result = "抽到的卡是：";
 	public final static String kuru_gambling_equipment = "此卡乃裝備卡，因此兩張卡均得以保留";
 	public final static String kuru_gambling_notEquipment = "此卡並非裝備卡，因此兩張卡均無法獲得";
