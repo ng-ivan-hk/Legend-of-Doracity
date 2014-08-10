@@ -525,6 +525,7 @@ public class Lang {
 	/* Selection Dialogs */
 	public final static String charSelection = "選擇角色";
 	public final static String cardSelection = "選擇祭品";
+	public final static String effectSelection = "選擇效果";
 
 	/* Status */
 	public final static String player = "玩家";

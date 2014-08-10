@@ -1,3 +1,11 @@
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+
 public class Knight extends Character {
 
 	public Knight(Player player) {
@@ -26,8 +34,65 @@ public class Knight extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Knight's 1stJob active skill!");
 
+							@SuppressWarnings("serial")
+							class EffectSelector extends JDialog {
+								public EffectSelector() {
+									super((java.awt.Frame) null, true);
+									Container cc = getContentPane();
+									cc.setLayout(new BoxLayout(cc, BoxLayout.Y_AXIS));
+									cc.add(new EffectButton(1));
+									cc.add(new EffectButton(2));
+									cc.add(new EffectButton(3));
+
+									setTitle(Lang.effectSelection);
+									pack();
+									WindowHandler.locateCenter(this);
+									setResizable(false);
+									setVisible(true);
+								}
+
+								class EffectButton extends JButton implements ActionListener {
+									private int type;
+
+									public EffectButton(int type) {
+										this.type = type;
+										String info = null;
+										switch (type) {
+										case 1:
+											info = Lang.attack + "+1";
+											break;
+										case 2:
+											info = Lang.defP + "+1";
+											break;
+										case 3:
+											info = Lang.defM + "+1";
+											break;
+										}
+										setText(info);
+										addActionListener(this);
+									}
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										EffectSelector.this.dispose();
+										switch (type) {
+										case 1:
+											changeAttack(1, FOR_ROUND_END);
+											break;
+										case 2:
+											changeDefP(1, FOR_ROUND_END);
+											break;
+										case 3:
+											changeDefM(1, FOR_ROUND_END);
+											break;
+										}
+									}
+								}
+
+							}
+
+							new EffectSelector();
 						}
 
 					}, 1);
