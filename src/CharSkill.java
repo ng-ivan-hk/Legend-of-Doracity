@@ -147,14 +147,17 @@ public class CharSkill {
 
 			public CardSelectPanel() {
 				setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+				
+				setCardButtons();
+			}
+			
+			protected void setCardButtons() {
 				ArrayList<Card> cards = player.getHandCards();
-
 				for (int i = cards.size() - 1; i >= 0; i--) {
 					add(getCardButton(cards.get(i)));
 				}
 			}
-			
+
 			protected CardButton getCardButton(Card card) {
 				return new CardButton(card);
 			}

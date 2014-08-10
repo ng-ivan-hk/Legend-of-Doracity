@@ -192,7 +192,9 @@ public class Player {
 		}
 
 		this.HP += HP;
-		Play.printlnLog(Lang.player + ": " + name + " " + (HP >= 0 ? "+" : "") + HP + " HP");
+		if (HP != 0) {
+			Play.printlnLog(Lang.player + ": " + name + " " + (HP >= 0 ? "+" : "") + HP + " HP");
+		}
 
 		if (this.HP > Play.MAX_HP) {
 			this.HP = Play.MAX_HP;
@@ -220,7 +222,9 @@ public class Player {
 		}
 
 		this.MP += MP;
-		Play.printlnLog(Lang.player + ": " + name + " " + (MP >= 0 ? "+" : "") + MP + " MP");
+		if (MP != 0) {
+			Play.printlnLog(Lang.player + ": " + name + " " + (MP >= 0 ? "+" : "") + MP + " MP");
+		}
 
 		if (this.MP > Play.MAX_MP) {
 			this.MP = Play.MAX_MP;

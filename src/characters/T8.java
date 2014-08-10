@@ -1,3 +1,9 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+
 public class T8 extends Character {
 
 	public T8(Player player) {
@@ -6,7 +12,6 @@ public class T8 extends Character {
 
 	@Override
 	protected void setCharacter() {
-		// TODO Auto-generated method stub
 		if (isFirstJob()) {
 
 			setValues(true, SUPPORT, false, 2, 2, 2, 2, true);
@@ -27,8 +32,85 @@ public class T8 extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using T8's 1stJob active skill!");
+							// Override CardSelectPanel.actionPerformed()
+							@SuppressWarnings("serial")
+							class CardSelectDialog extends CharSkill.CardSelectDialog {
 
+								public CardSelectDialog(Player player, TargetMethod method) {
+									super(player, method);
+								}
+
+								@Override
+								protected CardSelectPanel getCardSelectPanel() {
+									return new CardSelectPanel();
+								}
+
+								class CardSelectPanel extends
+										CharSkill.CardSelectDialog.CardSelectPanel {
+
+									@Override
+									protected void setCardButtons() {
+
+										// Add Equipment Card from hand cards
+										ArrayList<Card> cards = getPlayer().getHandCards();
+										for (int i = cards.size() - 1; i >= 0; i--) {
+											Card tempCard = cards.get(i);
+											if (tempCard instanceof Equipment) {
+												add(getCardButton(tempCard));
+											}
+										}
+
+										// Add Equipment Card from Character
+										Character[] selfChars = getPlayer().getCharacters();
+										for (int i = 0; i < selfChars.length; i++) {
+											Equipment maybeEquipment = selfChars[i].getEquipment();
+											if (maybeEquipment != null) {
+												add(new CharEquipmentButton(selfChars[i],
+														maybeEquipment));
+											}
+										}
+
+									}
+
+									/**
+									 * Represents an Equipment Card that is
+									 * currently equipped by a Character.
+									 * 
+									 * @author Ivan Ng
+									 * 
+									 */
+									class CharEquipmentButton extends JButton implements
+											ActionListener {
+										private Character character = null;
+
+										public CharEquipmentButton(Character c, Equipment e) {
+											this.character = c;
+											setText(e.toString() + " (" + c + ")");
+											addActionListener(this);
+										}
+
+										@Override
+										public void actionPerformed(ActionEvent evt) {
+											CardSelectDialog.this.dispose();
+											character.setEquipment(null);
+											method.targetMethod(null, null);
+										}
+
+									}
+
+								}
+
+							}
+
+							// Select a Card
+							new CardSelectDialog(getPlayer(), new TargetMethod() {
+
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									getPlayer().changeMP(5);
+								}
+
+							});
 						}
 
 					}, 0);
@@ -37,8 +119,7 @@ public class T8 extends Character {
 
 			setValues(true, SUPPORT, false, 3, 2, 2, 2, false);
 
-			passiveSkills = new CharSkill[2]; // This character has 2 passive
-												// skills
+			passiveSkills = new CharSkill[2];
 			passiveSkills[0] = new CharSkill(this, false, 0, Command.NA, new CharSkillMethod() {
 
 				@Override
