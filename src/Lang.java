@@ -453,29 +453,11 @@ public class Lang {
 			"支援箭", "回避", "鷹眼", "火雨術", "寒冰術", "雷電術", "治療術", "大治療術", "風之術", "禁言", "沉默", "牢固", "物理結界",
 			"魔法結界", "神聖祝福", "吸血術" };
 
-	public final static String[] SkillInfos = new String[] { "",
-			"對一名已防禦狀態的角色造成5點物理傷害<br><font color=red>需要1MP<br>只限劍士</font>",
-			"使目標在該回合物防歸0<br><font color=red>需要1MP<br>只限劍士</font>",
-			"此回合提升2點物攻<br><font color=red>需要1MP<br>只限劍士</font>",
-			"提升自身2點物防<br><font color=red>需要1MP<br>只限劍士</font>",
-			"對一名已防禦狀態的角色進行普攻<br><font color=red>需要1MP<br>只限弓手</font>",
-			"該目標在此回合所受到傷害額外+1<br><font color=red>需要1MP<br>只限弓手</font>",
-			"自身受普通攻擊時，無效一次<br><font color=red>需要1MP<br>只限弓手</font>",
-			"普通攻擊時無視對方一切提升的物防<br><font color=red>需要1MP<br>只限弓手</font>",
-			"敵方陣營目標受到(自身普攻)的魔法傷害<br><font color=red>需要8MP<br>只限法師</font>",
-			"敵方陣營降底1點魔防<br><font color=red>需要8MP<br>只限法師</font>",
-			"每當對敵方陣營造成傷害時，額外造成4點魔法傷害<br><font color=red>需要8MP<br>只限法師</font>",
-			"回復5點HP<br><font color=red>需要3MP<br>只限法師和支援</font>",
-			"回復10點HP<br><font color=red>需要7MP<br>只限支援</font>",
-			"提升自身2點速度<br><font color=red>需要1MP<br>只限法師</font>",
-			"禁止一名目標在該回合發動自身技能<br><font color=red>需要3MP<br>只限法師和支援</font>",
-			"禁止一名目標在該回合使用道具/技能卡<br><font color=red>需要3MP<br>只限法師和支援</font>",
-			"禁止一名目標在該回合進行普通攻擊<br><font color=red>需要3MP<br>只限法師和支援</font>",
-			"提升己方陣營1點物防，無限維持(維持時不能發動任何技能卡)<br><font color=red>需要5MP<br>只限支援</font>",
-			"提升己方陣營1點魔防，無限維持(維持時不能發動任何技能卡)<br><font color=red>需要5MP<br>只限支援</font>",
-			"此回合不會進入任何異常狀態及降底能力值<br><font color=red>需要5MP<br>只限法師和支援</font>",
-			"吸取相當於自身攻擊的HP並回復<br><font color=red>需要5MP<br>只限法師</font>" };
-	
+	public final static String[] SkillInfos = new String[] { "", "對一名已防禦狀態的角色造成5點物理傷害",
+			"使目標在該回合物防歸0", "此回合提升2點物攻", "N/A", "N/A", "該目標在此回合所受到傷害額外+1", "自身受普通攻擊時，無效一次",
+			"普通攻擊時無視對方一切提升的物防", "敵方陣營目標受到(自身普攻)的魔法傷", "敵方陣營降底1點魔防", "每當對敵方陣營造成傷害時，額外造成4點魔法傷害",
+			"N/A", "回復10點HP", "N/A", "禁止一名目標在該回合發動任何技能", "N/A", "禁止一名目標在該回合進行普通攻擊" };
+
 	public final static String availableJob = "可用職業：";
 	public final static String consume = "消耗";
 

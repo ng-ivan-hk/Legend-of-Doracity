@@ -41,6 +41,7 @@ abstract public class Equipment extends Card {
 	}
 
 	final public String getInfo() {
+
 		String info = Lang.EquipmentInfos[number] + "<br>" + Lang.availableJob
 				+ "<font color=blue>";
 		if (saberOK) {
@@ -97,6 +98,12 @@ abstract public class Equipment extends Card {
 		}
 	}
 
+	/**
+	 * Applies the Equipment's effect.Should be only called by
+	 * {@link Character#setEquipment(Equipment)}.
+	 * 
+	 * @param c
+	 */
 	final public void useEquipment(Character c) {
 		// Really equip!!!
 		equipmentEffect(c);
@@ -104,7 +111,7 @@ abstract public class Equipment extends Card {
 
 	/**
 	 * Actions to be performed when equipping this Equipment. Should be only
-	 * called by {@link Character#setEquipment(Equipment)}.
+	 * called by {@link Equipment#useEquipment(Character)}.
 	 * 
 	 * @param c
 	 *            <code>Character</code> who equips this Equipment

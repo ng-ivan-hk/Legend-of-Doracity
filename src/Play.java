@@ -65,8 +65,8 @@ public class Play extends JFrame {
 	public final static int[] EQUIPMENT_MAX = new int[] { 0, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1,
 			1, 3, 1, 1, 1, 3, 1, 1, 3, 3, 3, 1, 1 };
 	public final static int[] ITEM_MAX = new int[] { 0, 17, 17, 6 };
-	public final static int[] SKILL_MAX = new int[] { 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 0, 5,
-			0, 5, 2, 2 };
+	public final static int[] SKILL_MAX = new int[] { 0, 3, 3, 3, 0, 0, 3, 3, 3, 3, 3, 3, 0, 3, 0,
+			5, 0, 5 };
 	public final static int MAX_HP = 50;
 	public final static int MAX_MP = 150;
 	public final static int INIT_HP = 20;
@@ -165,11 +165,18 @@ public class Play extends JFrame {
 		for (int i = 0; i < ITEM_MAX[2]; i++) cards.push(new MPPotion());
 		for (int i = 0; i < ITEM_MAX[3]; i++) cards.push(new SmokeBomb());
 		// Push Skill Cards
-		for (int i = 0; i < SKILL_MAX.length; i++) {
-			for (int j = 0; j < SKILL_MAX[i]; j++) {
-				cards.push(new Skill(i + 1));
-			}
-		}
+		for (int i = 0; i < SKILL_MAX[1]; i++) cards.push(new Assault());
+		for (int i = 0; i < SKILL_MAX[2]; i++) cards.push(new Punch());
+		for (int i = 0; i < SKILL_MAX[3]; i++) cards.push(new BattleSoul());
+		for (int i = 0; i < SKILL_MAX[6]; i++) cards.push(new SupportShot());
+		for (int i = 0; i < SKILL_MAX[7]; i++) cards.push(new Evasion());
+		for (int i = 0; i < SKILL_MAX[8]; i++) cards.push(new EagleEye());
+		for (int i = 0; i < SKILL_MAX[9]; i++) cards.push(new FireRain());
+		for (int i = 0; i < SKILL_MAX[10]; i++) cards.push(new FreezingIce());
+		for (int i = 0; i < SKILL_MAX[11]; i++) cards.push(new Thunder());
+		for (int i = 0; i < SKILL_MAX[13]; i++) cards.push(new GreatHealing());
+		for (int i = 0; i < SKILL_MAX[15]; i++) cards.push(new Mute());
+		for (int i = 0; i < SKILL_MAX[17]; i++) cards.push(new Jail());
 		// Shuffle randomly @formatter:on
 		Collections.shuffle(cards);
 
@@ -1400,11 +1407,9 @@ public class Play extends JFrame {
 				} else if (card instanceof Skill) {
 
 					Skill skill = (Skill) card;
-					// TODO
+					skill.useSkill(currentChar);
 
 				}
-
-				
 
 				setVisible(false);
 				player.removeCard(card);
