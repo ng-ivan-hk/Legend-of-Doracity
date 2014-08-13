@@ -192,6 +192,7 @@ public class CharSkill {
 	private int occasion; // When can be this used? (see class Command)
 	private CharSkillMethod skillMethod; // Stores the method
 	private int requiredMP; // How many MP is required for this skill?
+	private boolean doNotPass = false; // After using this skill, pass or not?
 
 	/**
 	 * Create a character skill in setCharacter() from Character's subclass.
@@ -223,6 +224,25 @@ public class CharSkill {
 	}
 
 	/**
+	 * Pass true if this skill does not count as one turn. In other words, after
+	 * using this skill, you can still make an action for the same Character.
+	 * 
+	 * @param b
+	 */
+	public void setDoNotPass(boolean b) {
+		doNotPass = b;
+	}
+
+	/**
+	 * Change the Required MP of this skill. Used by T8.
+	 * 
+	 * @param requiredMP
+	 */
+	public void setRequiredMP(int requiredMP) {
+		this.requiredMP = requiredMP;
+	}
+
+	/**
 	 * Call this to use the skill.
 	 */
 	public void useSkill() {
@@ -243,6 +263,10 @@ public class CharSkill {
 
 	public int getRequiredMP() {
 		return requiredMP;
+	}
+
+	public boolean isDoNotPass() {
+		return doNotPass;
 	}
 
 	public String toString() {

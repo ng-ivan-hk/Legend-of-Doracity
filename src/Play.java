@@ -1233,8 +1233,12 @@ public class Play extends JFrame {
 							player2Area.updateArea();
 							displayArea.battleField.updateAllLabels();
 
-							// Pass
 							SkillDialog.this.dispose();
+							
+							// Pass or not?
+							if (charSkill.isDoNotPass()) {
+								return;
+							}
 							CastSkillButton.this.setEnabled(false);
 							synchronized (Play.this) {
 								Play.this.notify();

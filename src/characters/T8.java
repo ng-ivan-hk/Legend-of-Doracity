@@ -6,6 +6,30 @@ import javax.swing.JButton;
 
 public class T8 extends Character {
 
+	private final int job2RequiredMP = 4;
+
+	/**
+	 * Set all job 2 active skills' required MP to the parameter. Called when a
+	 * job 2 active skill is used. Also when round end.
+	 * 
+	 * @param requiredMP
+	 * 
+	 */
+	private void setJob2RequiredMP(int requiredMP) {
+		activeSkills[0].setRequiredMP(requiredMP);
+		activeSkills[1].setRequiredMP(requiredMP);
+		activeSkills[2].setRequiredMP(requiredMP);
+	}
+
+	@Override
+	public void roundEndExtra() {
+		if (!isFirstJob()) {
+			setJob2RequiredMP(job2RequiredMP);
+		}
+	}
+
+	/* === Above are T8's unique fields and methods === */
+
 	public T8(Player player) {
 		super(player, 27);
 	}
@@ -138,38 +162,57 @@ public class T8 extends Character {
 				}
 
 			}, 0);
-			activeSkills = new CharSkill[3]; // This character has 3 active
-												// skills
+
+			activeSkills = new CharSkill[3];
+
 			activeSkills[0] = new CharSkill(this, true, 0, Command.BEFORE_BATTLE,
 					new CharSkillMethod() {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using T8's 2ndJob active skill 1!");
-
+							Character[] selfChars = getPlayer().getCharacters();
+							for (int i = 0; i < selfChars.length; i++) {
+								selfChars[i].changeAttack(1, Character.FOR_ROUND_END);
+							}
+							setJob2RequiredMP(job2RequiredMP - 1);
+							getPlayer().changeHP(1);
 						}
 
-					}, 4);
+					}, job2RequiredMP);
+			activeSkills[0].setDoNotPass(true);
+
 			activeSkills[1] = new CharSkill(this, true, 1, Command.BEFORE_BATTLE,
 					new CharSkillMethod() {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using T8's 2ndJob active skill 2!");
+							Character[] selfChars = getPlayer().getCharacters();
+							for (int i = 0; i < selfChars.length; i++) {
+								selfChars[i].changeDefP(1, Character.FOR_ROUND_END);
+							}
+							setJob2RequiredMP(job2RequiredMP - 1);
+							getPlayer().changeHP(1);
 
 						}
 
-					}, 4);
+					}, job2RequiredMP);
+			activeSkills[1].setDoNotPass(true);
+
 			activeSkills[2] = new CharSkill(this, true, 2, Command.BEFORE_BATTLE,
 					new CharSkillMethod() {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using T8's 2ndJob active skill 3!");
-
+							Character[] selfChars = getPlayer().getCharacters();
+							for (int i = 0; i < selfChars.length; i++) {
+								selfChars[i].changeDefM(1, Character.FOR_ROUND_END);
+							}
+							setJob2RequiredMP(job2RequiredMP - 1);
+							getPlayer().changeHP(1);
 						}
 
-					}, 4);
+					}, job2RequiredMP);
+			activeSkills[2].setDoNotPass(true);
 		}
 	}
 
