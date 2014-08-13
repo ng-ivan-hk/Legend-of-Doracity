@@ -1407,7 +1407,12 @@ public class Play extends JFrame {
 				} else if (card instanceof Skill) {
 
 					Skill skill = (Skill) card;
-					skill.useSkill(currentChar);
+					switch (skill.check(currentChar)) { // Check first!
+					case 1:
+						JOptionPane.showMessageDialog(this, Lang.wrongJob);
+						return;
+					}
+					skill.useSkill(currentChar); // Use it!
 
 				}
 

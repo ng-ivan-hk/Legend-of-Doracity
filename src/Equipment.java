@@ -83,7 +83,7 @@ abstract public class Equipment extends Card {
 		if ((saberOK && c.getJob() == Character.SABER)
 				|| (archerOK && c.getJob() == Character.ARCHER)
 				|| (casterOK && c.getJob() == Character.CASTER)
-				|| (supportOK && c.getJob() == Character.SUPPORT)) {
+				|| (supportOK && c.getJob() == Character.SUPPORT) || (c.getJob() == Character.NA)) {
 
 			if (!doracityOK && c.isDoracity()) { // Not Academy
 				return 10;

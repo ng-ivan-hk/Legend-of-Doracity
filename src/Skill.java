@@ -92,7 +92,7 @@ abstract public class Skill extends Card {
 		if ((saberOK && c.getJob() == Character.SABER)
 				|| (archerOK && c.getJob() == Character.ARCHER)
 				|| (casterOK && c.getJob() == Character.CASTER)
-				|| (supportOK && c.getJob() == Character.SUPPORT)) {
+				|| (supportOK && c.getJob() == Character.SUPPORT) || c.getJob() == Character.NA) {
 
 			return 0;
 
