@@ -10,6 +10,8 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
@@ -106,6 +108,7 @@ public class Play extends JFrame {
 	private PlayerArea player2Area = null;
 	private PlayerArea[] playerAreas = null; // refers to the 2 player areas
 	private LoadingScreen loadingScreen = null;
+	private Point mouseDownCompCoords = null;
 	// Constant objects
 	private final static int alpha = 200; // 0~255, 255 = no transparent
 	private final static Color doracityColor = new Color(6, 77, 144);
@@ -175,6 +178,35 @@ public class Play extends JFrame {
 	}
 
 	private void setGUI() throws InterruptedException {
+		
+		/* Set Draggable */
+		addMouseListener(new MouseListener() {
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			public void mousePressed(MouseEvent e) {
+				mouseDownCompCoords = e.getPoint();
+			}
+
+			public void mouseExited(MouseEvent e) {
+			}
+
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		addMouseMotionListener(new MouseMotionListener() {
+			public void mouseMoved(MouseEvent e) {
+			}
+
+			public void mouseDragged(MouseEvent e) {
+				Point currCoords = e.getLocationOnScreen();
+				setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y
+						- mouseDownCompCoords.y);
+			}
+		});
 
 		/* Set Font Size and Type */
 		Enumeration<Object> keys = UIManager.getDefaults().keys();
