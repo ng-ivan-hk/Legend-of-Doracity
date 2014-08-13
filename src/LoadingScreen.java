@@ -2,11 +2,11 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JWindow;
 
 @SuppressWarnings("serial")
-public class LoadingScreen extends JFrame {
+public class LoadingScreen extends JWindow {
 
 	public LoadingScreen() {
 		try {
@@ -15,7 +15,6 @@ public class LoadingScreen extends JFrame {
 		} catch (NullPointerException e) {
 		}
 		
-		setUndecorated(true);
 		JLabel loadingLabel = new JLabel(Lang.loading);
 		loadingLabel.setFont(new Font(Lang.font, Font.BOLD, 50));
 		add(loadingLabel);
