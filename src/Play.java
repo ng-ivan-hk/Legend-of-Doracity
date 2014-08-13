@@ -186,6 +186,10 @@ public class Play extends JFrame {
 
 	private void setGUI() throws InterruptedException {
 		
+		/* Set Basic Info */
+		setTitle(Lang.frameTitle);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 		/* Set Draggable */
 		addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
@@ -235,8 +239,10 @@ public class Play extends JFrame {
 		/* Set Tool Tip */
 		ToolTipManager.sharedInstance().setInitialDelay(0);
 
-		setTitle(Lang.frameTitle);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		/* Set Style */
+		setUndecorated(true);
+//		setBackground(new Color(0, 0, 0, 0));
+		setContentPane(new ShadowPane());
 
 		/* Run Preload GUI */
 		Preload preload = new Preload(this);
