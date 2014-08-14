@@ -55,7 +55,7 @@ public class FishBall extends Character {
 										@Override
 										public void targetMethod(Character currentChar,
 												Character target) {
-											target.changeDefP(-target.getDefP(), FOR_ROUND_END);
+											target.setDestroyDefP(true);;
 										}
 
 									});

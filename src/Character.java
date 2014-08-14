@@ -67,6 +67,7 @@ abstract public class Character {
 	protected boolean assassin = false; // Map's Active Skill
 	private boolean giveUp = false; // if true, this character will be passed
 	private boolean giveUpSkills = false; // if true, this character cannot use skills
+	private boolean destroyDefP = false; // if true, getDefP() returns 0
 
 	/**
 	 * @param player
@@ -116,24 +117,37 @@ abstract public class Character {
 	 * Do something when a round ends.
 	 */
 	final public void roundEnd() {
-		// Remove round end effects
+		
+		boolean for_round_end = false; // if true, print message
+		
+		/* Remove round end effects */
 		if (attack_roundEnd != 0 || defP_roundEnd != 0 || defM_roundEnd != 0 || speed_roundEnd != 0) {
-			Play.printlnLog(Lang.log_for_round_end[0] + " " + this + " "
-					+ Lang.log_for_round_end[1]);
 			attack_roundEnd = 0;
 			defP_roundEnd = 0;
 			defM_roundEnd = 0;
 			speed_roundEnd = 0;
+			for_round_end = true;
 		}
-		// Defense off
-		defense = false;
-		// Give Up off
-		giveUp = false;
+
+		/* Boolean variables off */
+		defense = false; // Defense off
+		giveUp = false; // Give Up off
 		giveUpSkills = false;
-		// Map's Assassin off
-		assassin = false;
-		// Any other things?
+		if (destroyDefP) { // Destroy DefP off
+			destroyDefP = false;
+			for_round_end = true;
+		}
+		assassin = false; // Map's Assassin off
+
+		/* Print message */
+		if (for_round_end) {
+			Play.printlnLog(Lang.log_for_round_end[0] + " " + this + " "
+					+ Lang.log_for_round_end[1]);
+		}
+
+		/* Any other things? */
 		roundEndExtra();
+
 	}
 
 	/**
@@ -296,6 +310,9 @@ abstract public class Character {
 	}
 
 	public int getDefP() {
+		if (destroyDefP) {
+			return 0;
+		}
 		return defP_init + defP_ever + defP_jobChange + defP_roundEnd + defP_equipment;
 	}
 
@@ -520,6 +537,15 @@ abstract public class Character {
 
 	public boolean isGiveUpSkills() {
 		return giveUpSkills;
+	}
+	
+	/**
+	 * Destroy this Character's Physical Defense for a round.
+	 * 
+	 * @param b
+	 */
+	protected void setDestroyDefP(boolean b) {
+		destroyDefP = true;
 	}
 
 	final public int attack(Character target) { // Normal Attack (c1->c2)

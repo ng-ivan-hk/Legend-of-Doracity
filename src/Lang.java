@@ -461,7 +461,6 @@ public class Lang {
 	public final static String availableJob = "可用職業：";
 	public final static String consume = "消耗";
 
-
 	/* Properties */
 	public final static String HP = "HP";
 	public final static String MP = "MP";
