@@ -1,5 +1,3 @@
-import javax.swing.JLabel;
-
 public class Iron extends Character {
 
 	@Override

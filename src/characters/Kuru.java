@@ -1,6 +1,8 @@
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 public class Kuru extends Character {
@@ -30,7 +32,88 @@ public class Kuru extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Kuru's 1stJob active skill!");
+							
+							// Create a new class for selecting card
+							@SuppressWarnings("serial")
+							class EquipmentSelector extends CharSkill.CardSelectDialog {
+								public EquipmentSelector(Player player, TargetMethod method) {
+									super(player, method);
+								}
+
+								@Override
+								protected CardSelectPanel getCardSelectPanel() {
+									return new CardSelectPanel();
+								}
+
+								class CardSelectPanel extends
+										CharSkill.CardSelectDialog.CardSelectPanel {
+
+									@Override
+									protected void setCardButtons() {
+
+										// Add Equipment Card from my Characters
+										Character[] selfChars = getPlayer().getCharacters();
+										for (int i = 0; i < selfChars.length; i++) {
+											Equipment maybeEquipment = selfChars[i].getEquipment();
+											if (maybeEquipment != null) {
+												add(new EquipmentButton(selfChars[i],
+														maybeEquipment));
+											}
+										}
+										
+										// Add Equipment Card from opponent's Characters
+										Character[] opponenChars = getPlayer().getOpponent().getCharacters();
+										for (int i = 0; i < opponenChars.length; i++) {
+											Equipment maybeEquipment = opponenChars[i].getEquipment();
+											if (maybeEquipment != null) {
+												add(new EquipmentButton(opponenChars[i],
+														maybeEquipment));
+											}
+										}
+
+									}
+								}
+								
+								/**
+								 * Represents an Equipment Card that is
+								 * currently equipped by a Character.
+								 * 
+								 * @author Ivan Ng
+								 * 
+								 */
+								class EquipmentButton extends JButton implements ActionListener {
+									private Character character = null;
+
+									public EquipmentButton(Character c, Equipment e) {
+										this.character = c;
+										setText(e.toString() + " (" + c + ")");
+										addActionListener(this);
+									}
+
+									@Override
+									public void actionPerformed(ActionEvent evt) {
+										Class<? extends Equipment> targetEquipment = character.getEquipment().getClass();
+										try {
+											getPlayer().addCard(targetEquipment.newInstance());
+										} catch (InstantiationException | IllegalAccessException e) {
+											e.printStackTrace();
+										}
+										dispose();
+									}
+
+								}
+								
+							}
+
+							// Select a Card
+							new CharSkill.CardSelectDialog(getPlayer(), new TargetMethod() {
+
+								@Override
+								public void targetMethod(Character currentChar, Character target) {
+									new EquipmentSelector(getPlayer(), null);
+								}
+
+							});
 
 						}
 
@@ -114,14 +197,7 @@ public class Kuru extends Character {
 							}
 							
 							// Select a Card
-							new CardSelectDialog(getPlayer(), new TargetMethod() {
-
-								@Override
-								public void targetMethod(Character currentChar, Character target) {
-									// This will not be called...
-								}
-
-							});
+							new CardSelectDialog(getPlayer(), null);
 
 						}
 
