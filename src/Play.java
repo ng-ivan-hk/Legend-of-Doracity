@@ -240,9 +240,9 @@ public class Play extends JFrame {
 		ToolTipManager.sharedInstance().setInitialDelay(0);
 
 		/* Set Style */
-		setUndecorated(true);
+//		setUndecorated(true);
 //		setBackground(new Color(0, 0, 0, 0));
-		setContentPane(new ShadowPane());
+//		setContentPane(new ShadowPane());
 
 		/* Run Preload GUI */
 		Preload preload = new Preload(this);
