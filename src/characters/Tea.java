@@ -58,7 +58,7 @@ public class Tea extends Character {
 		if (isFirstJob()) { // Gentleman: Any female character?
 			System.out.println(noOfGirls);
 			if (noOfGirls > 0) {
-				Play.printlnLog(Lang.tea_gentleman);
+				Play.printlnLog(this + Lang.tea_gentleman);
 				changeAttack(+2, FOR_JOB_CHANGE);
 			}
 		} else { // Ero

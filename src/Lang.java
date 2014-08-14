@@ -548,18 +548,16 @@ public class Lang {
 	public final static String givenUp = "已無法於本回合行動，因此自動跳過";
 	public final static String giveUpSkills = "於本回合無法使用技能";
 	// 1. Tea
-	public final static String tea_gentleman = "場上有女性角色，烏龍茶的紳士技能發動：";
+	public final static String tea_gentleman = "的紳士技能因場上有女性角色而發動：";
 	public final static String tea_MSoul = "烏龍茶的M魂技能發動：受到女性角色攻擊時，回復1HP";
 	public final static String tea_DoM = "烏龍茶的抖M技能正在發動：";
 	public final static String tea_DoM_attackTeaOnly = tea_DoM + "女性只能攻擊烏龍茶";
 	public final static String tea_DoM_lessDamage = tea_DoM + "傷害-1";
 	public final static String tea_ero = "烏龍茶的工口技能發動：場上的女性角色數量是";
-	public final static String tea_loliSoul_end = "烏龍茶的蘿莉之魂技能效果完結";
 	// 2. Livia
 	public final static String livia_together = "古怪在場，淋琳的相伴技能發動：";
 	public final static String livia_together_job1 = livia_together;
 	public final static String livia_together_job2 = livia_together + "額外回復1HP";
-	public final static String livia_golem_end = "淋琳的巨魔像技能效果完結";
 	// 3. Phoebell
 	public final static String phoebell_together = "淋琳在場，古怪的相伴技能發動：";
 	public final static String phoebell_together_job2 = "古怪的相伴技能發動：MP回復+1";
@@ -569,7 +567,6 @@ public class Lang {
 	public final static String map_siscon = "場上有女性角色，地圖的妹控技能發動：";
 	// 5. Iron
 	public final static String iron_fortitude_lessDamage = "鐵皮的堅忍技能發動：傷害-1";
-	public final static String iron_morale_end = "鐵皮的士氣技能效果完結";
 	public final static String iron_heroic = "鐵皮的英勇技能發動：攻擊劍士時攻擊+1";
 	// 6. FishBall
 	public final static String fishball_limit = "魚丸的極限技能發動：攻擊+1，並在戰鬥後回復2MP";
@@ -585,11 +582,9 @@ public class Lang {
 			"物防+2、魔防+2" };
 	public final static String gamenobita_doracity_end = "野味大雄的小城技能效果完結";
 	// 11. Xander
-	public final static String xander_wall_end = "山大的防壁技能效果完結";
 	public final static String xander_manaForming = "山大的魔凝技能發動：沒手牌時+2MP";
 	// 12. Buttefly
 	public final static String butterfly_wealth = "的富貴技能發動：摸牌數量+1";
-	public final static String butterfly_squander_end = "七色彩蝶的揮霍技能效果完結";
 	// 14. Kurokawa
 	public final static String kurokawa_strong_end = "黑川米古的剛強技能效果完結";
 	// 15. Herohim
@@ -609,7 +604,6 @@ public class Lang {
 	public final static String sasa_pharmacist = "射手的藥師技能發動：額外使用道具回復時+1HP";
 	// 30. SunnyShum
 	public final static String sunnyshum_chasteness = "己方沒有女性角色，心連心的童貞技能發動：";
-	public final static String sunnyshum_excite_end = "心連心的激勵技能效果完結";
 
 	/* Error Messages */
 	public final static String error = "錯誤";
