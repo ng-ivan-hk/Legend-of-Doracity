@@ -140,7 +140,8 @@ public class Preload extends JPanel {
 			
 			for (int i = 0; i < totalChar; i++) {
 				add(new CharButton(i + 1));
-				play.getLoadingScreen().setProgress(1, "Loading Character " + i);
+				play.getLoadingScreen().setProgress(1,
+						"Loading Character " + i + ": " + Lang.CharNames[i]);
 			}
 			
 			

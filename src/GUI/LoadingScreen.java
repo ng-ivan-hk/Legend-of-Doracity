@@ -1,7 +1,5 @@
 import java.awt.Dimension;
-import java.awt.Font;
 
-import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JWindow;
 
@@ -11,9 +9,6 @@ public class LoadingScreen extends JWindow {
 	private JProgressBar progressBar = null;
 
 	public LoadingScreen() {
-//		JLabel loadingLabel = new JLabel(Lang.loading);
-//		loadingLabel.setFont(new Font(Lang.font, Font.BOLD, 50));
-//		add(loadingLabel);
 
 		progressBar = new JProgressBar(0, 100);
 		progressBar.setValue(0);
@@ -22,7 +17,7 @@ public class LoadingScreen extends JWindow {
 
 		setSize(new Dimension(500, 50));
 		setLocationRelativeTo(null);
-		
+
 	}
 
 	public void setProgress(int progress, String message) {
