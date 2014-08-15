@@ -1,3 +1,7 @@
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Kuzmon extends Character {
 
 	public Kuzmon(Player player) {
@@ -28,7 +32,65 @@ public class Kuzmon extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
-							Play.printlnLog("Using Kuzmon's 1stJob active skill!");
+
+							// Create a new class for selecting card
+							@SuppressWarnings("serial")
+							class CardSelectDialog extends CharSkill.CardSelectDialog {
+								public CardSelectDialog(Player player, TargetMethod method) {
+									super(player, method);
+								}
+
+								@Override
+								protected CardSelectPanel getCardSelectPanel() {
+									return new CardSelectPanel();
+								}
+
+								class CardSelectPanel extends
+										CharSkill.CardSelectDialog.CardSelectPanel {
+
+									@Override
+									protected CardButton getCardButton(Card card) {
+										return new CardButton(card);
+									}
+
+									class CardButton extends
+											CharSkill.CardSelectDialog.CardSelectPanel.CardButton {
+
+										public CardButton(Card card) {
+											super(card);
+										}
+
+										@Override
+										public void actionPerformed(ActionEvent evt) {
+
+											CardSelectDialog.this.dispose();
+
+											// Give my card to the opponent
+											getPlayer().removeCard(card);
+											getPlayer().getOpponent().addCard(card);
+
+											// Draw a random card from opponent
+											ArrayList<Card> opponentHandCards = getPlayer()
+													.getOpponent().getHandCards();
+											int randomIndex = new Random()
+													.nextInt(opponentHandCards.size());
+											Card randomCard = opponentHandCards.get(randomIndex);
+											getPlayer().addCard(randomCard);
+											getPlayer().getOpponent().removeCard(randomCard);
+											Play.printlnLog(Kuzmon.this
+													+ Lang.kuzmon_transferMagic1 + card
+													+ Lang.kuzmon_transferMagic2 + randomCard);
+
+										}
+
+									}
+
+								}
+
+							}
+
+							// Select a Card
+							new CardSelectDialog(getPlayer(), null);
 
 						}
 

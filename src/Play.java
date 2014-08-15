@@ -104,8 +104,8 @@ public class Play extends JFrame {
 	/* GUI objects */
 	private static Play play = null;
 	private static DisplayArea displayArea = null;
-	private PlayerArea player1Area = null;
-	private PlayerArea player2Area = null;
+	private static PlayerArea player1Area = null;
+	private static PlayerArea player2Area = null;
 	private PlayerArea[] playerAreas = null; // refers to the 2 player areas
 	private LoadingScreen loadingScreen = null;
 	private Preload preload = null;
@@ -1379,7 +1379,7 @@ public class Play extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				draw(player);
-				updateArea();
+				
 				// Update counter
 				count--;
 				if (count == 0) {
@@ -1547,6 +1547,7 @@ public class Play extends JFrame {
 		sortAllChars();
 		displayArea.setStage(Lang.stage_drawCards);
 		printlnLog(">>>" + Lang.stage_drawCards + "<<<");
+		currentStatus = Command.DRAW_CARD; // for Kuzmon's job 1 active skill
 
 		if (round == 1) { // give each player 5 cards
 
@@ -1593,6 +1594,45 @@ public class Play extends JFrame {
 
 			}
 
+		}
+		
+		for (int p = 0; p < playerAreas.length; p++) {
+			
+			final PlayerArea playerAreaTemp = playerAreas[p];
+
+			// Check for Kuzmon's job 1 active skill
+			Kuzmon maybeKuzmon = (Kuzmon) playerAreas[p].getPlayer().contains(Kuzmon.class);
+			if (maybeKuzmon != null && maybeKuzmon.isFirstJob()) {
+				
+				currentChar = maybeKuzmon;
+				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
+						.indexOfChar(currentChar), true);
+				
+				SwingUtilities.invokeAndWait(new Runnable() {
+					@Override
+					public void run() {
+						playerAreaTemp.castSkillButton.setEnabled(true);
+						playerAreaTemp.passButton.setEnabled(true);
+					}
+				});
+
+				synchronized (this) {
+					this.wait();
+				}
+				
+				SwingUtilities.invokeAndWait(new Runnable() {
+					@Override
+					public void run() {
+						playerAreaTemp.castSkillButton.setEnabled(false);
+						playerAreaTemp.passButton.setEnabled(false);
+					}
+				});
+				
+				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
+						.indexOfChar(currentChar), false);
+				
+			}
+			
 		}
 		player1.listCards();
 		player2.listCards();
@@ -1933,7 +1973,9 @@ public class Play extends JFrame {
 			Card temp = cards.pop();
 			// System.out.println("Get! " + temp);
 			player.addCard(temp);
-
+			
+			player1Area.updateArea();
+			player2Area.updateArea();
 			displayArea.setCardsLeft(cards.size());
 
 		}

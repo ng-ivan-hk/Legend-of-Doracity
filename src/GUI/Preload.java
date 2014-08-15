@@ -66,7 +66,7 @@ public class Preload extends JPanel {
 		debugButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				debugPlay.setPlayer("A", "B", new int[] { 1, 7, 13, 19, 25 }, new int[] { 2, 8, 14,
+				debugPlay.setPlayer("A", "B", new int[] { 1, 7, 13, 19, 21 }, new int[] { 2, 8, 14,
 						20, 26 });
 				synchronized (debugPlay) {
 					debugPlay.notify();

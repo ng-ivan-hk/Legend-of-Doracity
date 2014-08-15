@@ -7,6 +7,8 @@ import javax.swing.JWindow;
 public class LoadingScreen extends JWindow {
 
 	private JProgressBar progressBar = null;
+	private float progress = 0;
+	private final int noOfTask = 73;
 
 	public LoadingScreen() {
 
@@ -20,14 +22,11 @@ public class LoadingScreen extends JWindow {
 
 	}
 
-	public void setProgress(int progress, String message) {
-		progressBar.setValue(progressBar.getValue() + progress);
+	public void setProgress(int unit, String message) {
+		progress += ((float) 100 / noOfTask * unit);
+		progressBar.setValue((int) progress);
 		progressBar.setString(message);
 		progressBar.update(progressBar.getGraphics());
-	}
-
-	public int getProgress() {
-		return progressBar.getValue();
 	}
 
 }

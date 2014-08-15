@@ -32,9 +32,9 @@ public class KaitoDora extends Character {
 							ArrayList<Card> opponentHandCards = opponent.getHandCards();
 							int randomIndex = new Random().nextInt(opponentHandCards.size());
 							Card randomCard = opponentHandCards.get(randomIndex);
-							Play.printlnLog(KaitoDora.this + Lang.kaitodora_steal + randomCard);
 							getPlayer().addCard(randomCard);
 							getPlayer().getOpponent().removeCard(randomCard);
+							Play.printlnLog(KaitoDora.this + Lang.kaitodora_steal + randomCard);
 						}
 
 					}, 3);

@@ -594,6 +594,9 @@ public class Lang {
 	public final static String kuru_gambling_result = "抽到的卡是：";
 	public final static String kuru_gambling_equipment = "此卡乃裝備卡，因此兩張卡均得以保留";
 	public final static String kuru_gambling_notEquipment = "此卡並非裝備卡，因此兩張卡均無法獲得";
+	// 21. Kuzmon
+	public final static String kuzmon_transferMagic1 = "以";
+	public final static String kuzmon_transferMagic2 = "與對方交換了";
 	// 22. KaitoDora
 	public final static String kaitodora_steal = "偷竊了";
 	// 24. WindSound

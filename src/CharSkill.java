@@ -175,7 +175,9 @@ public class CharSkill {
 				public void actionPerformed(ActionEvent evt) {
 					CardSelectDialog.this.dispose();
 					player.removeCard(card);
-					method.targetMethod(null, null);
+					if (method != null) {
+						method.targetMethod(null, null);
+					}
 				}
 			}
 		}
