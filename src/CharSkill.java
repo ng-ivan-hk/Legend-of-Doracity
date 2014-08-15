@@ -56,7 +56,7 @@ public class CharSkill {
 		private void setDialog() {
 			setTitle(Lang.charSelection);
 			pack();
-			WindowHandler.locateCenter(this);
+			setLocationRelativeTo(null);
 			setResizable(false);
 			setVisible(true);
 		}
@@ -134,7 +134,7 @@ public class CharSkill {
 			setTitle(Lang.cardSelection);
 			add(getCardSelectPanel()); // TODO: JScrollPane?
 			pack();
-			WindowHandler.locateCenter(this);
+			setLocationRelativeTo(null);
 			setResizable(false);
 			setVisible(true);
 		}

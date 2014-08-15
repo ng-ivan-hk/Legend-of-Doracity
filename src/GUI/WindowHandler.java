@@ -9,17 +9,6 @@ import javax.swing.Timer;
 public class WindowHandler {
 
 	/**
-	 * Locate the window (JFrame) at center.
-	 * 
-	 * @param frame
-	 */
-	public static void locateCenter(final Window frame) {
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setLocation(dim.width / 2 - frame.getSize().width / 2,
-				dim.height / 2 - frame.getSize().height / 2);
-	}
-
-	/**
 	 * Shake the window.
 	 * 
 	 * @param frame

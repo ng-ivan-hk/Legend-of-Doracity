@@ -32,7 +32,7 @@ public class Help extends JFrame {
 		pack();
 		setMinimumSize(new Dimension(400, 100));
 		setSize(new Dimension(900, getWidth()));
-		WindowHandler.locateCenter(this);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 

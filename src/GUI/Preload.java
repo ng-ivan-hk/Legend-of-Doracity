@@ -42,15 +42,21 @@ public class Preload extends JPanel {
 	 *            pass Play object so that this class can unlock main thread
 	 */
 	public Preload(Play play) {
+		
+		play.getLoadingScreen().setProgress(1, "Creating Preload Screen");
+		
 		this.play = play;
 
 		add(new JLabel(Lang.player + "1: "));
+		play.getLoadingScreen().setProgress(1, "Creating TextField");
 		add(p1Name = new JTextField("A", 15));
+		play.getLoadingScreen().setProgress(1, "Creating CharSelectPanel");
 		add(p1 = new CharSelectPanel());
 
 		add(new JLabel(Lang.player + "2: "));
 		add(p2Name = new JTextField("B", 15));
 		add(p2 = new CharSelectPanel());
+		
 		add(new StartButton());
 
 		// For debugging: auto character selector
@@ -123,14 +129,21 @@ public class Preload extends JPanel {
 	}
 
 	private class CharSelectPanel extends JPanel {
+		
 		private ArrayList<Integer> charNumbers = new ArrayList<Integer>();
-		private int count = 0;
+		private int count = 0; // count how many characters selected
 
 		public CharSelectPanel() {
+			
 			setLayout(new GridLayout(0, 6));
-			for (int i = 0; i < 30; i++) {
+			final int totalChar = 30;
+			
+			for (int i = 0; i < totalChar; i++) {
 				add(new CharButton(i + 1));
+				play.getLoadingScreen().setProgress(1, "Loading Character " + i);
 			}
+			
+			
 		}
 
 		public int getCount() {

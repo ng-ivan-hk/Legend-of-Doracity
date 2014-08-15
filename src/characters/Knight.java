@@ -47,7 +47,7 @@ public class Knight extends Character {
 
 									setTitle(Lang.effectSelection);
 									pack();
-									WindowHandler.locateCenter(this);
+									setLocationRelativeTo(null);
 									setResizable(false);
 									setVisible(true);
 								}

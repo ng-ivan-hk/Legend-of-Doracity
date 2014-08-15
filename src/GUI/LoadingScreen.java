@@ -1,25 +1,38 @@
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 import javax.swing.JWindow;
 
 @SuppressWarnings("serial")
 public class LoadingScreen extends JWindow {
 
+	private JProgressBar progressBar = null;
+
 	public LoadingScreen() {
-		try {
-			setIconImage(new ImageIcon(Play.class.getResource("/resources/app_icon.png"))
-					.getImage().getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING));
-		} catch (NullPointerException e) {
-		}
+//		JLabel loadingLabel = new JLabel(Lang.loading);
+//		loadingLabel.setFont(new Font(Lang.font, Font.BOLD, 50));
+//		add(loadingLabel);
+
+		progressBar = new JProgressBar(0, 100);
+		progressBar.setValue(0);
+		progressBar.setStringPainted(true);
+		add(progressBar);
+
+		setSize(new Dimension(500, 50));
+		setLocationRelativeTo(null);
 		
-		JLabel loadingLabel = new JLabel(Lang.loading);
-		loadingLabel.setFont(new Font(Lang.font, Font.BOLD, 50));
-		add(loadingLabel);
-		pack();
-		WindowHandler.locateCenter(this);
+	}
+
+	public void setProgress(int progress, String message) {
+		progressBar.setValue(progressBar.getValue() + progress);
+		progressBar.setString(message);
+		progressBar.update(progressBar.getGraphics());
+	}
+
+	public int getProgress() {
+		return progressBar.getValue();
 	}
 
 }

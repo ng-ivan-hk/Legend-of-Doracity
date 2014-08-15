@@ -108,6 +108,7 @@ public class Play extends JFrame {
 	private PlayerArea player2Area = null;
 	private PlayerArea[] playerAreas = null; // refers to the 2 player areas
 	private LoadingScreen loadingScreen = null;
+	private Preload preload = null;
 	private Point mouseDownCompCoords = null;
 	// Constant objects
 	private final static int alpha = 200; // 0~255, 255 = no transparent
@@ -180,17 +181,44 @@ public class Play extends JFrame {
 		// Shuffle randomly @formatter:on
 		Collections.shuffle(cards);
 
-		setGUI();
+		
+		/* Create and Set GUI */
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+				public void run() {
+					setFrame();
+					createPreload();
+				}
+			});
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+
+		synchronized (this) {
+			this.wait();
+		}
+
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+				public void run() {
+					createMainGame();
+				}
+			});
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 
 	}
-
-	private void setGUI() throws InterruptedException {
+	
+	private void setFrame(){
 		
 		/* Set Basic Info */
+		getLoadingScreen().setProgress(1, "Setting Basic Info");
 		setTitle(Lang.frameTitle);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		/* Set Draggable */
+		getLoadingScreen().setProgress(1, "Adding Mouse Listeners to Frame");
 		addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 			}
@@ -220,6 +248,7 @@ public class Play extends JFrame {
 		});
 
 		/* Set Font Size and Type */
+		getLoadingScreen().setProgress(1, "Setting Font Size and Type");
 		Enumeration<Object> keys = UIManager.getDefaults().keys();
 		while (keys.hasMoreElements()) {
 			Object key = keys.nextElement();
@@ -230,45 +259,62 @@ public class Play extends JFrame {
 		}
 
 		/* Set App Icon */
+		getLoadingScreen().setProgress(1, "Setting App Icon");
 		try {
 			setIconImage(new ImageIcon(Play.class.getResource("/resources/app_icon.png"))
 					.getImage().getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING));
 		} catch (NullPointerException e) {
 		}
+		
+		
 
 		/* Set Tool Tip */
+		getLoadingScreen().setProgress(1, "Setting Tool Tip");
 		ToolTipManager.sharedInstance().setInitialDelay(0);
+		
+		
+		
+		/* Set Menu Bar*/
+		getLoadingScreen().setProgress(1, "Setting Menu Bar");
+		setJMenuBar(new MenuBar());
 
 		/* Set Style */
 //		setUndecorated(true);
 //		setBackground(new Color(0, 0, 0, 0));
 //		setContentPane(new ShadowPane());
 
-		/* Run Preload GUI */
-		Preload preload = new Preload(this);
-		add(preload);
-		setJMenuBar(new MenuBar());
+	}
+
+	/**
+	 * Create and shows Preload GUI.
+	 */
+	private void createPreload() {
+
+		add(preload = new Preload(this));
 		setSize(new Dimension(935, 570));
-		WindowHandler.locateCenter(this);
+		setLocationRelativeTo(null);
 		setResizable(false);
 		loadingScreen.setVisible(false);
 		setVisible(true);
 
-		synchronized (this) {
-			this.wait();
-		}
+	}
 
-		remove(preload);
+	/**
+	 * Create abd shows the GUI for main game.
+	 */
+	private void createMainGame() {
 
-		/* Run main game GUI */
 		setVisible(false);
 		remove(preload);
-		
+
 		// Loading Window again
 		loadingScreen.setVisible(true);		
 
+		getLoadingScreen().setProgress(1, "Creating Display Area");
 		add(BorderLayout.CENTER, displayArea = new DisplayArea());
+		getLoadingScreen().setProgress(1, "Creating Player Area 1");
 		add(BorderLayout.WEST, player1Area = new PlayerArea(player1));
+		getLoadingScreen().setProgress(1, "Creating Player Area 2");
 		add(BorderLayout.EAST, player2Area = new PlayerArea(player2));
 
 		// If we want to do same thing for both area we can use playerAreas
@@ -276,13 +322,18 @@ public class Play extends JFrame {
 		playerAreas[0] = player1Area;
 		playerAreas[1] = player2Area;
 
+		getLoadingScreen().setProgress(1, "Setting Frame for Main Game");
 		revalidate();
 		pack();
 		setMinimumSize(getBounds().getSize());
 		setSize(new Dimension(1100, 680));
-		WindowHandler.locateCenter(this);
+		setLocationRelativeTo(null);
 		setResizable(true);
 
+	}
+	
+	public LoadingScreen getLoadingScreen(){
+		return loadingScreen;
 	}
 
 	/**
@@ -397,7 +448,7 @@ public class Play extends JFrame {
 	}
 
 	/**
-	 * The Central Area.
+	 * The Central Area which shows Character's labels.
 	 * 
 	 * @author Ivan Ng
 	 * 
