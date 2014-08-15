@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -29,6 +30,7 @@ import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -326,7 +328,7 @@ public class Play extends JFrame {
 		revalidate();
 		pack();
 		setMinimumSize(getBounds().getSize());
-		setSize(new Dimension(1100, 680));
+		setSize(new Dimension(1000, getHeight() + 10));
 		setLocationRelativeTo(null);
 		setResizable(true);
 
@@ -463,9 +465,24 @@ public class Play extends JFrame {
 		private BattleField battleField = null;
 
 		private BottomField bottomField = null;
-		private JTextArea logArea = null;
+		private JScrollPane logAreaScrollPane = null;
 
 		public DisplayArea() {
+			
+			/* Set Log Area */
+			logAreaScrollPane = new JScrollPane(LOG_AREA = new JTextArea());
+			logAreaScrollPane.getVerticalScrollBar().setUnitIncrement(20);
+
+			// Update Log Area automatically whenever text is appended
+			((DefaultCaret) LOG_AREA.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
+			LOG_AREA.setEditable(false);
+
+			// Print current Date to Log Area
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd '('E')' HH:mm:ss");
+			LOG_AREA.append(Lang.legendOfDoracity + Lang.log + " " + player1 + " vs " + player2
+					+ " " + formatter.format(new Date()));
+
 
 			setLayout(new BorderLayout());
 			// Set Top Field
@@ -515,34 +532,26 @@ public class Play extends JFrame {
 
 			private CharLabel[] player1Chars = new CharLabel[CHAR_MAX];
 			private CharLabel[] player2Chars = new CharLabel[CHAR_MAX];
-			private BLabel[] player1Actions = new BLabel[CHAR_MAX + 1];
-			private BLabel[] player2Actions = new BLabel[CHAR_MAX + 1];;
 
 			public BattleField() {
 				setBackground(Color.WHITE);
 				setBorder(BorderFactory.createLineBorder(Color.GRAY));
-				setLayout(new GridLayout(6, 4));
 
-				// Row 0
-				add(new BLabel(Lang.player + ": " + player1));
-				add(player1Actions[0] = new BLabel("player1"));
-				add(player2Actions[0] = new BLabel("player2"));
-				add(new BLabel(Lang.player + ": " + player2));
-
-				// Row 1 - 5
+				// Create GUI Objects
 				Character[] player1CharTemp = player1.getCharacters();
 				Character[] player2CharTemp = player2.getCharacters();
 				for (int i = 0; i < CHAR_MAX; i++) {
-
-					add(player1Chars[i] = new CharLabel(player1CharTemp[i]));
-
-					add(player1Actions[i + 1] = new BLabel("Player1 " + i));
-					add(player2Actions[i + 1] = new BLabel("Player2 " + i));
-
-					add(player2Chars[i] = new CharLabel(player2CharTemp[i]));
-
+					player1Chars[i] = new CharLabel(player1CharTemp[i]);
+					player2Chars[i] = new CharLabel(player2CharTemp[i]);
 				}
+				
+				// Set Layout
+				GroupLayout layout = new GroupLayout(this);
+				setLayout(layout);
+				layout.setAutoCreateGaps(true);
+				layout.setAutoCreateContainerGaps(true);
 
+				updateCharOrder();
 				updateAllLabels();
 
 			}
@@ -598,32 +607,71 @@ public class Play extends JFrame {
 				Arrays.sort(player1Chars, labelComparator);
 				Arrays.sort(player2Chars, labelComparator);
 
-				try {
-					SwingUtilities.invokeAndWait(new Runnable() {
-						@Override
-						public void run() {
-							removeAll();
+				Runnable runner = new Runnable() {
+					@Override
+					public void run() {
+
+						/* Define how to draw layout here */
+						removeAll();
+
+						GroupLayout layout = (GroupLayout) getLayout();
+
+						GroupLayout.ParallelGroup h1 = layout
+								.createParallelGroup(GroupLayout.Alignment.LEADING);
+						for (int i = 0; i < player1Chars.length; i++) {
+							h1.addComponent(player1Chars[i],GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+							          GroupLayout.PREFERRED_SIZE);
 						}
-					});
-				} catch (InvocationTargetException | InterruptedException e) {
-					e.printStackTrace();
+
+						GroupLayout.ParallelGroup h2 = layout
+								.createParallelGroup(GroupLayout.Alignment.LEADING);
+						h2.addComponent(logAreaScrollPane, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
+
+						GroupLayout.ParallelGroup h3 = layout
+								.createParallelGroup(GroupLayout.Alignment.LEADING);
+						for (int i = 0; i < player2Chars.length; i++) {
+							h3.addComponent(player2Chars[i],GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+							          GroupLayout.PREFERRED_SIZE);
+						}
+
+						layout.setHorizontalGroup(layout.createSequentialGroup().addGroup(h1)
+								.addGroup(h2).addGroup(h3));
+
+						GroupLayout.SequentialGroup v1a = layout.createSequentialGroup();
+						for (int i = 0; i < player1Chars.length; i++) {
+							v1a.addComponent(player1Chars[i],GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+							          GroupLayout.PREFERRED_SIZE);
+						}
+
+						GroupLayout.ParallelGroup v1b = layout
+								.createParallelGroup(GroupLayout.Alignment.CENTER);
+						v1b.addComponent(logAreaScrollPane, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
+
+						GroupLayout.SequentialGroup v1c = layout.createSequentialGroup();
+						for (int i = 0; i < player2Chars.length; i++) {
+							v1c.addComponent(player2Chars[i],GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+							          GroupLayout.PREFERRED_SIZE);
+						}
+
+						GroupLayout.ParallelGroup v1 = layout
+								.createParallelGroup(GroupLayout.Alignment.LEADING);
+						v1.addGroup(v1a).addGroup(v1b).addGroup(v1c);
+
+						layout.setVerticalGroup(layout.createSequentialGroup().addGroup(v1));
+
+					}
+				};
+
+				if (EventQueue.isDispatchThread()) {
+					runner.run();
+				} else {
+					try {
+						SwingUtilities.invokeAndWait(runner);
+					} catch (InvocationTargetException | InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-
-				// Row 0
-				add(new BLabel(Lang.player + ": " + player1));
-				add(player1Actions[0]);
-				add(player2Actions[0]);
-				add(new BLabel(Lang.player + ": " + player2));
-
-				// Row 1 - 5
-				for (int i = 0; i < CHAR_MAX; i++) {
-
-					add(player1Chars[i]);
-					add(player1Actions[i + 1]);
-					add(player2Actions[i + 1]);
-					add(player2Chars[i]);
-
-				}
+				
 
 				updateAllLabels();
 
@@ -643,20 +691,7 @@ public class Play extends JFrame {
 
 			}
 
-			private class BLabel extends JLabel {
-				public BLabel(String text) {
-					super(text);
-					setHorizontalAlignment(SwingConstants.CENTER);
-					setVerticalAlignment(SwingConstants.BOTTOM);
-				}
-
-				public BLabel() {
-					setHorizontalAlignment(SwingConstants.CENTER);
-					setVerticalAlignment(SwingConstants.BOTTOM);
-				}
-			}
-
-			private class CharLabel extends BLabel {
+			private class CharLabel extends JLabel {
 				private Character character = null;
 				// To be drawn in paintComponent()
 				private BufferedImage charImage = null;
@@ -667,12 +702,22 @@ public class Play extends JFrame {
 				private String charValues = null;
 
 				public CharLabel(Character character) {
+
+					// Set Text Position (Equipment)
+					setHorizontalAlignment(SwingConstants.CENTER);
+					setVerticalAlignment(SwingConstants.BOTTOM);
+					
+					// Set Size
+					setPreferredSize(new Dimension(170,84));
+
+					// Set GUI Images for paintComponent()
 					this.character = character;
 					setCharImage();
 					setJobIcon();
 					setPropertyIcon();
 					setOpaque(false);
 					highLightLabel(false);
+					
 				}
 
 				/**
@@ -932,28 +977,13 @@ public class Play extends JFrame {
 		}
 
 		private class BottomField extends JPanel {
-			private JScrollPane scrollPane = null;
+			
 
 			public BottomField() {
 				setBackground(Color.WHITE);
 				setLayout(new GridLayout(1, 1));
 
-				/* Set Log Area */
-				scrollPane = new JScrollPane(logArea = LOG_AREA = new JTextArea());
-				scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-				scrollPane.setPreferredSize(new Dimension(getWidth(), 100));
-
-				// Update Log Area automatically whenever text is appended
-				((DefaultCaret) logArea.getCaret()).setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-
-				logArea.setEditable(false);
-
-				// Print current Date to Log Area
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd '('E')' HH:mm:ss");
-				logArea.append(Lang.legendOfDoracity + Lang.log + " " + player1 + " vs " + player2
-						+ " " + formatter.format(new Date()));
-
-				add(scrollPane, BorderLayout.CENTER);
+				
 			}
 		}
 
@@ -974,7 +1004,7 @@ public class Play extends JFrame {
 		public PlayerArea(Player player) {
 			this.player = player;
 
-			setPreferredSize(new Dimension(200, 0));
+			setPreferredSize(new Dimension(115, 0));
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 			// setAlignmentX(Component.CENTER_ALIGNMENT);
