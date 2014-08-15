@@ -60,7 +60,7 @@ public class Preload extends JPanel {
 		add(new StartButton());
 
 		// For debugging: auto character selector
-		JButton debugButton = new JButton();
+		ActionButton debugButton = new ActionButton();
 		debugButton.setText("DEBUG");
 		final Play debugPlay = play;
 		debugButton.addActionListener(new ActionListener() {
@@ -76,7 +76,7 @@ public class Preload extends JPanel {
 		add(debugButton);
 	}
 
-	private class StartButton extends JButton implements ActionListener {
+	private class StartButton extends ActionButton implements ActionListener {
 		public StartButton() {
 			setText(Lang.confirm);
 			addActionListener(this);

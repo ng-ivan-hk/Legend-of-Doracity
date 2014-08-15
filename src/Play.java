@@ -29,6 +29,7 @@ import java.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -118,6 +119,8 @@ public class Play extends JFrame {
 	private final static Color academyColor = new Color(186, 53, 0);
 	private final static Color doracityColorLight = new Color(220, 242, 255);
 	private final static Color academyColorLight = new Color(255, 231, 210);
+	
+	private final static int buttonWidth = 30;
 
 	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
 
@@ -508,7 +511,7 @@ public class Play extends JFrame {
 
 		private class TopField extends JPanel {
 			public TopField() {
-				setBackground(Color.WHITE);
+				setBackground(new Color(240, 240, 255));
 				setLayout(new GridLayout(0, 3));
 
 				// Add Round Label
@@ -1006,6 +1009,7 @@ public class Play extends JFrame {
 
 			setPreferredSize(new Dimension(115, 0));
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+			setBackground(new Color(240, 240, 255));
 
 			// setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -1015,23 +1019,18 @@ public class Play extends JFrame {
 			/* Add HP & MP meter */
 			add(HPmeter = new JLabel());
 			add(MPmeter = new JLabel());
-			// Horizontal line
-			JSeparator separator = new JSeparator();
-			Dimension d = separator.getPreferredSize();
-			d.width = separator.getMaximumSize().width;
-			separator.setMaximumSize(d);
-			add(separator);
 
-			/* Add General Buttons */
+			/* Add Action Buttons */
 			add(attackButton = new AttackButton());
+			add(Box.createRigidArea(new Dimension(1, 1)));
 			add(castSkillButton = new CastSkillButton());
+			add(Box.createRigidArea(new Dimension(1, 1)));
 			add(jobChangeButton = new JobChangeButton());
+			add(Box.createRigidArea(new Dimension(1, 1)));
 			add(drawButton = new DrawButton());
+			add(Box.createRigidArea(new Dimension(1, 1)));
 			add(passButton = new PassButton());
-
-			JSeparator separator1 = new JSeparator(); // Horizontal line;
-			separator1.setMaximumSize(d);
-			add(separator1);
+			add(Box.createRigidArea(new Dimension(1, 1)));
 
 			/* Add Card Area */
 			cardArea = new JPanel();
@@ -1069,7 +1068,7 @@ public class Play extends JFrame {
 			updateHPMP();
 
 			/* Add Hand Card Buttons */
-			cardArea.setBackground(Color.WHITE);
+			cardArea.setBackground(new Color(250, 250, 250));
 			ArrayList<Card> handCards = player.getHandCards();
 			for (int i = handCards.size() - 1; i >= 0; i--) {
 				cardArea.add(new CardButton(handCards.get(i)));
@@ -1143,7 +1142,7 @@ public class Play extends JFrame {
 			return player;
 		}
 
-		public class AttackButton extends JButton implements ActionListener {
+		public class AttackButton extends ActionButton implements ActionListener {
 			public AttackButton() {
 				setText(Lang.normalAttack);
 				setToolTipText(Lang.normalAttackInfo);
@@ -1229,7 +1228,7 @@ public class Play extends JFrame {
 
 		}
 
-		private class CastSkillButton extends JButton implements ActionListener {
+		private class CastSkillButton extends ActionButton implements ActionListener {
 			public CastSkillButton() {
 				setText(Lang.castSkill);
 				setToolTipText(Lang.castSkillInfo);
@@ -1339,7 +1338,7 @@ public class Play extends JFrame {
 
 		}
 
-		private class JobChangeButton extends JButton implements ActionListener {
+		private class JobChangeButton extends ActionButton implements ActionListener {
 			
 			public JobChangeButton() {
 				setText(Lang.jobChange);
@@ -1396,7 +1395,7 @@ public class Play extends JFrame {
 			}
 		}
 
-		private class DrawButton extends JButton implements ActionListener {
+		private class DrawButton extends ActionButton implements ActionListener {
 			private int count = 0; // each time only draw ? cards
 
 			public DrawButton() {
@@ -1427,7 +1426,7 @@ public class Play extends JFrame {
 
 		}
 
-		private class PassButton extends JButton implements ActionListener {
+		private class PassButton extends ActionButton implements ActionListener {
 			public PassButton() {
 				setText(Lang.pass);
 				setToolTipText(Lang.passInfo);
