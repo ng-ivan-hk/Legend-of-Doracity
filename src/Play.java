@@ -136,8 +136,10 @@ public class Play extends JFrame {
 		// Set Style of Progress Bar
 		UIManager.put("ProgressBar.background", new Color(255, 255, 255, 150));
 		UIManager.put("ProgressBar.foreground", new Color(0, 0, 0, 25));
-		UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
-		UIManager.put("ProgressBar.selectionForeground", Color.BLACK);
+		UIManager.put("ProgressBar.selectionBackground", Color.DARK_GRAY);
+		UIManager.put("ProgressBar.selectionForeground", Color.DARK_GRAY);
+		UIManager.put("ProgressBar.border", BorderFactory.createLineBorder(Color.GRAY));
+		
 		
 		// Loading Window
 		loadingScreen = new LoadingScreen();

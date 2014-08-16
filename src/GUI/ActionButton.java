@@ -28,6 +28,7 @@ public class ActionButton extends JButton {
 		setPreferredSize(new Dimension(91, 30));
 		setMaximumSize(new Dimension(91, 30));
 		setMouseExitedStyle();
+		setFocusPainted(false);
 
 		addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent evt) {

@@ -17,7 +17,6 @@ import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JWindow;
-import javax.swing.UIManager;
 
 @SuppressWarnings("serial")
 public class LoadingScreen extends JWindow {
@@ -36,12 +35,28 @@ public class LoadingScreen extends JWindow {
 		cc.setLayout(new FlowLayout());
 		setBackgroundImage();
 		add(Box.createRigidArea(new Dimension(400, 15)));
-		add(progressBar = new JProgressBar(0, 100));
+		add(progressBar = new JProgressBar(0, 100) {
+			@Override
+			// For Painting Border
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.setColor(Color.GRAY);
+				// Top
+				g.fillRect(0, 0, getWidth(), 1);
+				// Left
+				g.fillRect(0, 0, 1, getHeight());
+				// Bottom
+				g.fillRect(0, getHeight() - 1, getWidth(), 1);
+				// Right
+				g.fillRect(getWidth() - 1, 0, 1, getHeight());
+
+			}
+		});
 
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
 		progressBar.setPreferredSize(new Dimension(400, 50));
-		progressBar.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		progressBar.setBorderPainted(false);
 
 		setSize(new Dimension(600, 315));
 		setLocationRelativeTo(null);
