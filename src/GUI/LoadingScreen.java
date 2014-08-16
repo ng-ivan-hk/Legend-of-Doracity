@@ -62,28 +62,28 @@ public class LoadingScreen extends JWindow {
 		setLocationRelativeTo(null);
 
 		addMouseListener(new MouseListener() {
-			public void mouseReleased(MouseEvent e) {
+			public void mouseReleased(MouseEvent evt) {
 			}
 
-			public void mousePressed(MouseEvent e) {
-				mouseDownCompCoords = e.getPoint();
+			public void mousePressed(MouseEvent evt) {
+				mouseDownCompCoords = evt.getPoint();
 			}
 
-			public void mouseExited(MouseEvent e) {
+			public void mouseExited(MouseEvent evt) {
 			}
 
-			public void mouseEntered(MouseEvent e) {
+			public void mouseEntered(MouseEvent evt) {
 			}
 
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent evt) {
 			}
 		});
 		addMouseMotionListener(new MouseMotionListener() {
-			public void mouseMoved(MouseEvent e) {
+			public void mouseMoved(MouseEvent evt) {
 			}
 
-			public void mouseDragged(MouseEvent e) {
-				Point currCoords = e.getLocationOnScreen();
+			public void mouseDragged(MouseEvent evt) {
+				Point currCoords = evt.getLocationOnScreen();
 				setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y
 						- mouseDownCompCoords.y);
 			}
