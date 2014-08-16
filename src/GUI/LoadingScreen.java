@@ -1,24 +1,78 @@
+import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JWindow;
+import javax.swing.UIManager;
 
 @SuppressWarnings("serial")
 public class LoadingScreen extends JWindow {
 
+	private Point mouseDownCompCoords;
+
 	private JProgressBar progressBar = null;
 	private float progress = 0;
 	private final int noOfTask = 73;
+	private static Image bgImage = null;
 
 	public LoadingScreen() {
 
-		progressBar = new JProgressBar(0, 100);
+		setContentPane(new MyComponent());
+		Container cc = this.getContentPane();
+		cc.setLayout(new FlowLayout());
+		setBackgroundImage();
+		add(Box.createRigidArea(new Dimension(400, 15)));
+		add(progressBar = new JProgressBar(0, 100));
+
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
-		add(progressBar);
+		progressBar.setPreferredSize(new Dimension(400, 50));
+		progressBar.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-		setSize(new Dimension(500, 50));
+		setSize(new Dimension(600, 315));
 		setLocationRelativeTo(null);
+
+		addMouseListener(new MouseListener() {
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			public void mousePressed(MouseEvent e) {
+				mouseDownCompCoords = e.getPoint();
+			}
+
+			public void mouseExited(MouseEvent e) {
+			}
+
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		addMouseMotionListener(new MouseMotionListener() {
+			public void mouseMoved(MouseEvent e) {
+			}
+
+			public void mouseDragged(MouseEvent e) {
+				Point currCoords = e.getLocationOnScreen();
+				setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y
+						- mouseDownCompCoords.y);
+			}
+		});
 
 	}
 
@@ -26,7 +80,30 @@ public class LoadingScreen extends JWindow {
 		progress += ((float) 100 / noOfTask * unit);
 		progressBar.setValue((int) progress);
 		progressBar.setString(message);
-		progressBar.update(progressBar.getGraphics());
+		repaint();
+	}
+
+	private static class MyComponent extends JPanel {
+
+		public MyComponent() {
+			setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		}
+
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(bgImage, 0, 0, null);
+		}
+	}
+
+	public void setBackgroundImage() {
+		BufferedImage src = null;
+		try {
+			src = ImageIO.read(Play.class.getResource("/resources/loadingScreenBG.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		// Resize Image smoothly
+		bgImage = src.getScaledInstance(600, 315, Image.SCALE_AREA_AVERAGING);
 	}
 
 }

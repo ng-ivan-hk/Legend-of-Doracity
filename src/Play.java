@@ -132,6 +132,12 @@ public class Play extends JFrame {
 	/* Methods */
 
 	public Play() throws InterruptedException {
+
+		// Set Style of Progress Bar
+		UIManager.put("ProgressBar.background", new Color(255, 255, 255, 150));
+		UIManager.put("ProgressBar.foreground", new Color(0, 0, 0, 25));
+		UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
+		UIManager.put("ProgressBar.selectionForeground", Color.BLACK);
 		
 		// Loading Window
 		loadingScreen = new LoadingScreen();
@@ -188,30 +194,14 @@ public class Play extends JFrame {
 
 		
 		/* Create and Set GUI */
-		try {
-			SwingUtilities.invokeAndWait(new Runnable() {
-				public void run() {
-					setFrame();
-					createPreload();
-				}
-			});
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		setFrame();
+		createPreload();
 
 		synchronized (this) {
 			this.wait();
 		}
-
-		try {
-			SwingUtilities.invokeAndWait(new Runnable() {
-				public void run() {
-					createMainGame();
-				}
-			});
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		
+		createMainGame();
 
 	}
 	
@@ -1041,6 +1031,8 @@ public class Play extends JFrame {
 			// Create a scroll panel and put the card area into it
 			JScrollPane scrollPane = new JScrollPane(cardArea);
 			scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+			scrollPane.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0,
+					ActionButton.borderColor));;
 			add(scrollPane);
 
 			updateArea();
