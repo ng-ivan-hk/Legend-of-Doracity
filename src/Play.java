@@ -275,7 +275,7 @@ public class Play extends JFrame {
 
 		/* Set Tool Tip */
 		getLoadingScreen().setProgress(1, "Setting Tool Tip");
-		ToolTipManager.sharedInstance().setInitialDelay(0);
+		ToolTipManager.sharedInstance().setInitialDelay(500);
 		
 		
 		
@@ -417,6 +417,9 @@ public class Play extends JFrame {
 		private JMenuItem exitMenuItem = null;
 
 		public MenuBar() {
+
+			setBackground(new Color(245, 245, 245));
+			setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ActionButton.borderColor));
 
 			JMenu optionMenu = new JMenu(Lang.menu_option);
 			add(optionMenu);

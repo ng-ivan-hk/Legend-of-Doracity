@@ -17,10 +17,10 @@ import javax.swing.JButton;
 @SuppressWarnings("serial")
 public class ActionButton extends JButton {
 
-	final static Color normalColor = new Color(250, 250, 255);
-	final static Color disabledColor = new Color(220, 220, 230);
-	final static Color hoverColor = new Color(213, 225, 242);
-	final static Color borderColor = new Color(100, 100, 100);
+	public final static Color normalColor = new Color(250, 250, 255);
+	public final static Color disabledColor = new Color(220, 220, 230);
+	public final static Color hoverColor = new Color(213, 225, 242);
+	public final static Color borderColor = new Color(100, 100, 100);
 
 	public ActionButton() {
 
@@ -39,6 +39,7 @@ public class ActionButton extends JButton {
 			public void mouseExited(MouseEvent evt) {
 				setMouseExitedStyle();
 			}
+			
 		});
 	}
 

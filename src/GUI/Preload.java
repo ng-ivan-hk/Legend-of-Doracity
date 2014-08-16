@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -42,21 +43,22 @@ public class Preload extends JPanel {
 	 *            pass Play object so that this class can unlock main thread
 	 */
 	public Preload(Play play) {
-		
+
 		play.getLoadingScreen().setProgress(1, "Creating Preload Screen");
-		
 		this.play = play;
 
 		add(new JLabel(Lang.player + "1: "));
 		play.getLoadingScreen().setProgress(1, "Creating TextField");
 		add(p1Name = new JTextField("A", 15));
+		p1Name.setBorder(BorderFactory.createLineBorder(ActionButton.borderColor));
 		play.getLoadingScreen().setProgress(1, "Creating CharSelectPanel");
 		add(p1 = new CharSelectPanel());
 
 		add(new JLabel(Lang.player + "2: "));
 		add(p2Name = new JTextField("B", 15));
+		p2Name.setBorder(BorderFactory.createLineBorder(ActionButton.borderColor));
 		add(p2 = new CharSelectPanel());
-		
+
 		add(new StartButton());
 
 		// For debugging: auto character selector
@@ -129,22 +131,23 @@ public class Preload extends JPanel {
 	}
 
 	private class CharSelectPanel extends JPanel {
-		
+
 		private ArrayList<Integer> charNumbers = new ArrayList<Integer>();
 		private int count = 0; // count how many characters selected
 
 		public CharSelectPanel() {
-			
+
+			setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.BLACK));
+
 			setLayout(new GridLayout(0, 6));
 			final int totalChar = 30;
-			
+
 			for (int i = 0; i < totalChar; i++) {
 				add(new CharButton(i + 1));
 				play.getLoadingScreen().setProgress(1,
 						"Loading Character " + i + ": " + Lang.CharNames[i]);
 			}
-			
-			
+
 		}
 
 		public int getCount() {
@@ -165,11 +168,12 @@ public class Preload extends JPanel {
 			private int number;
 			private BufferedImage charImage = null;
 			private boolean mouseOver = false;
+			private boolean mousePressed = false;
 
 			public CharButton(int number) {
 				this.number = number;
 				setPreferredSize(new Dimension(150, 40));
-				setText(Lang.CharNames[number]);
+				setBorder(BorderFactory.createMatteBorder(1, 1, 0, 0, Color.BLACK));
 				setCharImage();
 				addActionListener(this);
 				addMouseListener(this);
@@ -214,7 +218,6 @@ public class Preload extends JPanel {
 				}
 				return imageURL;
 			}
-			
 
 			@Override
 			public void paintComponent(Graphics g) {
@@ -222,12 +225,18 @@ public class Preload extends JPanel {
 				if (!isSelected()) {
 					if (!mouseOver) {
 						g.setColor(new Color(0, 0, 0, 150));
+					} else if (mousePressed) {
+						g.setColor(new Color(0, 0, 0, 100));
 					} else {
 						g.setColor(new Color(0, 0, 0, 50));
 					}
 					g.fillRect(0, 0, getWidth(), getHeight());
 					g.setColor(mouseOver ? Color.WHITE : Color.LIGHT_GRAY);
 				} else {
+					if (mousePressed) {
+						g.setColor(new Color(0, 0, 0, 30));
+						g.fillRect(0, 0, getWidth(), getHeight());
+					}
 					g.setColor(Color.BLACK);
 				}
 				g.setFont(new Font(Lang.font, Font.PLAIN, 15));
@@ -252,10 +261,14 @@ public class Preload extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				mousePressed = true;
+				repaint();
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				mousePressed = false;
+				repaint();
 			}
 		}
 	}
