@@ -122,6 +122,7 @@ public class Iron extends Character {
 									target.setDefense(false);
 									attack(target);
 									target.setDefense(true);
+									activeSkills[0].setDoNotPass(false);
 								}
 
 							});
@@ -129,6 +130,7 @@ public class Iron extends Character {
 						}
 
 					}, 3);
+			activeSkills[0].setDoNotPass(true);
 		}
 	}
 

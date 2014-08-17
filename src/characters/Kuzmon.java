@@ -62,6 +62,8 @@ public class Kuzmon extends Character {
 
 										@Override
 										public void actionPerformed(ActionEvent evt) {
+											
+											activeSkills[0].setDoNotPass(false);
 
 											CardSelectDialog.this.dispose();
 
@@ -80,6 +82,7 @@ public class Kuzmon extends Character {
 											Play.printlnLog(Kuzmon.this
 													+ Lang.kuzmon_transferMagic1 + card
 													+ Lang.kuzmon_transferMagic2 + randomCard);
+											
 
 										}
 
@@ -95,6 +98,7 @@ public class Kuzmon extends Character {
 						}
 
 					}, 0);
+			activeSkills[0].setDoNotPass(true);
 
 		} else {
 

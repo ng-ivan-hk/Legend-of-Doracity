@@ -87,6 +87,7 @@ public class Knight extends Character {
 											changeDefM(1, FOR_ROUND_END);
 											break;
 										}
+										activeSkills[0].setDoNotPass(false);
 									}
 								}
 
@@ -96,6 +97,7 @@ public class Knight extends Character {
 						}
 
 					}, 1);
+			activeSkills[0].setDoNotPass(true);
 
 		} else {
 

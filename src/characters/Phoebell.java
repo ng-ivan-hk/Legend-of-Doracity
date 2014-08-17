@@ -163,12 +163,14 @@ public class Phoebell extends Character {
 									} else {
 										target.changeDefM(-1, FOR_ROUND_END);
 									}
+									activeSkills[0].setDoNotPass(false);
 								}
 
 							});
 						}
 
 					}, 3);
+			activeSkills[0].setDoNotPass(true);
 
 		} else {
 

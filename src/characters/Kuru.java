@@ -99,6 +99,7 @@ public class Kuru extends Character {
 											e.printStackTrace();
 										}
 										dispose();
+										activeSkills[0].setDoNotPass(false);
 									}
 
 								}
@@ -118,6 +119,7 @@ public class Kuru extends Character {
 						}
 
 					}, 3);
+			activeSkills[0].setDoNotPass(true);
 
 		} else {
 
@@ -189,6 +191,7 @@ public class Kuru extends Character {
 											}
 
 											Play.printlnLog(message);
+											activeSkills[0].setDoNotPass(false);
 										}
 
 									}
@@ -202,6 +205,7 @@ public class Kuru extends Character {
 						}
 
 					}, 0);
+			activeSkills[0].setDoNotPass(false);
 		}
 	}
 

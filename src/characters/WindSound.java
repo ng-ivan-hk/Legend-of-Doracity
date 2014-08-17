@@ -6,6 +6,11 @@ public class WindSound extends Character {
 
 	private boolean catForm = false; // for job 1 active skill
 	private boolean noDamage = false; // for job 2 active skill
+	
+	@Override
+	public String toString() {
+		return super.toString() + (catForm ? Lang.windsound_catForm_toString : "");
+	}
 
 	@Override
 	public int getInitAttack() {

@@ -55,7 +55,7 @@ public class LoadingScreen extends JWindow {
 
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
-		progressBar.setPreferredSize(new Dimension(400, 50));
+		progressBar.setPreferredSize(new Dimension(400, 35));
 		progressBar.setBorderPainted(false);
 
 		setSize(new Dimension(600, 315));
@@ -83,9 +83,11 @@ public class LoadingScreen extends JWindow {
 			}
 
 			public void mouseDragged(MouseEvent evt) {
-				Point currCoords = evt.getLocationOnScreen();
-				setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y
-						- mouseDownCompCoords.y);
+				if (isVisible()) {
+					Point currCoords = evt.getLocationOnScreen();
+					setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y
+							- mouseDownCompCoords.y);
+				}
 			}
 		});
 
@@ -107,6 +109,7 @@ public class LoadingScreen extends JWindow {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			g.drawImage(bgImage, 0, 0, null);
+			g.drawString(Lang.loading, 5, 15);
 		}
 	}
 

@@ -55,7 +55,8 @@ public class FishBall extends Character {
 										@Override
 										public void targetMethod(Character currentChar,
 												Character target) {
-											target.setDestroyDefP(true);;
+											target.setDestroyDefP(true);
+											activeSkills[0].setDoNotPass(false);
 										}
 
 									});
@@ -65,6 +66,7 @@ public class FishBall extends Character {
 						}
 
 					}, 5);
+			activeSkills[0].setDoNotPass(true);
 			activeSkills[1] = new CharSkill(this, true, 1, Command.BEFORE_BATTLE,
 					new CharSkillMethod() {
 
@@ -79,6 +81,7 @@ public class FishBall extends Character {
 										public void targetMethod(Character currentChar,
 												Character target) {
 											target.setGiveUpSkills(true);
+											activeSkills[1].setDoNotPass(false);
 										}
 
 									});
@@ -88,6 +91,7 @@ public class FishBall extends Character {
 						}
 
 					}, 5);
+			activeSkills[1].setDoNotPass(true);
 
 		} else {
 

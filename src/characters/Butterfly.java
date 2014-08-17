@@ -60,6 +60,7 @@ public class Butterfly extends Character {
 								@Override
 								public void targetMethod(Character currentChar, Character target) {
 									changeAttack(2, FOR_ROUND_END);
+									activeSkills[0].setDoNotPass(false);
 								}
 
 							});
@@ -67,6 +68,7 @@ public class Butterfly extends Character {
 						}
 
 					}, 0);
+			activeSkills[0].setDoNotPass(true);
 		}
 	}
 

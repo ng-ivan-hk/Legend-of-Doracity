@@ -26,17 +26,20 @@ public class Sasa extends Character {
 
 						@Override
 						public void skillMethod(Character currentChar, Player opponent) {
+							
 							new CharSkill.CardSelectDialog(getPlayer(), new TargetMethod() {
 
 								@Override
 								public void targetMethod(Character currentChar, Character target) {
 									getPlayer().changeHP(3);
+									activeSkills[0].setDoNotPass(false);
 								}
 
 							});
 						}
 
 					}, 0);
+			activeSkills[0].setDoNotPass(true);
 
 		} else {
 
@@ -84,6 +87,7 @@ public class Sasa extends Character {
 						}
 
 					}, 0);
+			activeSkills[0].setDoNotPass(false);
 		}
 	}
 

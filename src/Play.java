@@ -140,7 +140,6 @@ public class Play extends JFrame {
 		UIManager.put("ProgressBar.selectionForeground", Color.DARK_GRAY);
 		UIManager.put("ProgressBar.border", BorderFactory.createLineBorder(Color.GRAY));
 		
-		
 		// Loading Window
 		loadingScreen = new LoadingScreen();
 		loadingScreen.setVisible(true);
@@ -1319,12 +1318,11 @@ public class Play extends JFrame {
 							player2Area.updateArea();
 							displayArea.battleField.updateAllLabels();
 
-							SkillDialog.this.dispose();
-							
 							// Pass or not?
 							if (charSkill.isDoNotPass()) {
 								return;
 							}
+							SkillDialog.this.dispose();
 							CastSkillButton.this.setEnabled(false);
 							synchronized (Play.this) {
 								Play.this.notify();

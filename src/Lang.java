@@ -11,7 +11,7 @@ public class Lang {
 	public final static String frameTitle = legendOfDoracity + " - " + "Legend of Doracity";
 	public final static String font = "新細明體";
 	public final static String confirm = "決定";
-	public final static String loading = "載入中…";
+	public final static String loading = "正在啟動…";
 	public final static String menu_option = "選項";
 	public final static String menu_help = "幫助";
 	public final static String menu_about = "關於";
@@ -601,6 +601,7 @@ public class Lang {
 	public final static String kaitodora_steal = "偷竊了";
 	// 24. WindSound
 	public final static String windsound_catForm_cat = "風音之鈴已轉為貓形態！";
+	public final static String windsound_catForm_toString = "（貓形態）";
 	public final static String windsound_catForm_human = "風音之鈴已轉回人形！";
 	// 29. Sasa
 	public final static String sasa_pharmacist = "射手的藥師技能發動：額外使用道具回復時+1HP";

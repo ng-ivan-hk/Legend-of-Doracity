@@ -34,6 +34,7 @@ public class MandyLee extends Character {
 								public void targetMethod(Character currentChar, Character target) {
 									// set target defense on
 									target.setDefense(true);
+									activeSkills[0].setDoNotPass(false);
 								}
 
 							});
@@ -41,6 +42,7 @@ public class MandyLee extends Character {
 						}
 
 					}, 5);
+			activeSkills[0].setDoNotPass(true);
 
 		} else {
 

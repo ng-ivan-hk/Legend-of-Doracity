@@ -55,12 +55,15 @@ public class Map extends Character {
 												Character target) {
 											// set target assassin on
 											target.setAssassin(true);
+											
+											activeSkills[0].setDoNotPass(false);
 										}
 
 									});
 						}
 
 					}, 2);
+			activeSkills[0].setDoNotPass(true);
 
 		} else {
 
@@ -90,6 +93,8 @@ public class Map extends Character {
 												Character target) {
 											// set target give up on
 											target.setGiveUp(true);
+											
+											activeSkills[0].setDoNotPass(false);
 										}
 
 									});
@@ -97,6 +102,7 @@ public class Map extends Character {
 						}
 
 					}, 5);
+			activeSkills[0].setDoNotPass(true);
 		}
 	}
 

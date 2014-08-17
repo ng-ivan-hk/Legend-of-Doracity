@@ -51,6 +51,7 @@ public class Livia extends Character {
 									changeAttack(3, FOR_ROUND_END);
 									changeDefP(2, FOR_ROUND_END);
 									changeDefM(2, FOR_ROUND_END);
+									activeSkills[0].setDoNotPass(false);
 								}
 
 							});
@@ -58,6 +59,7 @@ public class Livia extends Character {
 						}
 
 					}, 3);
+			activeSkills[0].setDoNotPass(true);
 
 		} else {
 
