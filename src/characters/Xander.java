@@ -70,7 +70,7 @@ public class Xander extends Character {
 								public void targetMethod(Character currentChar, Character target) {
 									getPlayer().changeMP(2);
 									
-									activeSkills[0].setDoNotPass(false);
+									activeSkills[1].setDoNotPass(false);
 								}
 
 							});
@@ -78,7 +78,7 @@ public class Xander extends Character {
 						}
 
 					}, 0);
-			activeSkills[0].setDoNotPass(true);
+			activeSkills[1].setDoNotPass(true);
 		}
 	}
 
