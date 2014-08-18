@@ -558,32 +558,18 @@ public class Play extends JFrame {
 			}
 
 			/**
-			 * Highlight a CharLabel. It is used in Play.start() like this:
-			 * displayArea.battleField.highlightChar(currentChar.getPlayer(),
-			 * currentChar.getPlayer().indexOfChar(currentChar), true)
+			 * Highlight a CharLabel representing the Character.
 			 * 
-			 * @param player
-			 *            Player object
-			 * @param index
-			 *            index in CharLabel
+			 * @param c
+			 *            Character to be highlighted
 			 * @param b
 			 *            pass true to highlight, false to unhighlight
 			 */
-			public void highlightChar(Player player, int index, boolean b) {
+			public void highlightChar(Character c, boolean b) {
 
-				if (player.isPlayer1()) {
-					if (b) {
-						player1Chars[index].highLightLabel(true);
-					} else {
-						player1Chars[index].highLightLabel(false);
-					}
-				} else {
-					if (b) {
-						player2Chars[index].highLightLabel(true);
-					} else {
-						player2Chars[index].highLightLabel(false);
-					}
-				}
+				int index = c.getPlayer().indexOfChar(c);
+				(c.getPlayer().isPlayer1() ? player1Chars : player2Chars)[index].highLightLabel(b);
+
 			}
 
 			public void updateAllLabels() {
@@ -1388,12 +1374,16 @@ public class Play extends JFrame {
 					}
 				}
 				
+				setEnabled(false);
+				
 				// Update Area
 				player1Area.updateHPMP();
 				player2Area.updateHPMP();
 				displayArea.battleField.updateAllLabels();
 				displayArea.battleField.updateCharImages();
-				setEnabled(false);
+				
+				// Rehighlight character
+				displayArea.battleField.highlightChar(currentChar, true);
 
 			}
 		}
@@ -1654,11 +1644,10 @@ public class Play extends JFrame {
 			// Check for Kuzmon's job 1 active skill
 			Kuzmon maybeKuzmon = (Kuzmon) playerAreas[p].getPlayer().contains(Kuzmon.class);
 			if (maybeKuzmon != null && maybeKuzmon.isFirstJob()) {
-				
+
 				currentChar = maybeKuzmon;
-				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
-						.indexOfChar(currentChar), true);
-				
+				displayArea.battleField.highlightChar(currentChar, true);
+
 				SwingUtilities.invokeAndWait(new Runnable() {
 					@Override
 					public void run() {
@@ -1679,8 +1668,7 @@ public class Play extends JFrame {
 					}
 				});
 				
-				displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
-						.indexOfChar(currentChar), false);
+				displayArea.battleField.highlightChar(currentChar, false);
 				
 			}
 			
@@ -1790,8 +1778,7 @@ public class Play extends JFrame {
 					.setJobChangeButtonText();
 
 			// Highlight the character on the battle field
-			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
-					.indexOfChar(currentChar), true);
+			displayArea.battleField.highlightChar(currentChar, true);
 
 			// Handle Buttons
 			final PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
@@ -1824,8 +1811,7 @@ public class Play extends JFrame {
 			});
 
 			// Unhighlight the character
-			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
-					.indexOfChar(currentChar), false);
+			displayArea.battleField.highlightChar(currentChar, false);
 
 		}
 	}
@@ -1844,8 +1830,7 @@ public class Play extends JFrame {
 			printCurrentChar();
 
 			// Highlight the character on the battle field
-			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
-					.indexOfChar(currentChar), true);
+			displayArea.battleField.highlightChar(currentChar, true);
 
 			// Handle Buttons
 			final PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
@@ -1873,8 +1858,7 @@ public class Play extends JFrame {
 			});
 
 			// Unhighlight the character
-			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
-					.indexOfChar(currentChar), false);
+			displayArea.battleField.highlightChar(currentChar, false);
 
 		}
 	}
@@ -1899,8 +1883,7 @@ public class Play extends JFrame {
 			}
 
 			// Highlight the character on the battle field
-			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
-					.indexOfChar(currentChar), true);
+			displayArea.battleField.highlightChar(currentChar, true);
 
 			// Handle Buttons
 			final PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
@@ -1932,8 +1915,7 @@ public class Play extends JFrame {
 			});
 
 			// Unhighlight the character
-			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
-					.indexOfChar(currentChar), false);
+			displayArea.battleField.highlightChar(currentChar, false);
 
 		}
 	}
@@ -1957,8 +1939,7 @@ public class Play extends JFrame {
 			}
 
 			// Highlight the character on the battle field
-			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
-					.indexOfChar(currentChar), true);
+			displayArea.battleField.highlightChar(currentChar, true);
 
 			// Handle Buttons
 			final PlayerArea areaTemp = currentChar.getPlayer().isPlayer1() ? player1Area
@@ -1996,8 +1977,7 @@ public class Play extends JFrame {
 			});
 
 			// Unhighlight the character
-			displayArea.battleField.highlightChar(currentChar.getPlayer(), currentChar.getPlayer()
-					.indexOfChar(currentChar), false);
+			displayArea.battleField.highlightChar(currentChar, false);
 
 		}
 	}
