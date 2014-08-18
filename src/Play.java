@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -508,7 +509,7 @@ public class Play extends JFrame {
 
 		private class TopField extends JPanel {
 			public TopField() {
-				setBackground(new Color(240, 240, 255));
+				setBackground(Style.panelColor);
 				setLayout(new GridLayout(0, 3));
 
 				// Add Round Label
@@ -998,6 +999,7 @@ public class Play extends JFrame {
 		private CastSkillButton castSkillButton = null;
 		private JobChangeButton jobChangeButton = null;
 		private DrawButton drawButton = null;
+		private UnequipButton unequipButton = null;
 		private PassButton passButton = null;
 		private JPanel cardArea = null;
 
@@ -1005,29 +1007,30 @@ public class Play extends JFrame {
 			this.player = player;
 
 			setPreferredSize(new Dimension(115, 0));
-			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-			setBackground(new Color(240, 240, 255));
+			setLayout(new BorderLayout());
+			setBackground(Style.panelColor);//TODO:1
+			
 
-			// setAlignmentX(Component.CENTER_ALIGNMENT);
-
-			/* Add Player's name */
-			add(new JLabel("--- " + player + " ---"));
-
-			/* Add HP & MP meter */
-			add(HPmeter = new JLabel());
-			add(MPmeter = new JLabel());
+			/* Add Player's name &  HP, MP meter */
+			JPanel playerPanel = new JPanel();
+			add(playerPanel, BorderLayout.NORTH);
+			playerPanel.setBackground(Style.panelColor);
+			playerPanel.setLayout(new GridLayout(0,1));
+			playerPanel.add(new JLabel("--- " + player + " ---"));
+			playerPanel.add(HPmeter = new JLabel());
+			playerPanel.add(MPmeter = new JLabel());
 
 			/* Add Action Buttons */
-			add(attackButton = new AttackButton());
-			add(Box.createRigidArea(new Dimension(1, 1)));
-			add(castSkillButton = new CastSkillButton());
-			add(Box.createRigidArea(new Dimension(1, 1)));
-			add(jobChangeButton = new JobChangeButton());
-			add(Box.createRigidArea(new Dimension(1, 1)));
-			add(drawButton = new DrawButton());
-			add(Box.createRigidArea(new Dimension(1, 1)));
-			add(passButton = new PassButton());
-			add(Box.createRigidArea(new Dimension(1, 1)));
+			JPanel actionPanel = new JPanel();
+			add(actionPanel, BorderLayout.CENTER);
+			actionPanel.setBackground(Style.panelColor);
+			actionPanel.setLayout(new FlowLayout());
+			actionPanel.add(attackButton = new AttackButton());
+			actionPanel.add(castSkillButton = new CastSkillButton());
+			actionPanel.add(jobChangeButton = new JobChangeButton());
+			actionPanel.add(drawButton = new DrawButton());
+			actionPanel.add(unequipButton = new UnequipButton());
+			actionPanel.add(passButton = new PassButton());
 
 			/* Add Card Area */
 			cardArea = new JPanel();
@@ -1036,8 +1039,9 @@ public class Play extends JFrame {
 			JScrollPane scrollPane = new JScrollPane(cardArea);
 			scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 			scrollPane.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0,
-					ActionButton.borderColor));;
-			add(scrollPane);
+					ActionButton.borderColor));
+			scrollPane.setPreferredSize(new Dimension(getWidth(), 250));
+			add(scrollPane, BorderLayout.SOUTH);
 
 			updateArea();
 		}
@@ -1080,10 +1084,11 @@ public class Play extends JFrame {
 		public void updateHPMP() {
 
 			/* Update HP & MP */
-			HPmeter.setText("<html><font color=red>" + Lang.HP + " :  " + player.getHP() + " / "
+			HPmeter.setText("<html><font color=red>   " + Lang.HP + " :  " + player.getHP() + " / "
 					+ Play.MAX_HP + "</font></html>");
 			MPmeter.setText("<html><font color=blue>" + Lang.MP + " :  " + player.getMP() + " / "
 					+ Play.MAX_MP + "</font></html>");
+			repaint();
 
 		}
 
@@ -1133,8 +1138,8 @@ public class Play extends JFrame {
 		}
 
 		public void setJobChangeButtonText() {
-			jobChangeButton.setToolTipText(Lang.jobChangeInfo[0] + currentChar.getJobChangeMP()
-					+ Lang.jobChangeInfo[1]);
+			jobChangeButton.setDescription(Lang.jobChange,
+					Lang.jobChangeInfo[0] + currentChar.getJobChangeMP() + Lang.jobChangeInfo[1]);
 		}
 		
 		public Player getPlayer() {
@@ -1143,8 +1148,8 @@ public class Play extends JFrame {
 
 		public class AttackButton extends ActionButton implements ActionListener {
 			public AttackButton() {
-				setText(Lang.normalAttack);
-				setToolTipText(Lang.normalAttackInfo);
+				setImageName("attack");
+				setDescription(Lang.normalAttack, Lang.normalAttackInfo);
 				setEnabled(false);
 				addActionListener(this);
 			}
@@ -1229,8 +1234,8 @@ public class Play extends JFrame {
 
 		private class CastSkillButton extends ActionButton implements ActionListener {
 			public CastSkillButton() {
-				setText(Lang.castSkill);
-				setToolTipText(Lang.castSkillInfo);
+				setImageName("castSkill");
+				setDescription(Lang.castSkill, Lang.castSkillInfo);
 				setEnabled(false);
 				addActionListener(this);
 			}
@@ -1339,8 +1344,8 @@ public class Play extends JFrame {
 		private class JobChangeButton extends ActionButton implements ActionListener {
 			
 			public JobChangeButton() {
-				setText(Lang.jobChange);
-				setToolTipText(Lang.jobChangeInfo[0] + "15" + Lang.jobChangeInfo[1]);
+				setImageName("jobChange");
+				setDescription(Lang.jobChange, Lang.jobChangeInfo[0] + "15" + Lang.jobChangeInfo[1]);
 				setEnabled(false);
 				addActionListener(this);
 			}
@@ -1397,8 +1402,8 @@ public class Play extends JFrame {
 			private int count = 0; // each time only draw ? cards
 
 			public DrawButton() {
-				setText(Lang.drawCard);
-				setToolTipText(Lang.drawCardInfo);
+				setImageName("draw");
+				setDescription(Lang.drawCard, Lang.drawCardInfo);
 				setEnabled(false);
 				addActionListener(this);
 			}
@@ -1423,11 +1428,28 @@ public class Play extends JFrame {
 			}
 
 		}
+		
+		private class UnequipButton extends ActionButton implements ActionListener {
+			public UnequipButton() {
+				setImageName("unequip");
+				setDescription(Lang.unequip, Lang.unequipInfo);
+				setEnabled(false);
+				addActionListener(this);
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				setEnabled(false);
+				currentChar.setEquipment(null);
+				displayArea.battleField.updateAllLabels();
+			}
+
+		}
 
 		private class PassButton extends ActionButton implements ActionListener {
 			public PassButton() {
-				setText(Lang.pass);
-				setToolTipText(Lang.passInfo);
+				setImageName("pass");
+				setDescription(Lang.pass, Lang.passInfo);
 				setEnabled(false);
 				addActionListener(this);
 			}
@@ -1486,6 +1508,8 @@ public class Play extends JFrame {
 						JOptionPane.showMessageDialog(this, Lang.notDoracity);
 						return;
 					}
+					
+					unequipButton.setEnabled(true);
 
 				} else if (card instanceof Item) {
 					
@@ -1777,6 +1801,9 @@ public class Play extends JFrame {
 				@Override
 				public void run() {
 					areaTemp.jobChangeButton.setEnabled(true);
+					if (currentChar.getEquipment() != null) {
+						areaTemp.unequipButton.setEnabled(true);
+					}
 					areaTemp.passButton.setEnabled(true);
 					areaTemp.setEnableEquipment(true);
 				}
@@ -1790,6 +1817,7 @@ public class Play extends JFrame {
 				@Override
 				public void run() {
 					areaTemp.jobChangeButton.setEnabled(false);
+					areaTemp.unequipButton.setEnabled(false);
 					areaTemp.passButton.setEnabled(false);
 					areaTemp.setEnableEquipment(false);
 				}

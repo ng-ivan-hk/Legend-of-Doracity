@@ -482,17 +482,17 @@ public class Lang {
 	/* Buttons */
 	public final static String normalAttack = "普通攻擊";
 	public final static String castSkill = "發動技能";
-	public final static String removeEquipment = "移除裝備";
 	public final static String jobChange = "轉職";
 	public final static String drawCard = "抽牌";
+	public final static String unequip = "解除裝備";
 	public final static String pass = "Pass";
 
 	/* Button Descriptions */
 	public final static String normalAttackInfo = "選取對方一名角色，對其進行普通攻擊。";
 	public final static String castSkillInfo = "查看角色技能，並選擇使用其中一項。";
-	public final static String removeEquipmentInfo = "移除角色目前的裝備。";
 	public final static String[] jobChangeInfo = { "消耗", "MP進行轉職。" };
 	public final static String drawCardInfo = "抽一張手牌。";
+	public final static String unequipInfo = "解除角色當前的裝備。";
 	public final static String passInfo = "結束此階段。";
 
 	/* Skill messages */
