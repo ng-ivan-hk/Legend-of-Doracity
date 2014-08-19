@@ -137,6 +137,7 @@ public class Play extends JFrame {
 		UIManager.put("ProgressBar.selectionBackground", Color.DARK_GRAY);
 		UIManager.put("ProgressBar.selectionForeground", Color.DARK_GRAY);
 		UIManager.put("ProgressBar.border", BorderFactory.createLineBorder(Color.GRAY));
+		UIManager.put("ButtonUI", MyButtonUI.class.getName());
 		
 		// Loading Window
 		loadingScreen = new LoadingScreen();
@@ -1102,7 +1103,8 @@ public class Play extends JFrame {
 		public void setEnableEquipment(boolean b) {
 			Component[] cardButtons = cardArea.getComponents();
 			for (int i = 0; i < cardArea.getComponentCount(); i++) {
-				if (cardButtons[i].getBackground() == Color.WHITE) {
+				CardButton cardButton = (CardButton) cardButtons[i];
+				if (cardButton.card instanceof Equipment) {
 					cardButtons[i].setEnabled(b);
 				}
 			}
@@ -1111,7 +1113,8 @@ public class Play extends JFrame {
 		public void setEnableItem(boolean b) {
 			Component[] cardButtons = cardArea.getComponents();
 			for (int i = 0; i < cardArea.getComponentCount(); i++) {
-				if (cardButtons[i].getBackground() == Color.ORANGE) {
+				CardButton cardButton = (CardButton) cardButtons[i];
+				if (cardButton.card instanceof Item) {
 					cardButtons[i].setEnabled(b);
 				}
 			}
@@ -1122,22 +1125,24 @@ public class Play extends JFrame {
 			Component[] cardButtons = cardArea.getComponents();
 			if (b) { // enable the correct Skill buttons
 				for (int i = 0; i < cardArea.getComponentCount(); i++) {
+					CardButton cardButton = (CardButton) cardButtons[i];
 
 					// If the button refers to a Skill Card
-					if (cardButtons[i].getBackground() == Color.YELLOW) {
-						CardButton cardButtonTemp = (CardButton) cardButtons[i];
-						Skill cardTemp = (Skill) cardButtonTemp.card;
+					if (cardButton.card instanceof Skill) {
+						Skill skillCard = (Skill) cardButton.card;
 
 						// If the occasion of the Skill Card matches
-						if (cardTemp.getOccasion() == currentStatus) {
-							cardButtons[i].setEnabled(true);
+						if (skillCard.getOccasion() == currentStatus) {
+							cardButton.setEnabled(true);
 						}
 					}
 				}
 			} else { // disable all Skill buttons
 				for (int i = 0; i < cardArea.getComponentCount(); i++) {
-					if (cardButtons[i].getBackground() == Color.YELLOW) {
-						cardButtons[i].setEnabled(false);
+					CardButton cardButton = (CardButton) cardButtons[i];
+
+					if (cardButton.card instanceof Skill) {
+						cardButton.setEnabled(false);
 					}
 				}
 
@@ -1482,6 +1487,7 @@ public class Play extends JFrame {
 		}
 
 		private class CardButton extends JButton implements ActionListener {
+
 			private Card card = null;
 
 			public CardButton(Card card) {
@@ -1490,11 +1496,11 @@ public class Play extends JFrame {
 				setEnabled(false);
 
 				if (card instanceof Equipment) {
-					setBackground(Color.WHITE);
+					setBackground(new Color(221, 233, 235));
 				} else if (card instanceof Item) {
-					setBackground(Color.ORANGE);
+					setBackground(new Color(252, 218, 167));
 				} else { // Skill
-					setBackground(Color.YELLOW);
+					setBackground(new Color(255, 255, 180));
 				}
 
 				// Add description
@@ -1506,6 +1512,24 @@ public class Play extends JFrame {
 			@Override
 			public Point getToolTipLocation(MouseEvent e) {
 				return moveWithCursor(e);
+			}
+
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+
+
+			}
+
+			@Override
+			public void setEnabled(boolean b) {
+				super.setEnabled(b);
+				if (b) {
+					setBorder(BorderFactory.createLineBorder(getBackground().darker()));
+				} else {
+					setBorder(BorderFactory.createEmptyBorder());
+				}
+
 			}
 
 			@Override

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -61,8 +62,9 @@ public class Preload extends JPanel {
 		add(new StartButton());
 
 		// For debugging: auto character selector
-		NormalButton debugButton = new NormalButton();
+		JButton debugButton = new JButton();
 		debugButton.setText("DEBUG");
+
 		final Play debugPlay = play;
 		debugButton.addActionListener(new ActionListener() {
 			@Override
@@ -77,7 +79,7 @@ public class Preload extends JPanel {
 		add(debugButton);
 	}
 
-	private class StartButton extends NormalButton implements ActionListener {
+	private class StartButton extends JButton implements ActionListener {
 		public StartButton() {
 			setText(Lang.confirm);
 			addActionListener(this);
