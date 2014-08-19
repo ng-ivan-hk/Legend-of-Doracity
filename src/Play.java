@@ -1383,16 +1383,19 @@ public class Play extends JFrame {
 						JOptionPane.showMessageDialog(this, tempEquip + ": " + Lang.wrongJob + "\n"
 								+ Lang.removeEquip);
 						currentChar.setEquipment(null);
+						unequipButton.setEnabled(false);
 						break;
 					case 10:
 						JOptionPane.showMessageDialog(this, tempEquip + ": " + Lang.notAcademy
 								+ "\n" + Lang.removeEquip);
 						currentChar.setEquipment(null);
+						unequipButton.setEnabled(false);
 						break;
 					case 11:
 						JOptionPane.showMessageDialog(this, tempEquip + ": " + Lang.notDoracity
 								+ "\n" + Lang.removeEquip);
 						currentChar.setEquipment(null);
+						unequipButton.setEnabled(false);
 						break;
 
 					}
