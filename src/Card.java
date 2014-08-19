@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 /**
  * This represents a card (including Equipment, Item and Skill).
  * 
@@ -8,7 +10,6 @@ abstract public class Card {
 
 	private String name;
 	protected int number;
-	private String info;
 
 	/**
 	 * @param name
@@ -30,7 +31,19 @@ abstract public class Card {
 	}
 
 	public String getInfo() {
-		return info;
+		String type = null;
+		Color color = null;
+		if (this instanceof Equipment) {
+			type = Lang.equipment;
+			color = Style.equipmentDarkColor;
+		} else if (this instanceof Item) {
+			type = Lang.item;
+			color = Style.itemDarkColor;
+		} else {
+			type = Lang.skill;
+			color = Style.skillDarkColor;
+		}
+		return "<font color=" + Style.toRGB(color) + " >" + name + " (" + type + ")</font><br><br>";
 	}
 
 }

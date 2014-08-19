@@ -29,11 +29,14 @@ import java.util.Enumeration;
 import java.util.Stack;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonModel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -1489,24 +1492,32 @@ public class Play extends JFrame {
 		private class CardButton extends JButton implements ActionListener {
 
 			private Card card = null;
+			private Style.CardColorHolder colorHolder = null;
 
 			public CardButton(Card card) {
+				
 				this.card = card;
-				setText(card.toString());
-				setEnabled(false);
-
-				if (card instanceof Equipment) {
-					setBackground(new Color(221, 233, 235));
-				} else if (card instanceof Item) {
-					setBackground(new Color(252, 218, 167));
-				} else { // Skill
-					setBackground(new Color(255, 255, 180));
-				}
-
-				// Add description
-				this.setToolTipText("<html>" + card.getInfo() + "</html>");
-
 				addActionListener(this);
+				
+				// Set Style
+				colorHolder = new Style.CardColorHolder(card);
+
+				setUI(new MyButtonUI() {
+					@Override
+					public Color getHoverColor() {
+						return colorHolder.getHoverColor();
+					}
+
+					@Override
+					public Color getPressedColor() {
+						return colorHolder.getPressedColor();
+					}
+				});
+				setBackground(colorHolder.getNormalColor());
+				
+				setText(card.toString());
+				setToolTipText("<html>" + card.getInfo() + "</html>");
+				setEnabled(false);
 			}
 
 			@Override
@@ -1515,17 +1526,11 @@ public class Play extends JFrame {
 			}
 
 			@Override
-			public void paintComponent(Graphics g) {
-				super.paintComponent(g);
-
-
-			}
-
-			@Override
 			public void setEnabled(boolean b) {
 				super.setEnabled(b);
 				if (b) {
-					setBorder(BorderFactory.createLineBorder(getBackground().darker()));
+					setForeground(colorHolder.getDarkColor());
+					setBorder(BorderFactory.createLineBorder(colorHolder.getDarkColor()));
 				} else {
 					setBorder(BorderFactory.createEmptyBorder());
 				}

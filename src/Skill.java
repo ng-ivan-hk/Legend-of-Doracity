@@ -70,7 +70,7 @@ abstract public class Skill extends Card {
 
 		info += "</font>";
 
-		return info;
+		return super.getInfo() + info;
 
 	}
 

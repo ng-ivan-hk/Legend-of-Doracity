@@ -7,7 +7,6 @@ import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonModel;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicButtonUI;
 
@@ -21,7 +20,7 @@ public class MyButtonUI extends BasicButtonUI {
 
 	private final static MyButtonUI myButtonUI = new MyButtonUI();
 
-	private final static Dimension buttonSize = new Dimension(100, 30);
+	private final static Dimension buttonSize = new Dimension(90, 30);
 
 	public final static Color normalColor = new Color(250, 250, 255);
 	public final static Color disabledColor = new Color(0, 0, 0, 10);
@@ -30,7 +29,6 @@ public class MyButtonUI extends BasicButtonUI {
 	public final static Color borderColor = new Color(100, 100, 100);
 
 	public static ComponentUI createUI(JComponent c) {
-		System.out.println("Create");
 		return myButtonUI;
 	}
 
@@ -39,21 +37,9 @@ public class MyButtonUI extends BasicButtonUI {
 		super.installUI(c);
 		c.setBackground(normalColor);
 		c.setBorder(BorderFactory.createLineBorder(borderColor));
-	}
-
-	@Override
-	public Dimension getMinimumSize(JComponent c) {
-		return buttonSize;
-	}
-
-	@Override
-	public Dimension getPreferredSize(JComponent c) {
-		return buttonSize;
-	}
-
-	@Override
-	public Dimension getMaximumSize(JComponent c) {
-		return buttonSize;
+		c.setMinimumSize(buttonSize);
+		c.setPreferredSize(buttonSize);
+		c.setMaximumSize(buttonSize);
 	}
 
 	@Override
@@ -63,7 +49,7 @@ public class MyButtonUI extends BasicButtonUI {
 		Dimension d = b.getSize();
 
 		if (b.isRolloverEnabled() && model.isRollover()) {
-			g.setColor(hoverColor);
+			g.setColor(getHoverColor());
 		} else {
 			g.setColor(b.getBackground());
 		}
@@ -101,9 +87,17 @@ public class MyButtonUI extends BasicButtonUI {
 	public void paintButtonPressed(Graphics g, AbstractButton b) {
 		Dimension d = b.getSize();
 
-		g.setColor(pressedColor);
+		g.setColor(getPressedColor());
 		g.fillRect(0, 0, d.width, d.height);
 
+	}
+
+	public Color getHoverColor() {
+		return hoverColor;
+	}
+
+	public Color getPressedColor() {
+		return pressedColor;
 	}
 
 }

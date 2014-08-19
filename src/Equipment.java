@@ -64,7 +64,7 @@ abstract public class Equipment extends Card {
 
 		info += "</font>";
 
-		return info;
+		return super.getInfo() + info;
 	}
 
 	/**

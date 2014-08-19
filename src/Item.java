@@ -11,9 +11,9 @@ abstract public class Item extends Card {
 	}
 
 	final public String getInfo() {
-		return Lang.ItemInfos[number];
+		return super.getInfo() + Lang.ItemInfos[number];
 	}
-	
+
 	abstract public void useItem(Player player);
 
 }
