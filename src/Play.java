@@ -30,7 +30,6 @@ import java.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -120,8 +119,6 @@ public class Play extends JFrame {
 	private final static Color academyColor = new Color(186, 53, 0);
 	private final static Color doracityColorLight = new Color(220, 242, 255);
 	private final static Color academyColorLight = new Color(255, 231, 210);
-	
-	private final static int buttonWidth = 30;
 
 	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
 
@@ -684,6 +681,7 @@ public class Play extends JFrame {
 				private BufferedImage charImage = null;
 				private Image jobIcon = null;
 				private Image propertyIcon = null;
+				private Image defenseIcon = null;
 				private String charTitle = null;
 				private String charName = null;
 				private String charValues = null;
@@ -702,6 +700,7 @@ public class Play extends JFrame {
 					setCharImage();
 					setJobIcon();
 					setPropertyIcon();
+					setDefenseIcon();
 					setOpaque(false);
 					highLightLabel(false);
 					
@@ -869,6 +868,22 @@ public class Play extends JFrame {
 				}
 
 				/**
+				 * Set Defense Icon, which will be displayed if Character's
+				 * defense is on.
+				 */
+				public void setDefenseIcon() {
+					BufferedImage src = null;
+					try {
+						src = ImageIO
+								.read(Play.class.getResource("/resources/icons/defenseOn.png"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					// Resize Image smoothly
+					defenseIcon = src.getScaledInstance(15, 15, Image.SCALE_AREA_AVERAGING);
+				}
+
+				/**
 				 * Checks which Character does this CharLabel represents and
 				 * returns the respective URL.
 				 * 
@@ -939,13 +954,19 @@ public class Play extends JFrame {
 					Color lineColor = character.isDoracity() ? doracityColor : academyColor;
 					g.setColor(lineColor);
 
-					// Write Character's title and name at top
+					// Write Character's title at top-left
 					g.setFont(new Font(Lang.font, Font.PLAIN, 12));
 					g.drawString(charTitle, valuesX, valuesY * 3);
 					int titleWidth = g.getFontMetrics().stringWidth(charTitle);
 					g.setFont(new Font(Lang.font, Font.PLAIN, 15));
-					g.drawString(charName + (character.isDefense() ? "-" : ""), valuesX
-							+ titleWidth + 2, valuesY * 3);
+					// Followed by Character's name
+					int charNameX = valuesX + titleWidth + 2;
+					g.drawString(charName, charNameX, valuesY * 3);
+					// Followed by Defense Icon if Character's defense is on
+					if (character.isDefense()) {
+						int nameWidth = g.getFontMetrics().stringWidth(charName);
+						g.drawImage(defenseIcon, charNameX + nameWidth, valuesY - imageY, null);
+					}
 
 					// Write Character's values at right
 					valuesY += getHeight();
@@ -1182,6 +1203,9 @@ public class Play extends JFrame {
 							this.character = character;
 							setText(character.toString());
 							addActionListener(this);
+							if (character.isDefense()) {
+								setEnabled(false);
+							}
 						}
 
 						@Override
