@@ -42,8 +42,7 @@ abstract public class Equipment extends Card {
 
 	final public String getInfo() {
 
-		String info = Lang.EquipmentInfos[number] + "<br>" + Lang.availableJob
-				+ "<font color=blue>";
+		String info = Lang.availableJob + "<font color=blue>";
 		if (saberOK) {
 			info += Lang.JobNames[Character.SABER] + Lang.comma2;
 		}
@@ -62,7 +61,7 @@ abstract public class Equipment extends Card {
 			info = info.substring(0, info.length() - 1);
 		}
 
-		info += "</font>";
+		info += "</font><br><br>" + Lang.EquipmentInfos[number];
 
 		return super.getInfo() + info;
 	}

@@ -20,7 +20,7 @@ public class MyButtonUI extends BasicButtonUI {
 
 	private final static MyButtonUI myButtonUI = new MyButtonUI();
 
-	private final static Dimension buttonSize = new Dimension(90, 30);
+	private final static Dimension buttonSize = new Dimension(100, 30);
 
 	public final static Color normalColor = new Color(250, 250, 255);
 	public final static Color disabledColor = new Color(0, 0, 0, 10);

@@ -43,7 +43,7 @@ abstract public class Card {
 			type = Lang.skill;
 			color = Style.skillDarkColor;
 		}
-		return "<font color=" + Style.toRGB(color) + " >" + name + " (" + type + ")</font><br><br>";
+		return "<font color=" + Style.toRGB(color) + " >" + name + " (" + type + ")</font><br>";
 	}
 
 }
