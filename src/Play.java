@@ -29,14 +29,11 @@ import java.util.Enumeration;
 import java.util.Stack;
 
 import javax.imageio.ImageIO;
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonModel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -67,7 +64,7 @@ public class Play extends JFrame {
 
 	/* Constant Values */
 	public final static int CHAR_MAX = 5; // No. of char per player
-	public final static int DRAW_CARD_MAX = 3; // draw ? hand cards each turn
+	public final static int DRAW_CARD_MAX = 4; // draw ? hand cards each turn
 	public final static int[] EQUIPMENT_MAX = new int[] { 0, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1,
 			1, 3, 1, 1, 1, 3, 1, 1, 3, 3, 3, 1, 1 };
 	public final static int[] ITEM_MAX = new int[] { 0, 17, 17, 6 };
@@ -1436,7 +1433,6 @@ public class Play extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				draw(player);
-				
 				// Update counter
 				count--;
 				if (count == 0) {
@@ -1445,6 +1441,7 @@ public class Play extends JFrame {
 						Play.this.notify();
 					}
 				}
+
 			}
 
 			public void setDrawCard(int count) {
@@ -1646,14 +1643,7 @@ public class Play extends JFrame {
 		printlnLog(">>>" + Lang.stage_drawCards + "<<<");
 		currentStatus = Command.DRAW_CARD; // for Kuzmon's job 1 active skill
 
-		if (round == 1) { // give each player 5 cards
-
-			for (int i = 0; i < 5; i++) {
-				draw(player1);
-				draw(player2);
-			}
-
-		} else if (cards.size() >= 8) { // give each player at most 3 cards
+		if (cards.size() >= 8) { // give each player exactly 4 cards
 
 			for (int p = 0; p < playerAreas.length; p++) {
 				final PlayerArea playerAreaTemp = playerAreas[p];
@@ -1661,7 +1651,7 @@ public class Play extends JFrame {
 				SwingUtilities.invokeAndWait(new Runnable() {
 					@Override
 					public void run() {
-						
+
 						// Check for Butterfly's job 2 passive skill
 						Butterfly maybeButterfly = (Butterfly) playerAreaTemp.getPlayer().contains(
 								Butterfly.class);
@@ -1672,8 +1662,6 @@ public class Play extends JFrame {
 							playerAreaTemp.drawButton.setDrawCard(DRAW_CARD_MAX);
 						}
 
-						playerAreaTemp.passButton.setEnabled(true);
-						
 					}
 				});
 
@@ -1685,7 +1673,6 @@ public class Play extends JFrame {
 					@Override
 					public void run() {
 						playerAreaTemp.drawButton.setEnabled(false);
-						playerAreaTemp.passButton.setEnabled(false);
 					}
 				});
 
