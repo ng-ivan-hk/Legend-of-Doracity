@@ -1600,6 +1600,16 @@ public class Play extends JFrame {
 						JOptionPane.showMessageDialog(this, Lang.wrongJob);
 						return;
 					}
+
+					// Check MP enough?
+					if (currentChar.getPlayer().changeMP(-skill.getRequiedMP()) == 1) {
+						JOptionPane.showMessageDialog(this, Lang.noMP);
+						return;
+					}
+
+					Play.printlnLog(currentChar + Lang.log_useSkillCard + skill + " ("
+							+ Lang.log_skillEffect + skill.getEffectInfo() + ")");
+
 					skill.useSkill(currentChar); // Use it!
 
 				}

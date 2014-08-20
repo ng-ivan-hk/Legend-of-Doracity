@@ -72,6 +72,14 @@ abstract public class Skill extends Card {
 		return super.getInfo() + info;
 
 	}
+	
+	final public String getEffectInfo(){
+		return Lang.SkillInfos[number];
+	}
+	
+	public int getRequiedMP() {
+		return requiredMP;
+	}
 
 	public int getOccasion() {
 		return occasion;

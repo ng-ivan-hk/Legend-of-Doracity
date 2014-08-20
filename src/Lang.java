@@ -12,7 +12,7 @@ public class Lang {
 	public final static String font = "新細明體";
 	public final static String confirm = "決定";
 	public final static String loading = "正在啟動…";
-	
+
 	public final static String menu_option = "選項";
 	public final static String menu_help = "幫助";
 	public final static String menu_about = "關於";
@@ -457,7 +457,7 @@ public class Lang {
 
 	public final static String[] SkillInfos = new String[] { "", "對一名已防禦狀態的角色造成5點物理傷害",
 			"使目標在該回合物防歸0", "此回合提升2點物攻", "N/A", "N/A", "該目標在此回合所受到傷害額外+1", "自身受普通攻擊時，無效一次",
-			"普通攻擊時無視對方一切提升的物防", "敵方陣營目標受到(自身普攻)的魔法傷", "敵方陣營降底1點魔防", "每當對敵方陣營造成傷害時，額外造成4點魔法傷害",
+			"普通攻擊時無視對方一切提升的物防", "敵方陣營目標受到(自身普攻)的魔法傷", "敵方陣營降低1點魔防", "每當對敵方陣營造成傷害時，額外造成4點魔法傷害",
 			"N/A", "回復10點HP", "N/A", "禁止一名目標在該回合發動任何技能", "N/A", "禁止一名目標在該回合進行普通攻擊" };
 
 	public final static String availableJob = "可用職業：";
@@ -536,6 +536,7 @@ public class Lang {
 	public final static String log_attackSuccess = "攻擊成功";
 	public final static String log_attackFailed = "攻擊失敗";
 	public final static String log_castSkill = "發動了技能：";
+	public final static String log_useSkillCard = "使用了技能卡：";
 	public final static String log_skillEffect = "技能效果：";
 	public final static String log_lost = "戰敗！";
 	public final static String log_jobChange = "轉成";
@@ -553,44 +554,44 @@ public class Lang {
 	public final static String giveUpNormalAttack = "於本回合無法使用普通攻擊";
 	// 1. Tea
 	public final static String tea_gentleman = "的紳士技能因場上有女性角色而發動：";
-	public final static String tea_MSoul = "烏龍茶的M魂技能發動：受到女性角色攻擊時，回復1HP";
-	public final static String tea_DoM = "烏龍茶的抖M技能正在發動：";
-	public final static String tea_DoM_attackTeaOnly = tea_DoM + "女性只能攻擊烏龍茶";
+	public final static String tea_MSoul = CharNames[1] + "的M魂技能發動：受到女性角色攻擊時，回復1HP";
+	public final static String tea_DoM = CharNames[1] + "的抖M技能正在發動：";
+	public final static String tea_DoM_attackTeaOnly = tea_DoM + "女性只能攻擊" + CharNames[1];
 	public final static String tea_DoM_lessDamage = tea_DoM + "傷害-1";
-	public final static String tea_ero = "烏龍茶的工口技能發動：場上的女性角色數量是";
+	public final static String tea_ero = CharNames[1] + "的工口技能發動：場上的女性角色數量是";
 	// 2. Livia
-	public final static String livia_together = "古怪在場，淋琳的相伴技能發動：";
+	public final static String livia_together = CharNames[3] + "在場，" + CharNames[2] + "的相伴技能發動：";
 	public final static String livia_together_job1 = livia_together;
 	public final static String livia_together_job2 = livia_together + "額外回復1HP";
 	// 3. Phoebell
-	public final static String phoebell_together = "淋琳在場，古怪的相伴技能發動：";
-	public final static String phoebell_together_job2 = "古怪的相伴技能發動：MP回復+1";
+	public final static String phoebell_together = CharNames[2] + "在場，" + CharNames[3] + "的相伴技能發動：";
+	public final static String phoebell_together_job2 = CharNames[3] + "的相伴技能發動：MP回復+1";
 	// 4. Map
-	public final static String map_assassin = "地圖的刺殺技能正在發動：";
+	public final static String map_assassin = CharNames[4] + "的刺殺技能正在發動：";
 	public final static String map_assassin_moreDamage = map_assassin + "傷害+1";
-	public final static String map_siscon = "場上有女性角色，地圖的妹控技能發動：";
+	public final static String map_siscon = "場上有女性角色，" + CharNames[4] + "的妹控技能發動：";
 	// 5. Iron
-	public final static String iron_fortitude_lessDamage = "鐵皮的堅忍技能發動：傷害-1";
-	public final static String iron_heroic = "鐵皮的英勇技能發動：攻擊劍士時攻擊+1";
+	public final static String iron_fortitude_lessDamage = CharNames[5] + "的堅忍技能發動：傷害-1";
+	public final static String iron_heroic = CharNames[5] + "的英勇技能發動：攻擊劍士時攻擊+1";
 	// 6. FishBall
-	public final static String fishball_limit = "魚丸的極限技能發動：攻擊+1，並在戰鬥後回復2MP";
-	public final static String fishball_limit2 = "魚丸的極限技能發動：戰鬥後回復2MP";
+	public final static String fishball_limit = CharNames[6] + "的極限技能發動：攻擊+1，並在戰鬥後回復2MP";
+	public final static String fishball_limit2 = CharNames[6] + "的極限技能發動：戰鬥後回復2MP";
 	// 7. Shirogane
-	public final static String shirogane_resonance = "白銀的共鳴技能發動：每名法師額外回復1MP";
+	public final static String shirogane_resonance = CharNames[7] + "的共鳴技能發動：每名法師額外回復1MP";
 	// 9. Nana
-	public final static String nana_evil = "奈奈的邪氣技能發動：敵方速度-1";
-	public final static String nana_evil_end = "奈奈的邪氣技能效果完結";
+	public final static String nana_evil = CharNames[9] + "的邪氣技能發動：敵方速度-1";
+	public final static String nana_evil_end = CharNames[9] + "的邪氣技能效果完結";
 	// 10. GameNobita
 	public final static String gamenobita_doracity[] = { "己方陣型共有", "名小城陣型角色，因此技能效果為：每名小城陣型角色" };
 	public final static String gamenobita_doracity_effect[] = { "物防+1", "物防+1、魔防+1", "物防+2、魔防+1",
 			"物防+2、魔防+2" };
-	public final static String gamenobita_doracity_end = "野味大雄的小城技能效果完結";
+	public final static String gamenobita_doracity_end = CharNames[10] + "的小城技能效果完結";
 	// 11. Xander
-	public final static String xander_manaForming = "山大的魔凝技能發動：沒手牌時+2MP";
+	public final static String xander_manaForming = CharNames[11] + "的魔凝技能發動：沒手牌時+2MP";
 	// 12. Buttefly
 	public final static String butterfly_wealth = "的富貴技能發動：摸牌數量+1";
 	// 14. Kurokawa
-	public final static String kurokawa_strong_end = "黑川米古的剛強技能效果完結";
+	public final static String kurokawa_strong_end = CharNames[14] + "的剛強技能效果完結";
 	// 15. Herohim
 	public final static String herohim_doll_toString = "的人偶";
 	public final static String herohim_doll_end = "的人偶消失";
@@ -605,18 +606,18 @@ public class Lang {
 	// 22. KaitoDora
 	public final static String kaitodora_steal = "偷竊了";
 	// 24. WindSound
-	public final static String windsound_catForm_cat = "風音之鈴已轉為貓形態！";
+	public final static String windsound_catForm_cat = CharNames[24] + "已轉為貓形態！";
 	public final static String windsound_catForm_toString = "（貓形態）";
-	public final static String windsound_catForm_human = "風音之鈴已轉回人形！";
+	public final static String windsound_catForm_human = CharNames[24] + "已轉回人形！";
 	// 27. T8
 	public final static String t8_enchant_weapon_start = CharNames[27] + "的魔賦技能發動：裝備武器時攻擊+1";
 	public final static String t8_enchant_armor_start = CharNames[27] + "的魔賦技能發動：裝備防具時物防+1";
 	public final static String t8_enchant_weapon_end = CharNames[27] + "的魔賦技能效果移除：武器的攻擊-1";
 	public final static String t8_enchant_armor_end = CharNames[27] + "的魔賦技能效果移除：防具的物防-1";
 	// 29. Sasa
-	public final static String sasa_pharmacist = "射手的藥師技能發動：額外使用道具回復時+1HP";
+	public final static String sasa_pharmacist = CharNames[29] + "的藥師技能發動：額外使用道具回復時+1HP";
 	// 30. SunnyShum
-	public final static String sunnyshum_chasteness = "己方沒有女性角色，心連心的童貞技能發動：";
+	public final static String sunnyshum_chasteness = "己方沒有女性角色，" + CharNames[30] + "的童貞技能發動：";
 
 	/* Error Messages */
 	public final static String error = "錯誤";
