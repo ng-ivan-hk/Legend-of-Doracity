@@ -4,7 +4,7 @@ public class KnightArmor extends Equipment {
 	 * Card Number: 1
 	 */
 	public KnightArmor() {
-		super(1, true, false, false, false, true, true);
+		super(1, true, false, false, false, true, true, false);
 	}
 
 	@Override

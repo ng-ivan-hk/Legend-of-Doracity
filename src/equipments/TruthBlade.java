@@ -4,7 +4,7 @@ public class TruthBlade extends Equipment {
 	 * Card Number: 17
 	 */
 	public TruthBlade() {
-		super(17, true, false, false, false, true, true);
+		super(17, true, false, false, false, true, true, true);
 	}
 
 	@Override

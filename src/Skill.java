@@ -47,7 +47,7 @@ abstract public class Skill extends Card {
 
 	final public String getInfo() {
 
-		String info = Lang.availableJob + "<font color=blue>";
+		String info = "<br>" + Lang.availableJob + "<font color=blue>";
 		if (saberOK) {
 			info += Lang.JobNames[Character.SABER] + Lang.comma2;
 		}

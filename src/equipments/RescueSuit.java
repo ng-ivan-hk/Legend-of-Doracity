@@ -4,7 +4,7 @@ public class RescueSuit extends Equipment {
 	 * Card Number: 11
 	 */
 	public RescueSuit() {
-		super(11, false, false, false, true, true, true);
+		super(11, false, false, false, true, true, true, false);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ public class HealingWand extends Equipment {
 	 * Card Number: 21
 	 */
 	public HealingWand() {
-		super(21, false, false, true, true, true, true);
+		super(21, false, false, true, true, true, true, true);
 	}
 
 	@Override

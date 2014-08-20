@@ -11,7 +11,7 @@ abstract public class Item extends Card {
 	}
 
 	final public String getInfo() {
-		return super.getInfo() + "<br>" + Lang.ItemInfos[number];
+		return super.getInfo() + "<br><br>" + Lang.ItemInfos[number];
 	}
 
 	abstract public void useItem(Player player);

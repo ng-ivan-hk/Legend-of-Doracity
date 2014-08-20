@@ -4,7 +4,7 @@ public class LightningWand extends Equipment {
 	 * Card Number: 10
 	 */
 	public LightningWand() {
-		super(10, false, false, true, false, true, true);
+		super(10, false, false, true, false, true, true, true);
 	}
 
 	@Override

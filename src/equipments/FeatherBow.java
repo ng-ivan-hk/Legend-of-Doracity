@@ -4,7 +4,7 @@ public class FeatherBow extends Equipment {
 	 * Card Number: 5
 	 */
 	public FeatherBow() {
-		super(5, false, true, false, false, true, true);
+		super(5, false, true, false, false, true, true, true);
 	}
 
 	@Override

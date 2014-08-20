@@ -4,7 +4,7 @@ public class ManaField extends Equipment {
 	 * Card Number: 13
 	 */
 	public ManaField() {
-		super(13, false, false, false, true, true, true);
+		super(13, false, false, false, true, true, true, false);
 	}
 
 	@Override

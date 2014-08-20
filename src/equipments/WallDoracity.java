@@ -4,7 +4,7 @@ public class WallDoracity extends Equipment {
 	 * Card Number: 26
 	 */
 	public WallDoracity() {
-		super(26, true, true, true, true, true, false);
+		super(26, true, true, true, true, true, false, false);
 	}
 
 	@Override

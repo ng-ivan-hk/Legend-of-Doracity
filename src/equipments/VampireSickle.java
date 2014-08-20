@@ -4,7 +4,7 @@ public class VampireSickle extends Equipment {
 	 * Card Number: 16
 	 */
 	public VampireSickle() {
-		super(16, true, false, false, false, true, true);
+		super(16, true, false, false, false, true, true, true);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ public class PriorityClaw extends Equipment {
 	 * Card Number: 18
 	 */
 	public PriorityClaw() {
-		super(18, true, true, false, false, true, true);
+		super(18, true, true, false, false, true, true, true);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ public class MobilityBoots extends Equipment {
 	 * Card Number: 4
 	 */
 	public MobilityBoots() {
-		super(4, false, true, false, false, true, true);
+		super(4, false, true, false, false, true, true, false);
 	}
 
 	@Override

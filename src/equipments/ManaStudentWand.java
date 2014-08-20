@@ -4,7 +4,7 @@ public class ManaStudentWand extends Equipment {
 	 * Card Number: 19
 	 */
 	public ManaStudentWand() {
-		super(19, false, false, true, true, true, true);
+		super(19, false, false, true, true, true, true, true);
 	}
 
 	@Override

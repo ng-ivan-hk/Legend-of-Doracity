@@ -4,7 +4,7 @@ public class WizardRobe extends Equipment {
 	 * Card Number: 20
 	 */
 	public WizardRobe() {
-		super(20, false, false, true, true, true, true);
+		super(20, false, false, true, true, true, true, false);
 	}
 
 	@Override

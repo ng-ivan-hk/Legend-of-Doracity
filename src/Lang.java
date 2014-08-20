@@ -460,6 +460,8 @@ public class Lang {
 
 	public final static String availableJob = "可用職業：";
 	public final static String consume = "消耗";
+	public final static String weapon = "武器";
+	public final static String armor = "防具";
 
 	/* Properties */
 	public final static String HP = "HP";
@@ -603,6 +605,11 @@ public class Lang {
 	public final static String windsound_catForm_cat = "風音之鈴已轉為貓形態！";
 	public final static String windsound_catForm_toString = "（貓形態）";
 	public final static String windsound_catForm_human = "風音之鈴已轉回人形！";
+	// 27. T8
+	public final static String t8_enchant_weapon_start = CharNames[27] + "的魔賦技能發動：裝備武器時攻擊+1";
+	public final static String t8_enchant_armor_start = CharNames[27] + "的魔賦技能發動：裝備防具時物防+1";
+	public final static String t8_enchant_weapon_end = CharNames[27] + "的魔賦技能效果移除：武器的攻擊-1";
+	public final static String t8_enchant_armor_end = CharNames[27] + "的魔賦技能效果移除：防具的物防-1";
 	// 29. Sasa
 	public final static String sasa_pharmacist = "射手的藥師技能發動：額外使用道具回復時+1HP";
 	// 30. SunnyShum

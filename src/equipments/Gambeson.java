@@ -4,7 +4,7 @@ public class Gambeson extends Equipment { // = Cloth Armor
 	 * Card Number: 23
 	 */
 	public Gambeson() {
-		super(23, true, true, true, true, true, true);
+		super(23, true, true, true, true, true, true, false);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ public class FieldAcademy extends Equipment {
 	 * Card Number: 25
 	 */
 	public FieldAcademy() {
-		super(25, true, true, true, true, false, true);
+		super(25, true, true, true, true, false, true, false);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ public class AntiManaCloak extends Equipment {
 	 * Card Number: 24
 	 */
 	public AntiManaCloak() {
-		super(24, true, true, true, true, true, true);
+		super(24, true, true, true, true, true, true, false);
 	}
 
 	@Override

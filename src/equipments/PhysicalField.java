@@ -4,7 +4,7 @@ public class PhysicalField extends Equipment {
 	 * Card Number: 12
 	 */
 	public PhysicalField() {
-		super(12, false, false, false, true, true, true);
+		super(12, false, false, false, true, true, true, false);
 	}
 
 	@Override

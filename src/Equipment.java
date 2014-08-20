@@ -12,6 +12,7 @@ abstract public class Equipment extends Card {
 	private boolean supportOK;
 	private boolean doracityOK;
 	private boolean academyOK;
+	private boolean weapon; // if false, armor
 
 	/**
 	 * @param number
@@ -28,9 +29,11 @@ abstract public class Equipment extends Card {
 	 *            Can a Doracity character equip this?
 	 * @param academyOK
 	 *            Can an Academy character equip this?
+	 * @param weapon
+	 *            Is this a weapon? If false, that means this is an armor.
 	 */
 	public Equipment(int number, boolean saberOK, boolean archerOK, boolean casterOK,
-			boolean supportOK, boolean doracityOK, boolean academyOK) {
+			boolean supportOK, boolean doracityOK, boolean academyOK, boolean weapon) {
 		super(Lang.EquipmentTypes[number], number);
 		this.saberOK = saberOK;
 		this.archerOK = archerOK;
@@ -38,11 +41,13 @@ abstract public class Equipment extends Card {
 		this.supportOK = supportOK;
 		this.doracityOK = doracityOK;
 		this.academyOK = academyOK;
+		this.weapon = weapon;
 	}
 
 	final public String getInfo() {
 
-		String info = Lang.availableJob + "<font color=blue>";
+		String info = " " + (weapon ? Lang.weapon : Lang.armor) + "<br>" + Lang.availableJob
+				+ "<font color=blue>";
 		if (saberOK) {
 			info += Lang.JobNames[Character.SABER] + Lang.comma2;
 		}
@@ -64,6 +69,10 @@ abstract public class Equipment extends Card {
 		info += "</font><br><br>" + Lang.EquipmentInfos[number];
 
 		return super.getInfo() + info;
+	}
+
+	final public boolean isWeapon() {
+		return weapon;
 	}
 
 	/**

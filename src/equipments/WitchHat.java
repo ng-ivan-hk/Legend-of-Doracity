@@ -4,7 +4,7 @@ public class WitchHat extends Equipment {
 	 * Card Number: 7
 	 */
 	public WitchHat() {
-		super(7, false, false, true, false, true, true);
+		super(7, false, false, true, false, true, true, false);
 	}
 
 	@Override

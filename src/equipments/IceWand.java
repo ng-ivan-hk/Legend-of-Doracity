@@ -4,7 +4,7 @@ public class IceWand extends Equipment {
 	 * Card Number: 8
 	 */
 	public IceWand() {
-		super(8, false, false, true, false, true, true);
+		super(8, false, false, true, false, true, true, true);
 	}
 
 	@Override

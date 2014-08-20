@@ -4,7 +4,7 @@ public class Sniper extends Equipment {
 	 * Card Number: 6
 	 */
 	public Sniper() {
-		super(6, false, true, false, false, true, true);
+		super(6, false, true, false, false, true, true, true);
 	}
 
 	@Override

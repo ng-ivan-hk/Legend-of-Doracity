@@ -4,7 +4,7 @@ public class AdventurerSword extends Equipment {
 	 * Card Number: 15
 	 */
 	public AdventurerSword() {
-		super(15, true, true, false, false, true, true);
+		super(15, true, true, false, false, true, true, true);
 	}
 
 	@Override

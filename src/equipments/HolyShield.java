@@ -4,7 +4,7 @@ public class HolyShield extends Equipment {
 	 * Card Number: 2
 	 */
 	public HolyShield() {
-		super(2, true, false, false, false, true, true);
+		super(2, true, false, false, false, true, true, false);
 	}
 
 	@Override

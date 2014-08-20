@@ -4,7 +4,7 @@ public class TwinDancer extends Equipment {
 	 * Card Number: 3
 	 */
 	public TwinDancer() {
-		super(3, true, false, false, false, true, true);
+		super(3, true, false, false, false, true, true, true);
 	}
 
 	@Override

@@ -4,7 +4,7 @@ public class FireWand extends Equipment {
 	 * Card Number: 9
 	 */
 	public FireWand() {
-		super(9, false, false, true, false, true, true);
+		super(9, false, false, true, false, true, true, true);
 	}
 
 	@Override

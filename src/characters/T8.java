@@ -21,10 +21,58 @@ public class T8 extends Character {
 		activeSkills[2].setRequiredMP(requiredMP);
 	}
 
+	public static void addEquipmentExtraEffect(Character c) {
+		Equipment equipment = c.getEquipment();
+		if (equipment != null) {
+			if (equipment.isWeapon()) {
+				Play.printlnLog(Lang.t8_enchant_weapon_start);
+				c.changeAttack(1, FOR_EVER);
+			} else {
+				Play.printlnLog(Lang.t8_enchant_armor_start);
+				c.changeDefP(1, FOR_EVER);
+			}
+		}
+	}
+
+	public static void removeEquipmentExtraEffect(Character c) {
+		Equipment equipment = c.getEquipment();
+		if (equipment != null) {
+			if (equipment.isWeapon()) {
+				Play.printlnLog(Lang.t8_enchant_weapon_end);
+				c.changeAttack(-1, FOR_EVER);
+			} else {
+				Play.printlnLog(Lang.t8_enchant_armor_end);
+				c.changeDefP(-1, FOR_EVER);
+			}
+		}
+	}
+
 	@Override
 	public void roundEndExtra() {
 		if (!isFirstJob()) {
 			setJob2RequiredMP(job2RequiredMP);
+		}
+	}
+
+	@Override
+	public void jobChangeExtra() {
+		
+		if (isFirstJob()) {
+
+			// For T8's job 1 passive skill
+			Character[] selfChars = getPlayer().getCharacters();
+			for (int i = 0; i < selfChars.length; i++) {
+				addEquipmentExtraEffect(selfChars[i]);
+			}
+
+		} else {
+
+			// For removing T8's job 1 passive skill
+			Character[] selfChars = getPlayer().getCharacters();
+			for (int i = 0; i < selfChars.length; i++) {
+				removeEquipmentExtraEffect(selfChars[i]);
+			}
+			
 		}
 	}
 

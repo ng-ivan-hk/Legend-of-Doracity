@@ -450,7 +450,13 @@ abstract public class Character {
 				this.equipment = e;
 				Play.printlnLog(this + " " + Lang.log_equip + " " + e);
 				e.useEquipment(this);
-				
+
+				// Check for T8's job 1 passive skill
+				T8 maybeT8 = (T8) getPlayer().contains(T8.class);
+				if (maybeT8 != null && maybeT8.isFirstJob()) {
+					T8.addEquipmentExtraEffect(this);
+				}
+
 			}
 
 		} else {
@@ -469,22 +475,43 @@ abstract public class Character {
 			defP_equipment = 0;
 			defM_equipment = 0;
 			speed_equipment = 0;
-			
+
 			Play.printlnLog(this + " " + Lang.log_removeEquipment + " " + equipment);
 			equipment.removeEquipmentEffect(this);
-			
+
+			// Check for T8's job 1 passive skill
+			boolean isJob1T8here = false;
+			T8 maybeT8 = (T8) getPlayer().contains(T8.class);
+			if (maybeT8 != null && maybeT8.isFirstJob()) {
+				isJob1T8here = true;
+			}
+
+			if (isJob1T8here) {
+				T8.removeEquipmentExtraEffect(this);
+			}
+
 			// Equip new Equipment or null
 			this.equipment = e;
 			if (e != null) {
 				Play.printlnLog(this + " " + Lang.log_equip + " " + e);
 				e.useEquipment(this);
+				
+				// Check for T8's job 1 passive skill again
+				if (isJob1T8here) {
+					T8.addEquipmentExtraEffect(this);
+				}
 			}
+
 		}
 		
 		return 0;
 
 	}
 
+	/**
+	 * @return Equipment equipped by this Character. Returns null if no
+	 *         Equipment is equipped.
+	 */
 	public Equipment getEquipment() {
 		return equipment;
 	}
