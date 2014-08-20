@@ -9,7 +9,16 @@ public class Jail extends Skill {
 
 	@Override
 	protected void skillEffect(Character c) {
-		c.setGiveUpNormalAttack(true);
+
+		new CharSkill.CharSelectDialog(c, c.getPlayer().getOpponent(), new TargetMethod() {
+
+			@Override
+			public void targetMethod(Character currentChar, Character target) {
+				target.setGiveUpNormalAttack(true);
+			}
+
+		});
+
 	}
 
 }

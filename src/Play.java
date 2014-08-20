@@ -172,7 +172,7 @@ public class Play extends JFrame {
 		for (int i = 0; i < EQUIPMENT_MAX[24]; i++) cards.push(new AntiManaCloak());
 		for (int i = 0; i < EQUIPMENT_MAX[25]; i++) cards.push(new FieldAcademy());
 		for (int i = 0; i < EQUIPMENT_MAX[26]; i++) cards.push(new WallDoracity());
-		// Push Item Cards
+//		// Push Item Cards
 		for (int i = 0; i < ITEM_MAX[1]; i++) cards.push(new HPPotion());
 		for (int i = 0; i < ITEM_MAX[2]; i++) cards.push(new MPPotion());
 		for (int i = 0; i < ITEM_MAX[3]; i++) cards.push(new SmokeBomb());
