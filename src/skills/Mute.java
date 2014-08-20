@@ -9,7 +9,7 @@ public class Mute extends Skill {
 
 	@Override
 	protected void skillEffect(Character c) {
-		Play.printlnLog("Using" + this);
+		c.setGiveUpSkills(true);
 	}
 
 }

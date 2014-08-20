@@ -9,7 +9,10 @@ public class FreezingIce extends Skill {
 
 	@Override
 	protected void skillEffect(Character c) {
-		Play.printlnLog("Using" + this);
+		Character[] opponentChars = c.getPlayer().getOpponent().getCharacters();
+		for (int i = 0; i < opponentChars.length; i++) {
+			opponentChars[i].changeDefM(-1, Character.FOR_ROUND_END);
+		}
 	}
 
 }

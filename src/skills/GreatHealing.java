@@ -9,7 +9,7 @@ public class GreatHealing extends Skill {
 
 	@Override
 	protected void skillEffect(Character c) {
-		Play.printlnLog("Using" + this);
+		c.getPlayer().changeHP(10);
 	}
 
 }

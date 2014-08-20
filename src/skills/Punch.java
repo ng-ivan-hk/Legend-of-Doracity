@@ -9,7 +9,7 @@ public class Punch extends Skill {
 
 	@Override
 	protected void skillEffect(Character c) {
-		Play.printlnLog("Using" + this);
+		c.setDestroyDefP(true);
 	}
 
 }

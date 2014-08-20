@@ -9,7 +9,8 @@ public class BattleSoul extends Skill {
 
 	@Override
 	protected void skillEffect(Character c) {
-		Play.printlnLog("Using" + this);
+		c.changeAttack(2, Character.FOR_ROUND_END);
+		c.changeDefP(2, Character.FOR_ROUND_END);
 	}
 
 }

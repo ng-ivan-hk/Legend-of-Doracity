@@ -66,7 +66,8 @@ abstract public class Character {
 	protected boolean defense = false; // character will defense if attacked
 	protected boolean assassin = false; // Map's Active Skill
 	private boolean giveUp = false; // if true, this character will be passed
-	private boolean giveUpSkills = false; // if true, this character cannot use skills
+	private boolean giveUpNormalAttack = false; // if true, cannot use normal attack
+	private boolean giveUpSkills = false; // if true, cannot use skills
 	private boolean destroyDefP = false; // if true, getDefP() returns 0
 
 	/**
@@ -133,6 +134,7 @@ abstract public class Character {
 		defense = false; // Defense off
 		giveUp = false; // Give Up off
 		giveUpSkills = false;
+		giveUpNormalAttack = false;
 		if (destroyDefP) { // Destroy DefP off
 			destroyDefP = false;
 			for_round_end = true;
@@ -564,6 +566,15 @@ abstract public class Character {
 
 	public boolean isGiveUpSkills() {
 		return giveUpSkills;
+	}
+	
+	protected void setGiveUpNormalAttack(boolean b) {
+		Play.printlnLog(this + Lang.giveUpSkills);
+		giveUpNormalAttack = b;
+	}
+
+	public boolean isGiveUpNormalAttack() {
+		return giveUpNormalAttack;
 	}
 	
 	/**

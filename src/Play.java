@@ -1934,13 +1934,15 @@ public class Play extends JFrame {
 			SwingUtilities.invokeAndWait(new Runnable() {
 				@Override
 				public void run() {
+					if (!currentChar.isGiveUpNormalAttack()) {
+						areaTemp.attackButton.setEnabled(true);
+					}
 					if (!currentChar.isGiveUpSkills()) {
 						areaTemp.setEnableSkill(true);
 						areaTemp.castSkillButton.setEnabled(true);
 					}
-					areaTemp.attackButton.setEnabled(true);
 					areaTemp.passButton.setEnabled(true);
-					
+
 				}
 			});
 

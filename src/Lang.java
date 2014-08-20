@@ -547,7 +547,8 @@ public class Lang {
 	public final static String totalDamage = "總計：";
 	public final static String giveUp = "於本回合無法行動";
 	public final static String givenUp = "已無法於本回合行動，因此自動跳過";
-	public final static String giveUpSkills = "於本回合無法使用技能";
+	public final static String giveUpSkills = "於本回合無法使用任何技能";
+	public final static String giveUpNormalAttack = "於本回合無法使用普通攻擊";
 	// 1. Tea
 	public final static String tea_gentleman = "的紳士技能因場上有女性角色而發動：";
 	public final static String tea_MSoul = "烏龍茶的M魂技能發動：受到女性角色攻擊時，回復1HP";

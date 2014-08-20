@@ -9,7 +9,7 @@ public class Jail extends Skill {
 
 	@Override
 	protected void skillEffect(Character c) {
-		Play.printlnLog("Using" + this);
+		c.setGiveUpNormalAttack(true);
 	}
 
 }
