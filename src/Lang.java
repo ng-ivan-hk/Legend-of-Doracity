@@ -12,10 +12,12 @@ public class Lang {
 	public final static String font = "新細明體";
 	public final static String confirm = "決定";
 	public final static String loading = "正在啟動…";
+	
 	public final static String menu_option = "選項";
 	public final static String menu_help = "幫助";
 	public final static String menu_about = "關於";
 	public final static String menu_aboutInfo = "這是為茶所設立的「小城聯盟」卡片對戰遊戲而開發的電腦程式。<br><br>遊戲設計：烏龍茶<br>程式製作：古怪<br>程式協力：射手小朋友<br>角色設計：蝶、山大、烏龍茶、淋琳<br>封面繪圖：羽須智行";
+	public final static String menu_drawCardOneOff = "一次過抽所有卡片";
 	public final static String menu_exit = "結束";
 
 	public final static String help_debug = "DEBUG說明";

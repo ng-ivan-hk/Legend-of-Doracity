@@ -34,6 +34,7 @@ import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -119,6 +120,9 @@ public class Play extends JFrame {
 	private final static Color academyColor = new Color(186, 53, 0);
 	private final static Color doracityColorLight = new Color(220, 242, 255);
 	private final static Color academyColorLight = new Color(255, 231, 210);
+	
+	/* Settings */
+	private boolean drawCardOneOff = false;
 
 	public static void main(String[] args) throws InterruptedException, InvocationTargetException {
 
@@ -407,6 +411,9 @@ public class Play extends JFrame {
 
 		private JMenuItem helpMenuItem = null;
 		private JMenuItem aboutMenuItem = null;
+		
+		private JCheckBoxMenuItem drawCardMenuItem = null;
+		
 		private JMenuItem exitMenuItem = null;
 
 		public MenuBar() {
@@ -420,6 +427,8 @@ public class Play extends JFrame {
 			/* Add Menu Items */
 			optionMenu.add(helpMenuItem = new JMenuItem(Lang.menu_help));
 			optionMenu.add(aboutMenuItem = new JMenuItem(Lang.menu_about));
+			optionMenu.add(new JSeparator());
+			optionMenu.add(drawCardMenuItem = new JCheckBoxMenuItem(Lang.menu_drawCardOneOff));
 			optionMenu.add(new JSeparator());
 			optionMenu.add(exitMenuItem = new JMenuItem(Lang.menu_exit));
 
@@ -436,6 +445,13 @@ public class Play extends JFrame {
 				public void actionPerformed(ActionEvent evt) {
 					JOptionPane.showMessageDialog(Play.this, "<html>" + Lang.menu_aboutInfo
 							+ "</html>", Lang.menu_about, JOptionPane.INFORMATION_MESSAGE);
+				}
+			});
+			
+			drawCardMenuItem.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent evt) {
+					drawCardOneOff = drawCardMenuItem.getState();
 				}
 			});
 
@@ -1432,14 +1448,31 @@ public class Play extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				draw(player);
-				// Update counter
-				count--;
-				if (count == 0) {
+
+				if (drawCardOneOff) {
+
+					while (count != 0) {
+						draw(player);
+						count--;
+					}
+
 					setEnabled(false);
 					synchronized (Play.this) {
 						Play.this.notify();
 					}
+
+				} else {
+
+					draw(player);
+					// Update counter
+					count--;
+					if (count == 0) {
+						setEnabled(false);
+						synchronized (Play.this) {
+							Play.this.notify();
+						}
+					}
+
 				}
 
 			}
