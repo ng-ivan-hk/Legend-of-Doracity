@@ -80,6 +80,15 @@ public class Play extends JFrame {
 	public static Comparator<Character> charComparator = new Comparator<Character>() {
 		@Override
 		public int compare(Character c1, Character c2) {
+			// If LittleCity, last one!
+			if (c1 instanceof LittleCity && c1.isFirstJob()) {
+				return 1;
+			}
+			if (c2 instanceof LittleCity && c2.isFirstJob()) {
+				return -1;
+			}
+
+			// Check accroding to characters' speed
 			if (c1.getSpeed() == c2.getSpeed()) {
 				if (c1.getPlayer() == c2.getPlayer()) {
 					return c1.getNumber() - c2.getNumber();
