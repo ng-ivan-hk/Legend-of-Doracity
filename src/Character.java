@@ -583,6 +583,7 @@ abstract public class Character {
 	 * @param b
 	 */
 	protected void setDestroyDefP(boolean b) {
+		Play.printlnLog(this + Lang.destroyDefP);
 		destroyDefP = true;
 	}
 
