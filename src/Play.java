@@ -9,15 +9,12 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageFilter;
-import java.awt.image.ImageProducer;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -34,7 +31,6 @@ import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.GrayFilter;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -84,13 +80,18 @@ public class Play extends JFrame {
 	public static Comparator<Character> charComparator = new Comparator<Character>() {
 		@Override
 		public int compare(Character c1, Character c2) {
+			
 			// If LittleCity, last one!
-			if (c1 instanceof LittleCity && c1.isFirstJob()) {
+			if (c1 instanceof LittleCity && c1.isFirstJob())
 				return 1;
-			}
-			if (c2 instanceof LittleCity && c2.isFirstJob()) {
+			if (c2 instanceof LittleCity && c2.isFirstJob())
 				return -1;
-			}
+			
+			// If Character has Priority Claw, first one!
+			if (c1.getEquipment() instanceof PriorityClaw)
+				return -1;
+			if (c2.getEquipment() instanceof PriorityClaw)
+				return 1;
 
 			// Check accroding to characters' speed
 			if (c1.getSpeed() == c2.getSpeed()) {
@@ -189,7 +190,7 @@ public class Play extends JFrame {
 		for (int i = 0; i < EQUIPMENT_MAX[24]; i++) cards.push(new AntiManaCloak());
 		for (int i = 0; i < EQUIPMENT_MAX[25]; i++) cards.push(new FieldAcademy());
 		for (int i = 0; i < EQUIPMENT_MAX[26]; i++) cards.push(new WallDoracity());
-//		// Push Item Cards
+		// Push Item Cards
 		for (int i = 0; i < ITEM_MAX[1]; i++) cards.push(new HPPotion());
 		for (int i = 0; i < ITEM_MAX[2]; i++) cards.push(new MPPotion());
 		for (int i = 0; i < ITEM_MAX[3]; i++) cards.push(new SmokeBomb());
