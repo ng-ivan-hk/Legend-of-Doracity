@@ -67,10 +67,6 @@ public class Kuzmon extends Character {
 
 											CardSelectDialog.this.dispose();
 
-											// Give my card to the opponent
-											getPlayer().removeCard(card);
-											getPlayer().getOpponent().addCard(card);
-
 											// Draw a random card from opponent
 											ArrayList<Card> opponentHandCards = getPlayer()
 													.getOpponent().getHandCards();
@@ -79,6 +75,11 @@ public class Kuzmon extends Character {
 											Card randomCard = opponentHandCards.get(randomIndex);
 											getPlayer().addCard(randomCard);
 											getPlayer().getOpponent().removeCard(randomCard);
+											
+											// Give my card to the opponent
+											getPlayer().removeCard(card);
+											getPlayer().getOpponent().addCard(card);
+											
 											Play.printlnLog(Kuzmon.this
 													+ Lang.kuzmon_transferMagic1 + card
 													+ Lang.kuzmon_transferMagic2 + randomCard);
