@@ -578,7 +578,7 @@ abstract public class Character {
 	}
 	
 	protected void setGiveUpNormalAttack(boolean b) {
-		Play.printlnLog(this + Lang.giveUpSkills);
+		Play.printlnLog(this + Lang.giveUpNormalAttack);
 		giveUpNormalAttack = b;
 	}
 
