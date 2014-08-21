@@ -61,6 +61,7 @@ abstract public class Character {
 	protected CharSkill[] passiveSkills = null;
 	protected CharSkill[] activeSkills = null;
 	
+	private int order = 0; // This has a higher priority than speed
 	private boolean firstJob = false; // if false, second job
 	private Equipment equipment = null;
 	protected boolean defense = false; // character will defense if attacked
@@ -426,6 +427,14 @@ abstract public class Character {
 
 	public int getInitSpeed() {
 		return speed_init;
+	}
+	
+	public void changeOrder(int order){
+		this.order += order;
+	}
+	
+	public int getOrder(){
+		return order;
 	}
 
 	/**

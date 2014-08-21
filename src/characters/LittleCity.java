@@ -19,6 +19,15 @@ public class LittleCity extends Character {
 			}
 		}
 	}
+	
+	@Override
+	public void jobChangeExtra() {
+		if (isFirstJob()) {
+			changeOrder(-100);
+		} else {
+			changeOrder(100);
+		}
+	}
 
 	/* === Above are LittleCity's unique fields and methods === */
 

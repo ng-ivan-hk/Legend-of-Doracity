@@ -81,28 +81,26 @@ public class Play extends JFrame {
 		@Override
 		public int compare(Character c1, Character c2) {
 			
-			// If LittleCity, last one!
-			if (c1 instanceof LittleCity && c1.isFirstJob())
-				return 1;
-			if (c2 instanceof LittleCity && c2.isFirstJob())
-				return -1;
-			
-			// If Character has Priority Claw, first one!
-			if (c1.getEquipment() instanceof PriorityClaw)
-				return -1;
-			if (c2.getEquipment() instanceof PriorityClaw)
-				return 1;
+			// Check characters' order
+			if (c1.getOrder() == c2.getOrder()) {
 
-			// Check accroding to characters' speed
-			if (c1.getSpeed() == c2.getSpeed()) {
-				if (c1.getPlayer() == c2.getPlayer()) {
-					return c1.getNumber() - c2.getNumber();
+				// Check characters' speed
+				if (c1.getSpeed() == c2.getSpeed()) {
+					
+					if (c1.getPlayer() == c2.getPlayer()) {
+						return c1.getNumber() - c2.getNumber();
+					} else {
+						return c1.getPlayer().isPlayer1() ? -1 : 1;
+					}
+
 				} else {
-					return c1.getPlayer().isPlayer1() ? -1 : 1;
+					return c2.getSpeed() - c1.getSpeed();
 				}
+
 			} else {
-				return c2.getSpeed() - c1.getSpeed();
+				return c2.getOrder() - c1.getOrder();
 			}
+			 
 		}
 	};
 

@@ -12,11 +12,13 @@ public class PriorityClaw extends Equipment {
 
 		c.changeAttack(1, Character.FOR_EQUIPMENT);
 		c.changeSpeed(1, Character.FOR_EQUIPMENT);
+		c.changeOrder(1);
+
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		// COMPLETED
+		c.changeOrder(-1);
 	}
 
 }

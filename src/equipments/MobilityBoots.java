@@ -11,12 +11,13 @@ public class MobilityBoots extends Equipment {
 	public void equipmentEffect(Character c) {
 
 		c.changeSpeed(2, Character.FOR_EQUIPMENT);
+		c.changeOrder(1);
 
 	}
 
 	@Override
 	protected void removeEquipmentEffect(Character c) {
-		// COMPLETED
+		c.changeOrder(-1);
 	}
 
 }
