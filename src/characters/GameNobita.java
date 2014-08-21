@@ -131,7 +131,7 @@ public class GameNobita extends Character {
 
 			}, 0);
 			activeSkills = new CharSkill[1];
-			activeSkills[0] = new CharSkill(this, true, 0, Command.AFTER_BATTLE,
+			activeSkills[0] = new CharSkill(this, true, 0, Command.BEFORE_BATTLE,
 					new CharSkillMethod() {
 
 						@Override
