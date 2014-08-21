@@ -9,12 +9,15 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageProducer;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -31,6 +34,7 @@ import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.GrayFilter;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -595,6 +599,19 @@ public class Play extends JFrame {
 
 			}
 
+			/**
+			 * Paint a CharLabel to grayscale.
+			 * 
+			 * @param c
+			 *            Character to be painted gray
+			 * @param b
+			 *            pass true to grayscale, false to color
+			 */
+			public void paintCharGray(Character c, boolean b) {
+				int index = c.getPlayer().indexOfChar(c);
+				(c.getPlayer().isPlayer1() ? player1Chars : player2Chars)[index].paintLabelGray(b);
+			}
+
 			public void updateAllLabels() {
 
 				for (int i = 0; i < CHAR_MAX; i++) {
@@ -703,8 +720,13 @@ public class Play extends JFrame {
 
 			private class CharLabel extends JLabel {
 				private Character character = null;
+				
+				private boolean gray = false; // if true, this label will be painted gray
+				
 				// To be drawn in paintComponent()
 				private BufferedImage charImage = null;
+				private BufferedImage charImageGray = null;
+				
 				private Image jobIcon = null;
 				private Image propertyIcon = null;
 				private Image defenseIcon = null;
@@ -749,6 +771,18 @@ public class Play extends JFrame {
 										: academyColor));
 					}
 
+				}
+
+				/**
+				 * Called by paintCharGray(). This will set a boolean variable
+				 * to be true, and allow paintComponent() to paint color or gray
+				 * according to the boolean.
+				 * 
+				 * @param b
+				 */
+				public void paintLabelGray(boolean b) {
+					gray = b;
+					repaint();
 				}
 
 				/**
@@ -858,9 +892,16 @@ public class Play extends JFrame {
 					}
 					// Crop Image
 					charImage = src.getSubimage(120, 185, 300, 100);
-					// Set Filter
+					
+					// Set Filter					
 					RescaleOp rescaleOp = new RescaleOp(0.3f, 182, null);
 					rescaleOp.filter(charImage, charImage);
+					
+					// Set Gray Scale Image
+					charImageGray = new BufferedImage(300, 100, BufferedImage.TYPE_BYTE_GRAY);
+					Graphics gray = charImageGray.getGraphics();
+					gray.drawImage(charImage, 0, 0, null);
+					gray.dispose();
 				}
 
 				/**
@@ -965,7 +1006,7 @@ public class Play extends JFrame {
 					int valuesY = 5;
 
 					// Draw Char Image at back
-					g.drawImage(charImage, 0, 0, null);
+					g.drawImage(gray ? charImageGray : charImage, 0, 0, null);
 
 					// Draw Job Icon at bottom
 					int iconSize = 25;
@@ -1905,10 +1946,17 @@ public class Play extends JFrame {
 				}
 			});
 
-			// Unhighlight the character
+			// Unhighlight the character & Paint it in grayscale
 			displayArea.battleField.highlightChar(currentChar, false);
+			displayArea.battleField.paintCharGray(currentChar, true);
 
 		}
+		
+		// Paint CharLabel back to color
+		for (int i = 0; i < charList.size(); i++) {
+			displayArea.battleField.paintCharGray(charList.get(i), false);
+		}
+
 	}
 
 	private void stageBeforeBattle() throws InterruptedException, InvocationTargetException {
@@ -1952,10 +2000,17 @@ public class Play extends JFrame {
 				}
 			});
 
-			// Unhighlight the character
+			// Unhighlight the character & Paint it in grayscale
 			displayArea.battleField.highlightChar(currentChar, false);
+			displayArea.battleField.paintCharGray(currentChar, true);
 
 		}
+
+		// Paint CharLabel back to color
+		for (int i = 0; i < charList.size(); i++) {
+			displayArea.battleField.paintCharGray(charList.get(i), false);
+		}
+
 	}
 
 	private void stageDuringBattle() throws InterruptedException, InvocationTargetException {
@@ -2011,10 +2066,17 @@ public class Play extends JFrame {
 				}
 			});
 
-			// Unhighlight the character
+			// Unhighlight the character & Paint it in grayscale
 			displayArea.battleField.highlightChar(currentChar, false);
+			displayArea.battleField.paintCharGray(currentChar, true);
 
 		}
+		
+		// Paint CharLabel back to color
+		for (int i = 0; i < charList.size(); i++) {
+			displayArea.battleField.paintCharGray(charList.get(i), false);
+		}
+
 	}
 
 	private void stageAfterBattle() throws InterruptedException, InvocationTargetException {
@@ -2073,10 +2135,17 @@ public class Play extends JFrame {
 				}
 			});
 
-			// Unhighlight the character
+			// Unhighlight the character & Paint it in grayscale
 			displayArea.battleField.highlightChar(currentChar, false);
+			displayArea.battleField.paintCharGray(currentChar, true);
 
 		}
+		
+		// Paint CharLabel back to color
+		for (int i = 0; i < charList.size(); i++) {
+			displayArea.battleField.paintCharGray(charList.get(i), false);
+		}
+
 	}
 
 	private void sortAllChars() {
