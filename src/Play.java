@@ -290,7 +290,7 @@ public class Play extends JFrame {
 		
 		
 		
-		/* Set Menu Bar*/
+		/* Set Menu Bar */
 		getLoadingScreen().setProgress(1, "Setting Menu Bar");
 		setJMenuBar(new MenuBar());
 
@@ -437,7 +437,7 @@ public class Play extends JFrame {
 
 			JMenu optionMenu = new JMenu(Lang.menu_option);
 			add(optionMenu);
-
+			
 			/* Add Menu Items */
 			optionMenu.add(helpMenuItem = new JMenuItem(Lang.menu_help));
 			optionMenu.add(aboutMenuItem = new JMenuItem(Lang.menu_about));
@@ -475,6 +475,7 @@ public class Play extends JFrame {
 					System.exit(0);
 				}
 			});
+			
 		}
 	}
 
