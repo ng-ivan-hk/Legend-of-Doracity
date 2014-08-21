@@ -186,12 +186,20 @@ public class Player {
 	 *         1 if player HP <= 0
 	 */
 	public int changeHP(int HP) {
+		
+		this.HP += HP;
 
 		if (HP < 0) {
 			Play.shake(5, 300);
+
+			// Check for LittleCity's job 1 passive skill 1
+			LittleCity maybeLittleCity = (LittleCity) contains(LittleCity.class);
+			if (maybeLittleCity != null && maybeLittleCity.isFirstJob()) {
+				maybeLittleCity.insane(-HP);
+			}
+
 		}
 
-		this.HP += HP;
 		if (HP != 0) {
 			Play.printlnLog(Lang.player + ": " + name + " " + (HP >= 0 ? "+" : "") + HP + " HP");
 		}

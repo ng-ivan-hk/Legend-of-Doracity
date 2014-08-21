@@ -192,9 +192,9 @@ public class Lang {
 			// 23. LittleCity
 			{
 					// Passive
-					{ { "自虐", "己方-1HP" } },
+					{ { "狂化", "該回合每損失3HP，攻擊+2 " }, { "後制", "順位時將會是最後行動" } },
 					// Active
-					{ { "狂化", "該回合每損失3HP，攻擊+2 後制:順位時將會是最後行動" } } },
+					{ { "自虐", "己方-1HP" } } },
 			// 24. Wind Sound
 			{
 					// Passive
@@ -606,6 +606,8 @@ public class Lang {
 	public final static String kuzmon_transferMagic2 = "與對方交換了";
 	// 22. KaitoDora
 	public final static String kaitodora_steal = "偷竊了";
+	// 23. LittleCity
+	public final static String littleCity_insane = CharNames[23] + "的狂化技能發動：每損失3HP攻擊+2";
 	// 24. WindSound
 	public final static String windsound_catForm_cat = CharNames[24] + "已轉為貓形態！";
 	public final static String windsound_catForm_toString = "（貓形態）";
