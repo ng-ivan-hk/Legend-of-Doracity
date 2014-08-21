@@ -56,13 +56,12 @@ public class FishBall extends Character {
 										public void targetMethod(Character currentChar,
 												Character target) {
 											target.setDestroyDefP(true);
+											limit();
 											activeSkills[0].setDoNotPass(false);
 										}
 
 									});
-							
-							limit();
-							
+
 						}
 
 					}, 5);
@@ -81,12 +80,11 @@ public class FishBall extends Character {
 										public void targetMethod(Character currentChar,
 												Character target) {
 											target.setGiveUpSkills(true);
+											limit();
 											activeSkills[1].setDoNotPass(false);
 										}
 
 									});
-							
-							limit();
 							
 						}
 

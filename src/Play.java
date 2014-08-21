@@ -208,7 +208,6 @@ public class Play extends JFrame {
 		// Shuffle randomly @formatter:on
 		Collections.shuffle(cards);
 
-		
 		/* Create and Set GUI */
 		setFrame();
 		createPreload();
