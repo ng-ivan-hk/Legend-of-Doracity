@@ -13,9 +13,8 @@ public class HolyShield extends Equipment {
 		Character[] charTemp = c.getPlayer().getCharacters();
 		for (int i = 0; i < charTemp.length; i++) {
 			charTemp[i].changeDefP(1, Character.FOR_EVER);
-			charTemp[i].changeDefM(1, Character.FOR_EVER);
 		}
-		
+
 	}
 
 	@Override
@@ -24,7 +23,6 @@ public class HolyShield extends Equipment {
 		Character[] charTemp = c.getPlayer().getCharacters();
 		for (int i = 0; i < charTemp.length; i++) {
 			charTemp[i].changeDefP(-1, Character.FOR_EVER);
-			charTemp[i].changeDefM(-1, Character.FOR_EVER);
 		}
 
 	}

@@ -96,7 +96,7 @@ public class Knight extends Character {
 							new EffectSelector();
 						}
 
-					}, 1);
+					}, 0);
 			activeSkills[0].setDoNotPass(true);
 
 		} else {

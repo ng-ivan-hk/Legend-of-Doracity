@@ -6,7 +6,7 @@ import javax.swing.JButton;
 
 public class T8 extends Character {
 
-	private final int job2RequiredMP = 4;
+	private final int job2RequiredMP = 5;
 
 	/**
 	 * Set all job 2 active skills' required MP to the parameter. Called when a
